@@ -1,0 +1,1392 @@
+
+/* --------------------------------------- IMPORT START ------------------------------------------------------ */
+
+@import url('https://fonts.googleapis.com/css?family=Righteous&display=swap');
+
+/* --------------------------------------- IMPORT END -------------------------------------------------------- */
+
+/* --------------------------------------- GLOBAL STYLE START ------------------------------------------------ */
+
+*{
+  margin: 0;
+  padding: 0;
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+}
+
+.btn-small {
+  border: 1px solid black;
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  font-size: 12.5px;
+  background-color: white;
+  padding-left: 10.75px;
+  padding-top: 5px;
+  color: black;
+  width: 72.5px;
+  height: 32.5px;
+}
+
+.btn-small:hover {
+  cursor: pointer;
+  border: 1px solid#2DA100;
+  background-color: black;
+  color: #2DA100;
+  transition: 0.5s;
+}
+
+.btn-medium {
+  border: 1px solid black;
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  font-size: 15px;
+  margin: 10px;
+  background-color: white;
+  padding: 12.5px 20px;
+  color: black;
+}
+
+.btn-medium:hover {
+  cursor: pointer;
+  border: 1px solid#2DA100;
+  background-color: black;
+  color: #2DA100;
+  transition: 0.5s;
+}
+
+.btn-big  {
+  border: 1px solid black;
+  font-family: 'Righteous', cursive;
+  font-size: 20px;
+  margin: 20px;
+  background-color: white;
+  padding: 15px 30px;
+  color: black;
+}
+
+.btn-big:hover {
+  cursor: pointer;
+  border: 1px solid#2DA100;
+  background-color: black;
+  color: #2DA100;
+  transition: 0.5s;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: red;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: black;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: lightseagreen;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px lightseagreen;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* --------------------------------------- GLOBAL STYLE END -------------------------------------------------- */
+
+/* --------------------------------------- COMPONENT HEADER START -------------------------------------------- */
+
+.topHeader{
+  background: rgb(27, 27, 27);
+  height: 100px;
+}
+
+.nav-logo {
+  color: #2DA100;
+  font-family: 'Righteous', cursive;
+  font-size: 25px;
+  padding: 0px;
+}
+
+.nav-logo > img {
+  margin-left: 70px;
+  margin-right: 10px;
+  height : 55px; 
+  width : 60px;
+}
+
+.menuHeader-left { 
+  margin-left: 70px;
+  margin-right: -100px;
+}
+
+.linkHeader {
+  color: white;
+  font-family: 'Righteous', cursive;
+  font-size: 17px;
+  display: flex;
+}
+
+.linkHeader:hover {
+  color: #2DA100;
+}
+
+.menuHeader-right {
+  margin-left: 50px;
+}
+
+.dropdownHeader {
+  display: flex;
+  margin-right: 5px;
+  font-size: 15px;
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+}
+
+.loginBar {
+  color: white;
+  font-family: 'Righteous', cursive;
+  font-size: 17px;
+  display: flex;
+  margin-bottom: auto;
+  margin-top: auto;
+  height: 50px;
+  background-color: #21272C;
+  border-radius: 30px;
+  padding: 10px;
+  margin-right: 10px;
+  line-height: 10px;
+}
+
+.searchBar {
+  margin-bottom: auto;
+  margin-top: auto;
+  height: 50px;
+  background-color: #21272C;
+  border-radius: 30px;
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 100px;
+}
+
+.searchInput{
+  color: #2DA100;
+  border: 0;
+  outline: 0;
+  background: none;
+  width: 0;
+  caret-color:transparent;
+  line-height: 30px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+.searchBar:hover > .searchInput{
+  padding: 0 10px;
+  width: 150px;
+  caret-color:#2DA100;
+  transition: width 0.4s linear;
+  right: -100px;
+}
+
+.searchIcon{
+  height: 30px;
+  width: 30px;
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color:white;
+  text-decoration:none;
+}
+
+.searchBar:hover > .searchIcon{
+  background: black;
+  color: #2DA100;
+}
+
+.menuDropdown{
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.menuHeader:hover .menuDropdown{
+  display: block;
+  color: #2DA100;
+}
+
+
+/* --------------------------------------- COMPONENT HEADER END --------------------------------------------- */
+
+/* --------------------------------------- COMPONENT JUMBOTRON 1 START ---------------------------------------- */
+.jumbotron1 {
+  background-image: url(components/support/img/img1.jpeg);
+  margin-top: -50px;
+  background-size: cover;
+  width: 100%;
+  height: 90vh;
+}
+
+.darken-overlay div {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.heading1 {
+  padding-top: 200px;
+  text-align: center;
+}
+
+.heading1 > h1 {
+  font-family: 'Righteous', cursive;
+  font-size: 55px;
+  font-weight: 900;
+  margin-top: 80px;
+  color: white;
+}
+
+.heading1 > h1:hover {
+  color: #2DA100;
+}
+
+.heading1 > p {
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  font-size: 25px;
+  margin-top: 20px;
+  font-weight: 400;
+  color: white;
+}
+
+.heading1 > p:hover {
+  color: #2DA100;
+}
+
+/* --------------------------------------- COMPONENT JUMBOTRON 1 END ------------------------------------------ */
+
+/* --------------------------------------- COMPONENT JUMBOTRON 2 START ---------------------------------------- */
+.jumbotron2 .produk:hover {
+  background-color: rgba(0, 0, 0, 0.800);
+}
+
+.produk {
+  position: relative;
+  display: inline-block;
+}
+
+.produk > img:hover + div {
+  display: block;
+}
+
+.produk-caption {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate( -50%, -50% );
+  text-align: center;
+  color: black;
+  font-weight: bold;
+  display: none;
+}
+
+.produk-caption:hover {
+  display: block;
+  color: #2DA100;
+  transition: 0.4s;
+}
+
+.produk-caption h2 > span {
+  margin-top: 100px;
+  font-family: 'Righteous', cursive;
+  text-align: center;
+  background-color: white;
+  color: black;
+  box-shadow: -5px 0px 0 3px white, 5px 0px 0 3px white, 0 0 0 3px white;
+  box-decoration-break: clone;
+}
+
+.produk-caption h2 > span:hover {
+  background-color: black;
+  color: #2DA100;
+  box-shadow: -10px 0px 0 4px black, 10px 0px 0 4px black, 0 0 0 4px black;
+  box-decoration-break: clone;
+  transition: 0.4s;
+}
+
+.produk-caption h3 > span {
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  text-align: center;
+  font-weight: 300;
+  font-size: 22px;
+  background-color: white;
+  color: black;
+  box-shadow: -5px 0px 0 3px white, 5px 0px 0 3px white, 0 0 0 3px white;
+  box-decoration-break: clone;
+}
+
+.produk-caption h3 > span:hover {
+  background-color: black;
+  color: #2DA100;
+  box-shadow: -10px 0px 0 4px black, 10px 0px 0 4px black, 0 0 0 4px black;
+  box-decoration-break: clone;
+  transition: 0.4s;
+}
+
+/* --------------------------------------- COMPONENT JUMBOTRON 2 END ------------------------------------------ */
+
+/* --------------------------------------- COMPONENT JUMBOTRON 3 START ---------------------------------------- */
+.jumbotron3 {
+  background-image: url(components/support/img/img3.jpg);
+  margin-top: 0px;
+  background-size: cover;
+  width: 100%;
+  height: 155vh;
+}
+
+.darken-overlay2 > div {
+  width: 100%;
+  height: 155vh;
+  background-color: rgba(185, 185, 185, 0.5);
+}
+
+.heading {
+  padding: 0px;
+}
+
+.heading2 {
+  padding-top: 50px;
+  text-align: center;
+}
+
+.heading2 > h1 {
+  font-family: 'Righteous', cursive;
+  font-size: 55px;
+  font-weight: 900;
+  margin-top: 10px;
+  color: black;
+}
+
+.benefit {
+  display: flexbox;
+  margin: 37px;
+}
+
+.benefit > img {
+  width: 125px;
+  height: 125px;
+}
+
+.benefit > p {
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  font-size: 25px;
+  margin-top: 20px;
+  font-weight: 500;
+  color: black;
+}
+
+/* --------------------------------------- COMPONENT JUMBOTRON 3 END ----------------------------------------- */
+
+/* --------------------------------------- COMPONENT JUMBOTRON 4 START ---------------------------------------- */
+.jumbotron4 {
+  background-image: url(components/support/img/img2.jpg);
+  margin-top: 0px;
+  background-size: cover;
+  width: 100%;
+  height: 90vh;
+}
+
+.darken-overlay div {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.heading4 {
+  padding-top: 150px;
+  text-align: center;
+}
+
+.heading4 > h1 {
+  font-family: 'Righteous', cursive;
+  font-size: 55px;
+  font-weight: 900;
+  margin-top: 80px;
+  color: white;
+}
+
+.heading4 > h1:hover {
+  color: #2DA100;
+}
+
+.heading4 > p {
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  font-size: 25px;
+  margin-top: 20px;
+  font-weight: 500;
+  color: white;
+}
+
+.heading4 > p:hover {
+  color: #2DA100;
+}
+
+/* --------------------------------------- COMPONENT JUMBOTRON 4 END ----------------------------------------- */
+
+/* --------------------------------------- COMPONENT FOOTER START -------------------------------------------- */
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .footer_main {
+    padding: 0px 0px 50px 0px;
+  }
+}
+
+.footer {
+  background-color: rgb(27, 27, 27);
+  height: 100%;
+}
+
+.footer_top {
+  width: 100%;
+  padding-top: 50px;
+  text-align: center;
+}
+
+.footer_top p {
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  color:white;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.trust-logos .column {
+  display: flex;
+  float: left;
+  width: 33.33%;
+  margin-right: 300px;
+}
+
+.trust-logos .column1 > img {
+  width: 300px;
+  height: 80px;
+  margin-top: 20px;
+  margin-left: 125px;
+  margin-right: 100px;
+}
+
+.trust-logos .column2 > img {
+  width: 150px;
+  height: 115px;
+  margin-right: 100px;
+}
+
+.trust-logos .column3 > img {
+  width: 100px;
+  height: 120px;
+  margin-right: 100px;
+}
+
+.trust-logos .column4 > img {
+  width: 150px;
+  height: 110px;
+}
+
+.footer_main {
+  margin-left: 50px;
+  margin-top: 50px;
+}
+
+.footer-left {
+  padding-left: 0px;
+  justify-content: flex-start;
+}
+
+ul.footer-list {
+  list-style: none;
+  padding-left: 0px;
+}
+
+ul.footer-list li {
+  color: white;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+ul.footer-list li.phone {
+  font-size: 22px;
+  color: white;
+}
+
+ul.footer-list li a {
+  color: white;
+  font-weight: 500;
+  text-transform: none;
+}
+
+ul.footer-list a:hover {
+  color: #2DA100;
+  text-decoration: none;
+  list-style: none;
+}
+
+.footer-right {
+  margin: -137px 800px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.footer-right p, .footer-middle p {
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  font-size: 16px;
+  color: white;
+}
+
+.footer-middle h4, .footer-right h4 {
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  font-size: 24px;
+  color: white;
+}
+
+.footer-right h4, .footer-left h4 {
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.footer-middle {
+  margin: -200px 250px;
+  text-align: center;
+  padding: 0;
+}
+
+#hero-cta-email {
+  height: 50px;
+  width: 60%;
+}
+
+.hero-cta-form input {
+  width: 100%;
+  float: left;
+  border: none;
+  background: white;
+  border-radius: 8px;
+  padding-left: 10px;
+  margin-left: 60px;
+  font-size: 17px;
+  line-height: 18px;
+  height: 15px;
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  font-weight: 500;
+  opacity: 1;
+  display: block;
+  margin-top: 10px;
+}
+
+.hero-cta-form input:focus {
+  font-weight: 500;
+  background: black;
+  border: 1px solid #2DA100;
+  color: #2DA100;
+}
+
+.footer_bottom {
+  margin-top: 225px;
+  padding-bottom: 20px;
+  margin-left: 50px;
+}
+
+.footer-copyright p {
+  text-align: start;
+  font-size: 12px;
+  color: white;
+  padding-top: 10px;
+}
+
+/* --------------------------------------- COMPONENT FOOTER END ---------------------------------------------- */
+
+/* --------------------------------------- LOGIN & REGISTER START -------------------------------------------- */
+.login{
+  margin: 100px 50px 100px 50px;
+}
+
+.header_sign_in{
+  margin-top: -30px;
+  margin-bottom: 30px;
+}
+
+.logo-header {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.title-header {
+  color: #2DA100;
+  font-family: 'Righteous', cursive;
+  margin-left: 527px;
+}
+
+.form-sign-in{
+  padding-top: 50px;
+  padding-bottom: 70px;
+  background: rgb(67,67,68);
+  background: linear-gradient(131deg, rgba(67,67,68,1) 42%, rgba(0,0,0,1) 100%); 
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.form-sign-in .icon-header{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.form-sign-in .title-form{
+  font-size: 30px;
+  font-family: 'Righteous', cursive;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0px;
+}
+
+.form-sign-in .subtitle-form >a{
+  margin-top: 90px;
+  margin-bottom: -30px;
+  font-size: 15px;
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  font-weight: 300;
+  color: #B4B4B4;
+}
+
+.form-sign-in .subtitle-form >a:hover{
+  color: #2DA100;
+}
+
+.label-sign-in {
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  color: #ffffff;
+}
+
+.input-sign-in{
+  display: flex;
+  background: white;
+  border: 1px solid #EDEDED;
+  color: #21272C;
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  font-size: 17px;
+  padding: 3px;
+  font-weight: 400;
+}
+
+.input-sign-in:focus{
+  background: black;
+  border: 1px solid #2DA100;
+  color: #2DA100;
+}
+
+/* --------------------------------------- LOGIN & REGISTER END ---------------------------------------------- */
+
+/* --------------------------------------- ABOUT PAGE START -------------------------------------------------- */
+.about {
+  background-color: rgba(0, 0, 0, 0.800);
+  margin-top: 0px;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.about >h2 {
+  color: #EDEDED;
+  text-align: center;
+  padding-top: 80px;
+  font-size: 40px;
+  font-family: 'Righteous', cursive;
+  font-weight: 500;
+}
+
+.about >h4 {
+  color: #EDEDED;
+  text-align: center;
+  padding-top: 10px;
+  font-size: 30px;
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  font-weight: 500;
+}
+
+.about >p {
+  color: #EDEDED;
+  text-align: center;
+  font-size: 20px;
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  font-weight: 400;
+}
+
+.about .about-item{
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 15px;
+  text-align: center;
+  display: flex;
+}
+
+.about .about-item .about-info{
+  float: center;
+  padding-left: 175px;
+  margin-bottom: 20px;
+}
+
+.about .about-item .title{
+  font-size: 30px;
+  color: white;
+  font-weight: 400;
+  font-family: 'Montserrat';
+  margin: 0;
+  padding-top: 10px;
+}
+
+.about .about-item .sub-title{
+  font-size: 20px;
+  color: whitesmoke;
+  font-weight: 300;
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  margin: 0;
+}
+
+.about .about-item .about-picture {
+  padding-left: 175px;
+}
+
+.about .about-item .about-picture img{
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1px;
+  display: block;
+  object-fit: cover;
+}
+
+/* --------------------------------------- ABOUT PAGE END ---------------------------------------------------- */
+
+/* --------------------------------------- REVIEWS PAGE START ------------------------------------------------ */
+.reviews {
+  background-color: rgba(0, 0, 0, 0.800);
+  margin-top: 0px;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.reviews >h2 {
+  color: #EDEDED;
+  text-align: center;
+  padding-top: 80px;
+  font-size: 40px;
+  font-family: 'Righteous', cursive;
+  font-weight: 500;
+}
+
+.reviews .reviews-item{
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 15px;
+  text-align: center;
+  justify-content: center;
+}
+
+.reviews .reviews-item .reviews-picture img{
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1px;
+  display: block;
+  object-fit: cover;
+}
+
+.reviews .reviews-item .reviews-info{
+  float: center;
+  margin-bottom: 20px;
+}
+
+.reviews .reviews-item .title{
+  font-size: 30px;
+  color: white;
+  font-weight: 400;
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  margin: 0;
+  padding-top: 10px;
+}
+
+.reviews .reviews-item .sub-title{
+  font-size: 20px;
+  color: whitesmoke;
+  font-weight: 300;
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  margin: 0;
+}
+
+.reviews >p {
+  color: #EDEDED;
+  text-align: center;
+  font-size: 20px;
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  font-weight: 400;
+}
+
+/* --------------------------------------- REVIEWS PAGE END -------------------------------------------------- */
+
+/* --------------------------------------- 404 NOT FOUND PAGE START ------------------------------------------ */
+
+#error-page {
+  background-color: black;
+  position:fixed !important;
+  position:absolute;
+  text-align:center;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  z-index:99999;
+}
+
+#error-inner {
+  margin: auto;
+}
+
+#error-inner h1 {
+  text-transform:uppercase;
+  color:#2DA100;
+  margin-top:20px;
+  font-size:20px;
+  font-family: 'Righteous', cursive;
+}
+
+.pesan-eror{
+  width:200px;
+  height:200px;
+  margin:0 auto 40px;
+  background:#2DA100;
+  color:#21272C;
+  font-size:100px;
+  line-height:200px;
+  -moz-border-radius-topleft: 75px;
+  -moz-border-radius-topright:75px; 
+  -webkit-border-top-left-radius:75px;
+  -webkit-border-top-right-radius:75px; 
+  border-top-left-radius:95px;
+  border-top-right-radius:95px; 
+  border-bottom-left-radius:14px;
+  border-bottom-right-radius:14px;
+  position:relative;
+  animation-name: floating;
+  -webkit-animation-name: floating;
+  animation-duration: 1.5s;	
+  -webkit-animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+  font-family: 'Righteous', cursive;
+}
+ 
+@keyframes floating {
+  0% {
+    transform: translateY(0%);	
+  }
+  50% {
+    transform: translateY(8%);	
+  }	
+  100% {
+    transform: translateY(0%);
+  }			
+}
+  
+@-webkit-keyframes floating {
+  0% {
+    -webkit-transform: translateY(0%);	
+  }
+  50% {
+    -webkit-transform: translateY(8%);	
+  }	
+  100% {
+    -webkit-transform: translateY(0%);
+  }			
+}
+
+.pesan-eror::after {
+  content:" ";
+  width:0;
+  height:0;
+  bottom:-17px;
+  border-color:#fff transparent transparent;
+  border-style:solid;
+  border-width:20px 20px 0;
+  position:absolute;
+  left:40%;
+}
+
+.balik-home {
+  position:relative;
+  margin:20px auto;
+  display:block;
+  padding:10px 15px 10px 15px;
+  font-family: 'Righteous', cursive;
+  font-size:30px;
+  background:#21272C;
+  border:0;
+  color:#2DA100;
+  border-radius:3px;
+  outline:none;
+  width:600px;
+  height:80px;
+  cursor:pointer;
+}
+  
+.balik-home:hover {
+  background:none;
+}
+  
+.balik-home:after,.balik-home:before {
+  position:absolute;
+  background:#2DA100;
+  content:"";
+  width:0%;
+  height:100%;
+  bottom:0px;
+  left:0;
+  z-index:-999999999;
+  border-radius:3px;
+}
+  
+.balik-home:before {
+  background:#B4B4B4;
+  width:100%;
+}
+  
+.balik-home:hover:after {
+  width:100%;
+  -webkit-transition: all 1s ease-in-out;
+  -moz-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out;
+}
+
+.balik-home a{
+  color:white;
+  text-decoration:none;
+  font-family: 'Righteous', cursive;
+}
+
+/* --------------------------------------- 404 NOT FOUND PAGE END -------------------------------------------- */
+
+/* --------------------------------------- PRODUCTS PAGE START ----------------------------------------------- */
+
+.productHeader {
+  padding-top: 50px;
+  text-align: center;
+  font-family: 'Righteous', cursive;
+  letter-spacing: 1px;
+  color: #21272C;
+}
+
+.productPrice {
+  font-family: Montserrat, Overpass,Trebuchet MS,Arial,sans-serif;
+  font-weight: bold;
+}
+
+.card {
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.4s;
+  width: 30%;
+  height: 500px;
+  margin-top: 20px;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 #21272C;
+}
+
+.cardNewProduct:hover {
+  box-shadow: 0 8px 16px 0 greenyellow;
+}
+
+.cardLimitedStock:hover {
+  box-shadow: 0 8px 16px 0 red;
+}
+
+.cardMostWanted:hover {
+  box-shadow: 0 8px 16px 0 blue;
+}
+
+.container {
+  padding: 2px 16px;
+}
+
+/* --------------------------------------- PRODUCTS PAGE END ------------------------------------------------- */
+
+/* --------------------------------------- ADMIN SIDE LEFT START --------------------------------------------- */
+
+.side-left {
+  width: 310px;
+  height: 100% !important;
+  overflow: hidden;
+  float: left;
+}
+
+.side-left .shortcut {
+  width: 70px;
+  height: 100% !important;
+  background: linear-gradient(0deg, rgb(0, 165, 69) 0%, rgb(1, 78, 20) 100%);
+  float: left;
+}
+
+.side-left .emblemapp {
+  width: 70px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.2);
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.side-left .emblemapp img {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  height: 29px;
+}
+
+.side-left .menus {
+  width: 70px;
+  overflow: hidden;
+  margin-top: 200px;
+  height: 100%;
+}
+
+.side-left .menus .item-menu {
+  width: 45px;
+  height: 45px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  margin: auto;
+  margin-bottom: 30px;
+}
+
+.side-left .menus .item-menu:last-child {
+  margin-top: 150px;
+}
+
+.side-left .menus .item-menu .icon-item-menu {
+  color: #21272C;
+  font-size: 22px;
+  text-align: center;
+  padding-top: 7px;
+}
+
+.side-left .menus .icon-item-menu:hover {
+  opacity: 0.4 !important;
+  transition: all 0.6s;
+}
+
+/* --------------------------------------- ADMIN SIDE LEFT END ----------------------------------------------- */
+
+/* --------------------------------------- ADMIN DASHBOARD PAGE START ---------------------------------------- */
+
+.main-content {
+  width: 1150px;
+  overflow: hidden;
+  margin-left: -225px;
+  margin-top: 50px;
+  float: right;
+}
+
+.main-content .header .header-title {
+  font-size: 32px;
+  color: #21272C;
+  font-weight: 400;
+  font-family: 'Montserrat';
+  text-align: center;
+  margin: 0;
+}
+
+.main-content .report-group {
+  margin-top: 35px;
+}
+
+.main-content .report-group .item-report {
+  background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(7,36,0,1) 50%, rgba(0,0,0,1) 100%);
+  background-size: cover;
+  border-radius: 8px;
+  background-position: center right;
+  background-repeat: no-repeat;
+  display: inline-flex;
+}
+
+.main-content .report-group .item-report .content {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.main-content .report-group .item-report .content .title-item {
+  font-size: 18px;
+  color: #B4B4B4;
+  font-weight: 500;
+  font-family: 'Montserrat';
+  margin: 0;
+}
+
+.main-content .report-group .item-report .content .value-item {
+  font-size: 42px;
+  color: #B4B4B4;
+  font-weight: 400;
+  font-family: 'Montserrat';
+  margin: 0;
+  margin-right: 10px;
+  clear: both;
+  float: left;
+}
+
+.main-content .report-group .item-big-report {
+  background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(7,36,0,1) 50%, rgba(0,0,0,1) 100%);
+  border-radius: 8px;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  width: 1000px;
+}
+
+.main-content .report-group .item-big-report .title {
+  font-size: 25px;
+  color: #B4B4B4;
+  font-weight: 500;
+  font-family: 'Montserrat';
+  margin: 5;
+  float: left;
+}
+
+.main-content .report-group .item-big-report .user-item  {
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.main-content .report-group .item-big-report .user-item .user-picture {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #E6E8F0;
+  border-radius: 100%;
+  float: left;
+  margin-right: 12px;
+}
+
+.main-content .report-group .item-big-report .user-item .user-picture img {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  margin-top: 4px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.main-content .report-group .item-big-report .user-item .user-info {
+  float: left;
+}
+
+.main-content .report-group .item-big-report .user-item .title {
+  font-size: 16px;
+  color: #B4B4B4;
+  font-weight: 400;
+  font-family: 'Montserrat';
+  margin: 0;
+  padding-top: 10px;
+}
+
+/* --------------------------------------- ADMIN DASHBOARD PAGE END ------------------------------------------ */
+
+/* --------------------------------------- ADMIN PRODUCTS PAGE START ----------------------------------------- */
+
+.main-content .header .sub-header-title {
+  font-size: 16px;
+  color: #21272C;
+  font-weight: 300;
+  font-family: 'Montserrat';
+  margin-left: 190px;
+  display: flex;
+  text-align: center;
+}
+
+.table-wisata thead tr th {
+  text-align: left !important;
+}
+
+.table-wisata tbody tr td {
+  text-align: left !important;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.table-tiketsaya tbody tr:hover{
+  background: #2DA100;
+}
+
+.table-tiketsaya tbody tr:hover td{
+  color: #21272C;
+}
+
+.table-tiketsaya tr td {
+  vertical-align: middle !important;
+}
+
+.table-tiketsaya thead tr th {
+  font-size: 16px;
+  color: #B4B4B4;
+  font-weight: 300;
+  font-family: 'Montserrat';
+  text-align: center;
+}
+
+.table-tiketsaya tbody tr td {
+  font-size: 16px;
+  color: #B4B4B4;
+  font-weight: 400;
+  font-family: 'Montserrat';
+  text-align: center;
+}
+
+.table-tiketsaya tbody tr td a {
+  font-size: 12px;
+  color: #B4B4B4;
+  font-weight: 400;
+  padding: 10px;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.user-table-item {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  display: block;
+  object-fit: cover;
+  margin: auto;
+}
+
+/* --------------------------------------- ADMIN PRODUCTS PAGE END ------------------------------------------- */
+
+/* --------------------------------------- ADMIN MANAGE PRODUCTS PAGE START ---------------------------------- */
+
+.overlay-box {
+  position: absolute;
+  top: -10px;
+  left: 30px;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  height: 200px;
+  width: 300px;
+}
+
+.overlay-box input{
+ position: absolute;
+ left: 100px;
+ top: 100px;
+ font-family: 'Montserrat';
+}
+
+.thumbnail-box {
+  position: relative;
+}
+
+.thumbnail-products {
+  position: absolute;
+  top: 40px;
+  left: -260px;
+  border-radius: 8px;
+  height: 100px;
+  width: 200px;
+  object-fit: cover;
+}
+
+.form-sign-in .content-sign-in {
+  margin-top: 30px;
+}
+
+.title-input-type-primary {
+  font-family: 'Montserrat';
+  font-size: 16px;
+  font-weight: 300;
+  color: #21272C;
+}
+
+.input-type-primary {
+  background: #FAFAFA;
+  border: 1px solid #EDEDED;
+  color: #21272C;
+  font-family: 'Montserrat';
+  font-size: 16px;
+  font-weight: 400;
+  height: 40px;
+  margin-bottom: 30px;
+}
+
+.input-type-primary:focus {
+  background: #D0D7FF;
+  border: 1px solid #2DA100;
+  color: #2DA100;
+}
+
+.form-action{
+  align-items: center;
+  margin-right: 10px;
+  display: flex;
+}
+
+/* --------------------------------------- ADMIN MANAGE PRODUCTS PAGE END ------------------------------------ */
