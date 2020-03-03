@@ -5,8 +5,11 @@ import NotFound from '../pages/notfound'
 import Axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { apiurl } from '../support/apiurl'
+import Swal from 'sweetalert2'
 
 const AdminDroneProducts = () => {
+
+    // //============================== FUNCTION READ PRODUCT =================================================// //
 
     const redux = useSelector((state) => {
         return {
@@ -16,14 +19,6 @@ const AdminDroneProducts = () => {
     })
     const dispatch = useDispatch()
     const [dataProducts, setDataProducts] = useState([])
-    const [editModal, setEditModal] = useState({
-        modalEdit: false,
-        indexEdit: 0
-    })
-    const [deleteModal, setDeleteModal] = useState({
-        modalDelete: false,
-        indexDelete: 0
-    })
 
     useEffect(() => {
         Axios.get(`${apiurl}/products/getdroneproducts`)
@@ -44,22 +39,151 @@ const AdminDroneProducts = () => {
                     <td>{val.productstock}</td>
                     <td>{val.producttypes}</td>
                     <td>
-                        <button className='btn btn-success mr-1 ml-1' onClick={() => { setEditModal({ ...editModal, modalEdit: true, indexEdit: index }) }}>EDIT</button>
-                        <button className='btn btn-danger mr-1 ml-1' onClick={() => { setDeleteModal({ ...deleteModal, modalDelete: true, indexDelete: index }) }}>DELETE</button>
+                        <button className='btn btn-success mr-1 ml-1' onClick={() => onModalOpen(index)}>EDIT</button>
+                        <button className='btn btn-danger mr-1 ml-1' onClick={() => onDeleteDataProduct(index)}>DELETE</button>
                     </td>
                 </tr>
             )
         })
     }
 
-    if (redux.roles === 2) { // //proteksi admin (hanya admin yang bisa akses)
+    // //============================== FUNCTION UPDATE =======================================================// //
+
+    const [editDataProduct, setEditDataProduct] = useState({
+        idproducts: 0,
+        productname: '',
+        productprice: '',
+        productstock: '',
+        productdescription: '',
+    })
+
+    const editProduct = e => {
+        const { name, value } = e.target
+        setEditDataProduct({ ...editDataProduct, [name]: value })
+    }
+
+    const { idproducts, productname, productprice, productstock, productdescription } = editDataProduct
+
+    const [editImage, setEditImage] = useState({
+        imageEditFileName: 'Choose an image...',
+        imageEditFile: undefined
+    })
+
+    const onEditImageFileChange = e => {
+        console.log('e.target.files[0]', editImage);
+        var file = e.target.files[0]
+        if (file) {
+            setEditImage({ ...editImage, imageEditFileName: file.name, imageEditFile: file })
+        }
+        else {
+            setEditImage({ ...editImage, imageEditFileName: 'Select Image', imageEditFile: undefined })
+        }
+    }
+
+    const [editModal, setEditModal] = useState({
+        modalEdit: false,
+        indexEdit: -1
+    })
+
+    const { indexEdit, modalEdit } = editModal
+
+    const onModalOpen = (index) => {
+        setEditDataProduct(dataProducts[index])
+        setEditModal({ ...editModal, modalEdit: true, indexEdit: index });
+    }
+
+    const toggleModal = () => setEditModal({ ...editModal, modalEdit: !modalEdit })
+
+    const renderModalEdit = () => {
+        return (
+            <Modal isOpen={modalEdit} toggle={toggleModal}>
+                <ModalHeader>Modal title</ModalHeader>
+                <ModalBody>
+                    <input type="text" className="form-control input-type-primary" onChange={editProduct} name='productname' defaultValue={productname} />
+                    <input type="file" className="form-control input-type-primary" onChange={onEditImageFileChange} name='productimage' />
+                    <input type="number" className="form-control input-type-primary" onChange={editProduct} name='productprice' defaultValue={productprice} />
+                    <input type="number" className="form-control input-type-primary" onChange={editProduct} name='productstock' defaultValue={productstock} />
+                    <input type="text" className="form-control input-type-primary" onChange={editProduct} name='productdescription' defaultValue={productdescription} />
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="success" onClick={onSaveEdit}>Edit</Button>
+                    <Button color="secondary" onClick={toggleModal}>Cancel</Button>
+                </ModalFooter>
+            </Modal>
+        )
+    }
+
+    const onSaveEdit = () => {
+        var data = {
+            idproducts,
+            productname,
+            productprice,
+            productstock,
+            productdescription
+        }
+        var id = data.idproducts
+        Axios.put(`${apiurl}/products/editdroneproducts/${id}`, data) // //menaruh hasil edit ke axios (db)
+            .then((res) => { // //jika axios berhasil
+                setDataProducts(res.data.dataDrone)
+                setEditModal({ ...modalEdit, modalEdit: false, indexEdit: -1 })
+            }).catch((err) => {
+                console.log(err)
+            })
+    }
+
+    // //============================== FUNCTION DELETE =======================================================// //
+
+    const onDeleteDataProduct = (index) => {
+        var id = dataProducts[index].idproducts
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            background: '#21272C',
+            color: '#ddd'
+        }).then((res1) => {
+            if (res1.value) {
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+                    .then(() => {
+                        Axios.delete(`${apiurl}/products/deleteproducts/${id}`)
+                            .then(() => {
+                                Axios.get(`${apiurl}/products/getdroneproducts`)
+                                    .then((res) => {
+                                        setDataProducts(res.data.result)
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                    })
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            })
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+            }
+        })
+    }
+
+
+    // //============================== RENDER AKHIR ==========================================================// //
+
+    if (redux.roles === 1) { // //proteksi admin (hanya admin yang bisa akses)
         return <NotFound />;
     }
     return (
         <div>
-
             <AdminSideLeft />
-
+            {renderModalEdit()}
             <div className="main-content">
 
                 <div className="header row">

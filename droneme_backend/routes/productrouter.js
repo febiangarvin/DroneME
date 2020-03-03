@@ -10,5 +10,11 @@ router.get('/getdroneaccessoriesproducts', productcontroller.getDroneAccessories
 router.get('/getaccessoriesproducts', productcontroller.getAccessoriesProducts)
 router.get('/getproducttypes', productcontroller.getProductTypes)
 
+router.put('/editdroneproducts/:id', productcontroller.editDroneProducts)
+router.put('/editdroneaccessoriesproducts/:id', productcontroller.editDroneAccessoriesProducts)
+router.put('/editaccessoriesproducts/:id', productcontroller.editAccessoriesProducts)
+
+router.delete('/deleteproducts/:id', productcontroller.deleteProducts)
+
 module.exports = router
 

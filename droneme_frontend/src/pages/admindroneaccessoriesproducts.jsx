@@ -6,7 +6,7 @@ import Axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { apiurl } from '../support/apiurl'
 
-const AdminDroneProducts = () => {
+const AdminDroneAccessoriesProducts = () => {
 
     const redux = useSelector((state) => {
         return {
@@ -26,7 +26,7 @@ const AdminDroneProducts = () => {
     })
 
     useEffect(() => {
-        Axios.get(`${apiurl}/products/getdroneaccessoriesproducts`)
+        Axios.get(`${apiurl}/products/getaccessoriesproducts`)
             .then((res) => {
                 setDataProducts(res.data.result)
             })
@@ -69,14 +69,14 @@ const AdminDroneProducts = () => {
                             </p>
                     </div>
                     <div className="col-md-12 row">
-                        <a href="/admindroneproducts" className="sub-header-title">
-                            Drone Products
+                        <a href="/admindroneaccessoriesproducts" className="sub-header-title">
+                            Drone Accessories
                             </a>
                         <p className="sub-header-title" style={{ fontWeight: 'bolder' }}>
-                            Drone Accessories
-                            </p>
-                        <a href="/adminaccessoriesproducts" className="sub-header-title">
                             Accessories
+                            </p>
+                        <a href="/admindroneproducts" className="sub-header-title">
+                            Drone Products
                             </a>
                     </div>
                 </div>
@@ -113,4 +113,4 @@ const AdminDroneProducts = () => {
     );
 }
 
-export default AdminDroneProducts;
+export default AdminDroneAccessoriesProducts;
