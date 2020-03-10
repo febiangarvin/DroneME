@@ -50,7 +50,7 @@ module.exports = {
     // //============================== Read Products =========================================================// //
 
     getDroneProducts: (req, res) => {
-        var sql = 'SELECT p.idproducts, p.productname, p.productprice, p.productstock, pt.producttypes FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=1'
+        var sql = 'SELECT p.idproducts, p.productname, p.productimage, p.productprice, p.productstock, pt.producttypes, p.productdescription FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=1'
         mysqldb.query(sql, (err, res1) => {
             if (err) return res.status(500).send(err)
             return res.status(200).send({ result: res1 })
@@ -58,7 +58,7 @@ module.exports = {
     },
 
     getDroneAccessoriesProducts: (req, res) => {
-        var sql = 'SELECT p.idproducts, p.productname, p.productprice, p.productstock, pt.producttypes FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=2'
+        var sql = 'SELECT p.idproducts, p.productname, p.productimage, p.productprice, p.productstock, pt.producttypes, p.productdescription FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=2'
         mysqldb.query(sql, (err, res1) => {
             if (err) return res.status(500).send(err)
             return res.status(200).send({ result: res1 })
@@ -66,7 +66,7 @@ module.exports = {
     },
 
     getAccessoriesProducts: (req, res) => {
-        var sql = 'SELECT p.idproducts, p.productname, p.productprice, p.productstock, pt.producttypes FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=3'
+        var sql = 'SELECT p.idproducts, p.productname, p.productimage, p.productprice, p.productstock, pt.producttypes, p.productdescription FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=3'
         mysqldb.query(sql, (err, res1) => {
             if (err) return res.status(500).send(err)
             return res.status(200).send({ result: res1 })
@@ -85,86 +85,163 @@ module.exports = {
 
     editDroneProducts: (req, res) => {
         var sql = `SELECT * FROM products WHERE idproducts = ${req.params.id}`
-        mysqldb.query(sql, (err, res2) => {
-            if (err) return res.status(500)
+        mysqldb.query(sql, (err, res1) => {
+            if (err) res.status(500).send(err);
 
-            var data = req.body
+            if (res1.length) {
+                const path = '/products/images'
+                const upload = uploader(path, 'products').fields([{ name: 'image' }])
+                upload(req, res, err => {
+                    if (err) {
+                        return res
+                            .status(500)
+                            .send({ message: 'Upload Fail', error: err.message })
+                    }
+                    const { image } = req.files
+                    console.log('image', req.files)
+                    const imagePath = image ? path + '/' + image[0].filename : null
 
-            var sql = `UPDATE products SET ? WHERE idproducts = ${req.params.id}`
-            mysqldb.query(sql, data, (err, res2) => {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'There is an error on the server',
-                        error: err.message
+                    const data = JSON.parse(req.body.data)
+
+                    if (imagePath) {
+                        data.productimage = imagePath
+                    }
+
+                    var sql = `UPDATE products SET ? WHERE idproducts = ${req.params.id}`
+                    mysqldb.query(sql, data, (err, res2) => {
+                        if (err) {
+                            if (imagePath) {
+                                fs.unlinkSync(`./public${imagePath}`)
+                            }
+                            return res.status(500).json({
+                                message: 'There is an error on the server',
+                                error: err.message
+                            })
+                        }
+                        if (imagePath) {
+                            if (res1[0].productimage) {
+                                fs.unlinkSync(`./public${res1[0].productimage}`)
+                            }
+                        }
+                        sql = 'SELECT p.idproducts, p.productname, p.productimage, p.productprice, p.productstock, p.productdescription, pt.producttypes FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=1'
+                        mysqldb.query(sql, (err1, result1) => {
+                            if (err1) res.status(500).send(err1)
+
+                            console.log(result1[0])
+
+                            res.status(200).send({ dataDrone: result1 })
+                        })
                     })
-                }
-
-                sql = 'SELECT p.idproducts, p.productname, p.productprice, p.productstock, pt.producttypes FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=1'
-                mysqldb.query(sql, (err1, result1) => {
-                    if (err1) res.status(500).send(err1)
-
-                    console.log(result1[0])
-
-                    res.status(200).send({ dataDrone: result1 })
                 })
-            })
+            }
         })
     },
 
     editDroneAccessoriesProducts: (req, res) => {
         var sql = `SELECT * FROM products WHERE idproducts = ${req.params.id}`
-        mysqldb.query(sql, (err, res2) => {
-            if (err) return res.status(500)
+        mysqldb.query(sql, (err, res1) => {
+            if (err) res.status(500).send(err);
 
-            var data = req.body
+            if (res1.length) {
+                const path = '/products/images'
+                const upload = uploader(path, 'products').fields([{ name: 'image' }])
+                upload(req, res, err => {
+                    if (err) {
+                        return res
+                            .status(500)
+                            .send({ message: 'Upload Fail', error: err.message })
+                    }
+                    const { image } = req.files
+                    console.log('image', req.files)
+                    const imagePath = image ? path + '/' + image[0].filename : null
 
-            var sql = `UPDATE products SET ? WHERE idproducts = ${req.params.id}`
-            mysqldb.query(sql, data, (err, res2) => {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'There is an error on the server',
-                        error: err.message
+                    const data = JSON.parse(req.body.data)
+
+                    if (imagePath) {
+                        data.productimage = imagePath
+                    }
+
+                    var sql = `UPDATE products SET ? WHERE idproducts = ${req.params.id}`
+                    mysqldb.query(sql, data, (err, res2) => {
+                        if (err) {
+                            if (imagePath) {
+                                fs.unlinkSync(`./public${imagePath}`)
+                            }
+                            return res.status(500).json({
+                                message: 'There is an error on the server',
+                                error: err.message
+                            })
+                        }
+                        if (imagePath) {
+                            if (res1[0].productimage) {
+                                fs.unlinkSync(`./public${res1[0].productimage}`)
+                            }
+                        }
+                        sql = 'SELECT p.idproducts, p.productname, p.productimage, p.productprice, p.productstock, p.productdescription, pt.producttypes FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=2'
+                        mysqldb.query(sql, (err1, result1) => {
+                            if (err1) res.status(500).send(err1)
+
+                            console.log(result1[0])
+
+                            res.status(200).send({ dataDrone: result1 })
+                        })
                     })
-                }
-
-                sql = 'SELECT p.idproducts, p.productname, p.productprice, p.productstock, pt.producttypes FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=2'
-                mysqldb.query(sql, (err1, result1) => {
-                    if (err1) res.status(500).send(err1)
-
-                    console.log(result1[0])
-
-                    res.status(200).send({ dataDrone: result1 })
                 })
-            })
+            }
         })
     },
 
     editAccessoriesProducts: (req, res) => {
         var sql = `SELECT * FROM products WHERE idproducts = ${req.params.id}`
-        mysqldb.query(sql, (err, res2) => {
-            if (err) return res.status(500)
-            var data = req.body
-            console.log('1')
+        mysqldb.query(sql, (err, res1) => {
+            if (err) res.status(500).send(err);
 
-            var sql = `UPDATE products SET ? WHERE idproducts = ${req.params.id}`
-            console.log('2')
-            mysqldb.query(sql, data, (err, res2) => {
-                if (err) {
-                    return res.status(500).json({
-                        message: 'There is an error on the server',
-                        error: err.message
+            if (res1.length) {
+                const path = '/products/images'
+                const upload = uploader(path, 'products').fields([{ name: 'image' }])
+                upload(req, res, err => {
+                    if (err) {
+                        return res
+                            .status(500)
+                            .send({ message: 'Upload Fail', error: err.message })
+                    }
+                    const { image } = req.files
+                    console.log('image', req.files)
+                    const imagePath = image ? path + '/' + image[0].filename : null
+
+                    const data = JSON.parse(req.body.data)
+
+                    if (imagePath) {
+                        data.productimage = imagePath
+                    }
+
+                    var sql = `UPDATE products SET ? WHERE idproducts = ${req.params.id}`
+                    mysqldb.query(sql, data, (err, res2) => {
+                        if (err) {
+                            if (imagePath) {
+                                fs.unlinkSync(`./public${imagePath}`)
+                            }
+                            return res.status(500).json({
+                                message: 'There is an error on the server',
+                                error: err.message
+                            })
+                        }
+                        if (imagePath) {
+                            if (res1[0].productimage) {
+                                fs.unlinkSync(`./public${res1[0].productimage}`)
+                            }
+                        }
+                        sql = 'SELECT p.idproducts, p.productname, p.productimage, p.productprice, p.productstock, p.productdescription, pt.producttypes FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=3'
+                        mysqldb.query(sql, (err1, result1) => {
+                            if (err1) res.status(500).send(err1)
+
+                            console.log(result1[0])
+
+                            res.status(200).send({ dataDrone: result1 })
+                        })
                     })
-                }
-
-                sql = 'SELECT p.idproducts, p.productname, p.productprice, p.productstock, pt.producttypes FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=3'
-                mysqldb.query(sql, (err1, result1) => {
-                    if (err1) res.status(500).send(err1)
-
-                    console.log(result1[0])
-
-                    res.status(200).send({ dataDrone: result1 })
                 })
-            })
+            }
         })
     },
 

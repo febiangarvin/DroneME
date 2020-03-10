@@ -19,6 +19,9 @@ import AdminAddProducts from './pages/adminaddproducts';
 import AdminSales from './pages/adminsales';
 import AdminSalesDetail from './pages/adminsalesdetail';
 import AdminEdit from './pages/adminedit';
+import FlyaDrone from './pages/flyadrone';
+import BuildaDrone from './pages/buildadrone';
+import RepairaDrone from './pages/repairadrone';
 
 import { Switch, Route } from 'react-router-dom'
 import Axios from 'axios';
@@ -40,12 +43,20 @@ class App extends Component {
           </Route>
           <Route path={'/login'} exact component={Login} />
           <Route path={'/register'} exact component={Register} />
-          <Route path={'/about'} exact component={About} />
-          <Route path={'/reviews'} exact component={Reviews} />
-          <Route path={'/faq'} exact component={FAQ} />
+
           <Route path={'/droneproducts'} exact component={DroneProducts} />
           <Route path={'/droneaccessoriesproducts'} exact component={DroneAccessoriesProducts} />
           <Route path={'/accessoriesproducts'} exact component={AccessoriesProducts} />
+
+          <Route path={'/flyadrone'} exact component={FlyaDrone} />
+          <Route path={'/buildadrone'} exact component={BuildaDrone} />
+          <Route path={'/repairadrone'} exact component={RepairaDrone} />
+
+          <Route path={'/about'} exact component={About} />
+          <Route path={'/reviews'} exact component={Reviews} />
+          <Route path={'/faq'} exact component={FAQ} />
+
+
           <Route path={'/admindashboard'} exact component={AdminDashboard} />
           <Route path={'/admindroneproducts'} exact component={AdminDroneProducts} />
           <Route path={'/admindroneaccessoriesproducts'} exact component={AdminDroneAccessoriesProducts} />

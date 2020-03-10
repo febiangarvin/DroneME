@@ -52,6 +52,8 @@ const AdminDroneProducts = () => {
     const [editDataProduct, setEditDataProduct] = useState({
         idproducts: 0,
         productname: '',
+        productimage: null,
+        productimagename: '',
         productprice: '',
         productstock: '',
         productdescription: '',
@@ -62,7 +64,7 @@ const AdminDroneProducts = () => {
         setEditDataProduct({ ...editDataProduct, [name]: value })
     }
 
-    const { idproducts, productname, productprice, productstock, productdescription } = editDataProduct
+    const { idproducts, productname, productimage, productprice, productstock, productdescription } = editDataProduct
 
     const [editImage, setEditImage] = useState({
         imageEditFileName: 'Choose an image...',
@@ -73,10 +75,10 @@ const AdminDroneProducts = () => {
         console.log('e.target.files[0]', editImage);
         var file = e.target.files[0]
         if (file) {
-            setEditImage({ ...editImage, imageEditFileName: file.name, imageEditFile: file })
+            setEditDataProduct({ ...editDataProduct, productimagename: file.name, productimage: file })
         }
         else {
-            setEditImage({ ...editImage, imageEditFileName: 'Select Image', imageEditFile: undefined })
+            setEditDataProduct({ ...editDataProduct, productimagename: 'Select Image', productimage: undefined })
         }
     }
 
@@ -97,10 +99,9 @@ const AdminDroneProducts = () => {
     const renderModalEdit = () => {
         return (
             <Modal isOpen={modalEdit} toggle={toggleModal}>
-                <ModalHeader>Modal title</ModalHeader>
                 <ModalBody>
                     <input type="text" className="form-control input-type-primary" onChange={editProduct} name='productname' defaultValue={productname} />
-                    <input type="file" className="form-control input-type-primary" onChange={onEditImageFileChange} name='productimage' />
+                    <input type="file" className="form-control input-type-primary" style={{ padding: 2 }} onChange={onEditImageFileChange} name='productimage' />
                     <input type="number" className="form-control input-type-primary" onChange={editProduct} name='productprice' defaultValue={productprice} />
                     <input type="number" className="form-control input-type-primary" onChange={editProduct} name='productstock' defaultValue={productstock} />
                     <input type="text" className="form-control input-type-primary" onChange={editProduct} name='productdescription' defaultValue={productdescription} />
@@ -118,12 +119,24 @@ const AdminDroneProducts = () => {
             idproducts,
             productname,
             productprice,
+            productimage,
             productstock,
             productdescription
         }
+        var formdata = new FormData()
+        var Headers = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+        formdata.append('image', productimage)
+        formdata.append('data', JSON.stringify(data))
+
         var id = data.idproducts
-        Axios.put(`${apiurl}/products/editdroneproducts/${id}`, data) // //menaruh hasil edit ke axios (db)
+
+        Axios.put(`${apiurl}/products/editdroneproducts/${id}`, formdata, Headers) // //menaruh hasil edit ke axios (db)
             .then((res) => { // //jika axios berhasil
+                console.log('res', res);
                 setDataProducts(res.data.dataDrone)
                 setEditModal({ ...modalEdit, modalEdit: false, indexEdit: -1 })
             }).catch((err) => {
@@ -147,11 +160,13 @@ const AdminDroneProducts = () => {
             color: '#ddd'
         }).then((res1) => {
             if (res1.value) {
-                Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                )
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'Your file has been deleted.',
+                    icon: 'success',
+                    background: '#21272C',
+                    color: '#ddd'
+                })
                     .then(() => {
                         Axios.delete(`${apiurl}/products/deleteproducts/${id}`)
                             .then(() => {
@@ -173,7 +188,6 @@ const AdminDroneProducts = () => {
             }
         })
     }
-
 
     // //============================== RENDER AKHIR ==========================================================// //
 

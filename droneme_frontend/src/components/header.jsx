@@ -60,9 +60,9 @@ const Header = (props) => {
                             Documentations
                                     </DropdownToggle>
                         <DropdownMenu right>
-                            <DropdownItem href='/droneproducts' className='dropdownHeader'> Flying a Drone</DropdownItem>
-                            <DropdownItem href='/droneproducts' className='dropdownHeader'> Building a Drone</DropdownItem>
-                            <DropdownItem href='/droneproducts' className='dropdownHeader'> Fixing a Drone</DropdownItem>
+                            <DropdownItem href='/flyadrone' className='dropdownHeader'> Flying a Drone</DropdownItem>
+                            <DropdownItem href='/buildadrone' className='dropdownHeader'> Assembling a Drone</DropdownItem>
+                            <DropdownItem href='/repairadrone' className='dropdownHeader'> Repairing a Drone</DropdownItem>
                         </DropdownMenu>
                     </UncontrolledDropdown>
 
@@ -90,9 +90,9 @@ const Header = (props) => {
                                         <FaUserSecret /> Welcome, {props.username}
                                     </DropdownToggle>
                                     <DropdownMenu right>
-                                        <DropdownItem href='/admindashboard' className='dropdownHeader'><FaRegEdit /> Manage Admin</DropdownItem>
-                                        <DropdownItem href='/manageproduct' className='dropdownHeader'><FaPlane /> Manage Product</DropdownItem>
-                                        <DropdownItem href='/managesales' className='dropdownHeader'><FaCashRegister /> Manage Sales</DropdownItem>
+                                        <DropdownItem href='/admindashboard' className='dropdownHeader'><FaRegEdit /> Dashboard</DropdownItem>
+                                        <DropdownItem href='/admindroneproducts' className='dropdownHeader'><FaPlane /> Manage Product</DropdownItem>
+                                        <DropdownItem href='/adminsales' className='dropdownHeader'><FaCashRegister /> Manage Sales</DropdownItem>
                                         <DropdownItem href={'/'} onClick={Logoutbtn} className='dropdownHeader'><FaSignOutAlt /> Logout </DropdownItem>
                                     </DropdownMenu>
                                 </UncontrolledDropdown>

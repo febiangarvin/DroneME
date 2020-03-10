@@ -9,10 +9,6 @@ class AdminSales extends Component {
 
                 <AdminSideLeft />
 
-                <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-                <link rel="stylesheet" type="text/css" href="css/style.css" />
-                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossOrigin="anonymous" />
-
                 <div className="main-content">
                     <div className="header row">
                         <div className="col-md-12">
@@ -41,7 +37,7 @@ class AdminSales extends Component {
                                             <td>Mark Balley</td>
                                             <td>Rp10.000.000</td>
                                             <td>
-                                                <a href="/adminsalesdetail" className="btn-small">Details</a>
+                                                <a href="/adminsalesdetail" className="btn-primary">Details</a>
                                             </td>
                                             <td>Paid</td>
                                             <td>
@@ -56,7 +52,7 @@ class AdminSales extends Component {
                                             <td>Mark Balley</td>
                                             <td>Rp10.000.000</td>
                                             <td>
-                                                <a href="/adminsalesdetail" className="btn-small">Details</a>
+                                                <a href="/adminsalesdetail" className="btn-primary">Details</a>
                                             </td>
                                             <td>Paid</td>
                                             <td>
@@ -71,7 +67,7 @@ class AdminSales extends Component {
                                             <td>Mark Balley</td>
                                             <td>Rp10.000.000</td>
                                             <td>
-                                                <a href="/adminsalesdetail" className="btn-small">Details</a>
+                                                <a href="/adminsalesdetail" className="btn-primary">Details</a>
                                             </td>
                                             <td>Paid</td>
                                             <td>
@@ -86,7 +82,7 @@ class AdminSales extends Component {
                                             <td>Mark Balley</td>
                                             <td>Rp10.000.000</td>
                                             <td>
-                                                <a href="/adminsalesdetail" className="btn-small">Details</a>
+                                                <a href="/adminsalesdetail" className="btn-primary">Details</a>
                                             </td>
                                             <td>Waiting for Payment</td>
                                             <td>
@@ -101,7 +97,7 @@ class AdminSales extends Component {
                                             <td>Mark Balley</td>
                                             <td>Rp10.000.000</td>
                                             <td>
-                                                <a href="/adminsalesdetail" className="btn-small">Details</a>
+                                                <a href="/adminsalesdetail" className="btn-primary">Details</a>
                                             </td>
                                             <td>Waiting for Payment</td>
                                             <td>
