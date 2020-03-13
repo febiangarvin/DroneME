@@ -61,13 +61,13 @@ const Header = (props) => {
                                     </DropdownToggle>
                         <DropdownMenu right>
                             <DropdownItem href='/flyadrone' className='dropdownHeader'> Flying a Drone</DropdownItem>
-                            <DropdownItem href='/buildadrone' className='dropdownHeader'> Assembling a Drone</DropdownItem>
+                            <DropdownItem href='/assembleadrone' className='dropdownHeader'> Assembling a Drone</DropdownItem>
                             <DropdownItem href='/repairadrone' className='dropdownHeader'> Repairing a Drone</DropdownItem>
                         </DropdownMenu>
                     </UncontrolledDropdown>
 
                     <NavItem>
-                        <NavLink href={'/'} className='mr-4 linkHeader'>Create a Drone!</NavLink>
+                        <NavLink href={'/customdronebodyproducts'} className='mr-4 linkHeader'>Create a Drone!</NavLink>
                     </NavItem>
                 </Nav>
 

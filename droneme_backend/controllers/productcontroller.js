@@ -77,7 +77,39 @@ module.exports = {
         var sql = 'SELECT * FROM producttypes'
         mysqldb.query(sql, (err, res1) => {
             if (err) return res.status(500).send(err)
-            return res.status(200).send(res1)
+            return res.status(200).send({ result: res1 })
+        })
+    },
+
+    getDroneBodyProducts: (req, res) => {
+        var sql = `SELECT p.idproducts, p.productname, p.productimage, p.productprice, p.productstock, pt.producttypes, p.productdescription FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=2 AND productname LIKE '%body%'`
+        mysqldb.query(sql, (err, res1) => {
+            if (err) return res.status(500).send(err)
+            return res.status(200).send({ result: res1 })
+        })
+    },
+
+    getDroneWingProducts: (req, res) => {
+        var sql = `SELECT p.idproducts, p.productname, p.productimage, p.productprice, p.productstock, pt.producttypes, p.productdescription FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=2 AND productname LIKE '%wing%'`
+        mysqldb.query(sql, (err, res1) => {
+            if (err) return res.status(500).send(err)
+            return res.status(200).send({ result: res1 })
+        })
+    },
+
+    getDroneMotorProducts: (req, res) => {
+        var sql = `SELECT p.idproducts, p.productname, p.productimage, p.productprice, p.productstock, pt.producttypes, p.productdescription FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=2 AND productname LIKE '%motor%'`
+        mysqldb.query(sql, (err, res1) => {
+            if (err) return res.status(500).send(err)
+            return res.status(200).send({ result: res1 })
+        })
+    },
+
+    getDroneBatteryProducts: (req, res) => {
+        var sql = `SELECT p.idproducts, p.productname, p.productimage, p.productprice, p.productstock, pt.producttypes, p.productdescription FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=2 AND productname LIKE '%battery%'`
+        mysqldb.query(sql, (err, res1) => {
+            if (err) return res.status(500).send(err)
+            return res.status(200).send({ result: res1 })
         })
     },
 

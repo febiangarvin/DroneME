@@ -20,6 +20,7 @@ class Login extends Component {
         if (this.props.AuthLog) {
             return <Redirect to={'/'} />
         }
+
         return (
             <div>
                 <div className="login">

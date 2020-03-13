@@ -35,7 +35,7 @@ const AdminDroneAccessoriesProducts = () => {
             return (
                 <tr key={index}>
                     <td>{val.productname}</td>
-                    <td>{val.productprice}</td>
+                    <td>Rp.{val.productprice}</td>
                     <td>{val.productstock}</td>
                     <td>{val.producttypes}</td>
                     <td>

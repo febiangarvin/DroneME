@@ -3,7 +3,7 @@ import Header from '../components/header'
 import Jumbotron4 from '../components/jumbotron4';
 import Footer from '../components/footer';
 
-const BuildaDrone = () => {
+const AssembleaDrone = () => {
     return (
         <div>
             <Header />
@@ -68,4 +68,4 @@ const BuildaDrone = () => {
     )
 }
 
-export default BuildaDrone;
+export default AssembleaDrone;

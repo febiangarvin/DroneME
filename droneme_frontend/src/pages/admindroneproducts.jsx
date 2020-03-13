@@ -139,7 +139,8 @@ const AdminDroneProducts = () => {
                 console.log('res', res);
                 setDataProducts(res.data.dataDrone)
                 setEditModal({ ...modalEdit, modalEdit: false, indexEdit: -1 })
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 console.log(err)
             })
     }

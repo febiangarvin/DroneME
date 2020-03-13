@@ -9,7 +9,7 @@ const INITIAL_STATE = {
     login: false,
     register: false,
     error: '',
-    addproduct: false
+    addproduct: false,
 }
 
 export default (state = INITIAL_STATE, action) => {

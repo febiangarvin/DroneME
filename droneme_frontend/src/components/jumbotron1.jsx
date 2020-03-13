@@ -10,9 +10,10 @@ class Jumbotron1 extends Component {
                     <div className="heading1">
                         <h1>Realize Your Own Creativity!</h1>
                         <p>Build and customize your own drone, <br /> with the support of a variety of drone parts and assembled by the best mechanics.</p>
-                        <button className="btn-big" href='/'>
+                        <br />
+                        <a className="btn-big" href='/customdronebodyproducts'>
                             BUILD NOW &nbsp;<FaPaperPlane />
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>

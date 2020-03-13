@@ -3,44 +3,23 @@ import Header from '../components/header'
 import Footer from '../components/footer';
 import Axios from 'axios'
 import { apiurl, apiImage } from '../support/apiurl'
-import { useDispatch } from 'react-redux'
-import { usersAddCart } from '../redux/actions'
-import Swal from 'sweetalert2'
 
-const AccessoriesProducts = () => {
+const CustomDroneMotorProducts = () => {
 
-    const [dataAccessories, setDataAccessories] = useState([])
-
-    // //set dipatch(pengganti connect, pada class component)
-    const dispatch = useDispatch()
+    const [dataDroneMotor, setdataDroneMotor] = useState([])
 
     useEffect(() => {
-        Axios.get(`${apiurl}/products/getaccessoriesproducts`)
+        Axios.get(`${apiurl}/products/getdronemotorproducts`)
             .then((res) => {
-                setDataAccessories(res.data.result)
+                setdataDroneMotor(res.data.result)
             })
             .catch((err) => {
                 console.log(err)
             })
     }, [])
 
-    const addProduct = (dataProduct) => {
-        dispatch(usersAddCart(dataProduct))
-        Swal.fire({
-            title: 'Product Added!',
-            text: `Check your cart to view the added item`,
-            icon: 'success',
-            background: '#21272C',
-            color: '#ddd'
-        })
-    }
-
     const renderProduk = () => {
-        return dataAccessories.map((val, index) => {
-            const detailProduct = {
-                idproducts: val.idproducts,
-                productprice: val.productprice,
-            }
+        return dataDroneMotor.map((val, index) => {
             return (
                 <div class="card" key={index} style={{ position: 'relative' }}>
                     <div style={{ height: '200px', width: '100%' }}>
@@ -59,17 +38,14 @@ const AccessoriesProducts = () => {
                             <p style={{ fontFamily: "Montserrat, Overpass, Trebuchet MS, Arial, sans-serif" }}>
                                 {val.productdescription}
                             </p>
-                            <p style={{ fontFamily: "Montserrat, Overpass, Trebuchet MS, Arial, sans-serif" }}>
-                                We have, <h4>{val.productstock}</h4> items left in store
-                            </p>
                         </center>
                         <br />
                         <center>
                             <h5 className="productPrice">Rp {val.productprice}</h5>
                             <br />
-                            <div onClick={() => addProduct(detailProduct)} className="btn-medium mt-1 mb-1" style={{ textAlign: 'center', paddingRight: '10px', paddingBottom: '10px', marginBottom: '5px' }}>
-                                Add This Product
-                            </div>
+                            <a href='/Product' className="btn-small mt-1 mb-1" style={{ textAlign: 'center', paddingRight: '10px', paddingBottom: '5px', marginBottom: '5px' }}>
+                                Choose This Motor
+                            </a>
                         </center>
                         <br />
                     </div>
@@ -82,14 +58,20 @@ const AccessoriesProducts = () => {
         <div>
             <Header />
 
-            <h2 className="productHeader">Accessories</h2>
+            <h2 className="productHeader">Drone Motors</h2>
             <div className='productList'>
                 {renderProduk()}
             </div>
-
+            <br />
+            <div style={{ textAlign: 'center', paddingBottom: '15px', marginBottom: '35px' }}>
+                <a href='/customdronebatteryproducts' className="btn-medium mt-1 mb-1" style={{ textAlign: 'center', paddingRight: '15px', paddingBottom: '15px', marginBottom: '25px' }}>
+                    Next Item
+                </a>
+            </div>
+            <br />
             <Footer />
         </div>
     );
 }
 
-export default AccessoriesProducts;
+export default CustomDroneMotorProducts;

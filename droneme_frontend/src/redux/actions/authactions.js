@@ -55,13 +55,32 @@ export const KeepLogin = () => {
             .then((res) => {
                 console.log(res.data.result[0]);
                 if (res.data.result.length) {
-                    dispatch({ type: 'LOGIN_SUCCESS', payload: res.data.result[0] })
+                    dispatch({ type: 'LOGIN_SUCCESS', payload: res.data.result[0] }) // //payload untuk kirim data ke reducers
                 } else {
                     dispatch({ type: 'LOGIN_ERROR', payload: 'Password Incorrect' })
                 }
             }).catch((err) => {
                 console.log(err)
                 // dispatch({ type: 'LOGIN_ERROR', payload: 'server error' })
+            })
+            .finally(() => {
+                dispatch({ type: 'LOGIN_ERROR' })
+            })
+    }
+}
+
+// //function untuk mendapatkan data cart user yang login
+export const UserGetCart = () => {
+    return (dispatch) => {
+        // dispatch({ type: 'GET_CART_LOADING' })
+        const idusers = localStorage.getItem('droneme')
+        Axios.get(`${apiurl}/users/usergetcart/${idusers}`)
+            .then((res) => {
+                dispatch({ type: 'GET_CART_LENGTH_SUCCESS', payload: res.data.result.length })
+                dispatch({ type: 'GET_CART_SUCCESS', payload: res.data.result })
+            })
+            .catch((err) => {
+                console.log(err)
             })
     }
 }
@@ -90,8 +109,6 @@ export const RegisterAction = ({ username, email, password, confirmpassword }) =
     }
 }
 
-export const AddProductSuccess = () => {
-    return {
-        type: 'ADD_PRODUCT_SUCCESS'
-    }
-}
+// export const AddProductSuccess = () => {
+//     return {type: 'ADD_PRODUCT_SUCCESS'}
+// }

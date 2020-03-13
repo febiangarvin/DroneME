@@ -16,7 +16,7 @@ class Jumbotron4 extends Component {
                         <a className="btn-big" href='/flyadrone'>
                             Flying a Drone &nbsp;<GiFalconMoon />
                         </a>
-                        <a className="btn-big" href='/buildadrone'>
+                        <a className="btn-big" href='/assembleadrone'>
                             Assembling a Drone &nbsp;<FaTools />
                         </a>
                         <a className="btn-big" href='/repairadrone'>
