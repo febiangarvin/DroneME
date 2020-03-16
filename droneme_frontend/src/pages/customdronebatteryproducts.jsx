@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Header from '../components/header'
 import Footer from '../components/footer';
 import Axios from 'axios'
 import { apiurl, apiImage } from '../support/apiurl'
 
 const CustomDroneBatteryProducts = () => {
+
+    // //============================== FUNCTION READ =========================================================// //
 
     const [dataDroneBattery, setdataDroneBattery] = useState([])
 
@@ -35,8 +38,11 @@ const CustomDroneBatteryProducts = () => {
                             {val.productname}
                         </h4>
                         <center>
+                            <br />
+                            <button className='btn btn-success mr-1 ml-1' onClick={() => onModalOpen(index)}>Product Details</button>
+                            <br /><br />
                             <p style={{ fontFamily: "Montserrat, Overpass, Trebuchet MS, Arial, sans-serif" }}>
-                                {val.productdescription}
+                                We have, <h4>{val.productstock}</h4> items left in store
                             </p>
                         </center>
                         <br />
@@ -54,10 +60,71 @@ const CustomDroneBatteryProducts = () => {
         })
     }
 
+    // //============================== FUNCTION ADD CUSTOM PRODUCT ==================================================// //
+
+    // const addProduct = (dataProduct) => {
+    //     dispatch(usersAddCart(dataProduct))
+    //     Swal.fire({
+    //         title: 'Product Added!',
+    //         text: `Check your cart to view the added item`,
+    //         icon: 'success',
+    //         background: '#21272C',
+    //         color: '#ddd'
+    //     })
+    // }
+
+    // //============================== FUNCTION OPEN MODAL PRODUCT DESCRIPTION ===============================// //
+
+    const [productDescription, setProductDescription] = useState({
+        idproducts: 0,
+        productname: '',
+        productdescription: '',
+    })
+
+    const { idproducts, productname, productdescription } = productDescription
+
+    const [descriptionModal, setDescriptionModal] = useState({
+        modalDescription: false,
+        indexDescription: -1
+    })
+
+    const { indexDescription, modalDescription } = descriptionModal
+
+    const onModalOpen = (index) => {
+        setProductDescription(dataDroneBattery[index])
+        setDescriptionModal({ ...descriptionModal, modalDescription: true, indexDescription: index });
+    }
+
+    const toggleModal = () => setDescriptionModal({ ...descriptionModal, modalDescription: !modalDescription })
+
+    const renderModalDescription = () => {
+        return dataDroneBattery.map((val, index) => {
+            return (
+                <Modal isOpen={modalDescription} fade={false} key={index} toggle={toggleModal}>
+                    <ModalHeader>
+                        <center>
+                            {productname} Details:
+                </center>
+                    </ModalHeader>
+                    <ModalBody>
+                        <center>
+                            {productdescription}
+                        </center>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="secondary" onClick={toggleModal}>Close</Button>
+                    </ModalFooter>
+                </Modal>
+            )
+        })
+    }
+
+    // //============================== RENDER AKHIR ==========================================================// //
+
     return (
         <div>
             <Header />
-
+            {renderModalDescription()}
             <h2 className="productHeader">Drone Batteries</h2>
             <div className='productList'>
                 {renderProduk()}

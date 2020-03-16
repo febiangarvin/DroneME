@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Header from '../components/header'
 import Footer from '../components/footer';
 import Axios from 'axios'
@@ -8,6 +9,8 @@ import { usersAddCart } from '../redux/actions'
 import Swal from 'sweetalert2'
 
 const AccessoriesProducts = () => {
+
+    // //============================== FUNCTION READ =========================================================// //
 
     const [dataAccessories, setDataAccessories] = useState([])
 
@@ -23,17 +26,6 @@ const AccessoriesProducts = () => {
                 console.log(err)
             })
     }, [])
-
-    const addProduct = (dataProduct) => {
-        dispatch(usersAddCart(dataProduct))
-        Swal.fire({
-            title: 'Product Added!',
-            text: `Check your cart to view the added item`,
-            icon: 'success',
-            background: '#21272C',
-            color: '#ddd'
-        })
-    }
 
     const renderProduk = () => {
         return dataAccessories.map((val, index) => {
@@ -56,9 +48,9 @@ const AccessoriesProducts = () => {
                             {val.productname}
                         </h4>
                         <center>
-                            <p style={{ fontFamily: "Montserrat, Overpass, Trebuchet MS, Arial, sans-serif" }}>
-                                {val.productdescription}
-                            </p>
+                            <br />
+                            <button className='btn btn-success mr-1 ml-1' onClick={() => onModalOpen(index)}>Product Details</button>
+                            <br /><br />
                             <p style={{ fontFamily: "Montserrat, Overpass, Trebuchet MS, Arial, sans-serif" }}>
                                 We have, <h4>{val.productstock}</h4> items left in store
                             </p>
@@ -78,10 +70,71 @@ const AccessoriesProducts = () => {
         })
     }
 
+    // //============================== FUNCTION ADD PRODUCT ==================================================// //
+
+    const addProduct = (dataProduct) => {
+        dispatch(usersAddCart(dataProduct))
+        Swal.fire({
+            title: 'Product Added!',
+            text: `Check your cart to view the added item`,
+            icon: 'success',
+            background: '#21272C',
+            color: '#ddd'
+        })
+    }
+
+    // //============================== FUNCTION OPEN MODAL PRODUCT DESCRIPTION ===============================// //
+
+    const [productDescription, setProductDescription] = useState({
+        idproducts: 0,
+        productname: '',
+        productdescription: '',
+    })
+
+    const { idproducts, productname, productdescription } = productDescription
+
+    const [descriptionModal, setDescriptionModal] = useState({
+        modalDescription: false,
+        indexDescription: -1
+    })
+
+    const { indexDescription, modalDescription } = descriptionModal
+
+    const onModalOpen = (index) => {
+        setProductDescription(dataAccessories[index])
+        setDescriptionModal({ ...descriptionModal, modalDescription: true, indexDescription: index });
+    }
+
+    const toggleModal = () => setDescriptionModal({ ...descriptionModal, modalDescription: !modalDescription })
+
+    const renderModalDescription = () => {
+        return dataAccessories.map((val, index) => {
+            return (
+                <Modal isOpen={modalDescription} fade={false} key={index} toggle={toggleModal}>
+                    <ModalHeader>
+                        <center>
+                            {productname} Details:
+                    </center>
+                    </ModalHeader>
+                    <ModalBody>
+                        <center>
+                            {productdescription}
+                        </center>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="secondary" onClick={toggleModal}>Close</Button>
+                    </ModalFooter>
+                </Modal>
+            )
+        })
+    }
+
+    // //============================== RENDER AKHIR ==========================================================// //
+
     return (
         <div>
             <Header />
-
+            {renderModalDescription()}
             <h2 className="productHeader">Accessories</h2>
             <div className='productList'>
                 {renderProduk()}

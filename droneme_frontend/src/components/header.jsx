@@ -104,7 +104,7 @@ const Header = (props) => {
                                             <FaUserAstronaut /> Hello, {props.username}
                                         </DropdownToggle>
                                         <DropdownMenu right>
-                                            <DropdownItem href='/cart' className='dropdownHeader'><FaShoppingCart /> My Orders</DropdownItem>
+                                            <DropdownItem href='/cart' className='dropdownHeader'><FaShoppingCart /> My Cart</DropdownItem>
                                             <DropdownItem href='/resetpassword' className='dropdownHeader'><FaUserEdit /> Edit Profile</DropdownItem>
                                             <DropdownItem href={'/'} onClick={Logoutbtn} className='dropdownHeader'><FaSignOutAlt /> Logout </DropdownItem>
                                         </DropdownMenu>

@@ -35,8 +35,8 @@ const AdminAccessoriesProducts = () => {
             return (
                 <tr key={index}>
                     <td>{val.productname}</td>
-                    <td>{val.productprice}</td>
-                    <td>{val.productstock}</td>
+                    <td>Rp {val.productprice}</td>
+                    <td>{val.productstock} items</td>
                     <td>{val.producttypes}</td>
                     <td>
                         <button className='btn btn-success mr-1 ml-1' onClick={() => onModalOpen(index)}>EDIT</button>

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/header'
-import Footer from '../components/footer';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import NotFound from '../pages/notfound'
 import Axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
@@ -35,7 +33,7 @@ const Cart = () => {
         })
     }
 
-    // //============================== FUNCTION DELETE CART===================================================// //
+    // //============================== FUNCTION DELETE CART ===================================================// //
 
     const onDeleteDataCart = (index) => {
         var id = datacart[index].idtransactions
