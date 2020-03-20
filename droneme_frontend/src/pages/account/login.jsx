@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import LoginComp from '../components/support/img/icons/logincomp.png'
-import Logo from '../components/support/img/icons/logo.png'
-import { LoginThunk } from '../redux/actions'
+import LoginComp from '../../components/support/img/icons/logincomp.png'
+import Logo from '../../components/support/img/icons/logo.png'
+import { LoginThunk } from '../../redux/actions'
 import { connect } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
 

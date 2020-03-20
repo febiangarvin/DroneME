@@ -2,19 +2,19 @@ const { mysqldb } = require('./../connections')
 
 module.exports = {
 
-    // //============================== Add Cart ============================================================// //
+    // //============================== CREATE FUNCTION =======================================================// //
 
     userAddCart: (req, res) => {
         // //get data from frontend
+        console.log(req.body)
         const data = {
-            idproducts: req.body.dataProduct.idproducts,
+            idproducts: req.body.idproducts,
             idusers: parseInt(req.body.idusers),
-            quantity: 1,
-            totalprice: parseInt(req.body.dataProduct.productprice) * 1,
+            quantity: req.body.quantity,
             paymentstatus: 'cart'
         }
         // //set sql fro database
-        let sql = 'INSERT INTO transactions SET ?'
+        let sql = 'INSERT INTO transactiondetails SET ?'
 
         // //database actions
         mysqldb.query(sql, data, (err, res1) => {
@@ -24,22 +24,19 @@ module.exports = {
     },
 
     userAddCheckout: (req, res) => {
-        const data = {
-            idproducts: req.body.dataProduct.idproducts,
-            idusers: parseInt(req.body.idusers),
-            quantity: req.body.dataProduct.quantity,
-            totalprice: parseInt(req.body.dataProduct.productprice) * parseInt(req.body.dataProduct.quantity),
-            paymentstatus: 'checkout',
-            address: req.body.dataProduct.address,
-            province: req.body.dataProduct.province,
-            postalcode: parseInt(req.body.dataProduct.postalcode),
-            receiver: req.body.dataProduct.receiver,
-            iduniquetransactions: parseInt(Math.random() * 100)
-        }
 
-        let sql = 'INSERT INTO transactions SET ?'
+        const quantities = []
 
-        mysqldb.query(sql, data, (err, res1) => {
+        const newData = []
+
+        req.body.dataProduct.forEach(val => { // //melakukan push quantity product ke array baru (quantities)
+            quantities.push(val.quantity)
+            newData.push(val.idproducts)
+        });
+
+        let sql = `UPDATE transactiondetails SET ? WHERE idproducts = ${newData} idusers = ${id} AND paymentstatus = 'cart'`
+
+        mysqldb.query(sql, quantities, (err, res1) => {
             if (err) return res.status(500).send(err)
             return res.status(200).send({ result: res1.insertId })
         })
@@ -59,14 +56,14 @@ module.exports = {
             const { image } = req.files
             const imagePath = image ? path + '/' + image[0].filename : null
 
-            const data = JSON.parse(req.body.products)
+            // const data = JSON.parse(req.body.products)
             data.productimage = imagePath
 
             const data = {
                 idproducts: req.body.dataProduct.idproducts,
                 idusers: parseInt(req.body.idusers),
                 quantity: req.body.dataProduct.quantity,
-                totalprice: parseInt(req.body.dataProduct.totalprice),
+                price: parseInt(req.body.dataProduct.price),
                 paymentstatus: 'On Process',
                 address: req.body.dataProduct.address,
                 province: req.body.dataProduct.province,
@@ -84,22 +81,23 @@ module.exports = {
         })
     },
 
-    // //============================== Read Users ============================================================// //
+    // //============================== READ FUNCTION =========================================================// //
 
-    getUsers: (req, res) => {
-        var sql = 'SELECT u.username, u.email, u.verification FROM users u WHERE u.idroles=1;'
+    userGetCart: (req, res) => {
+        // //get data from frontend
+        const { id } = req.params
+        // //set SQL for database
+        let sql = `SELECT td.*, p.productname, p.productprice FROM transactiondetails td JOIN products p ON p.idproducts = td.idproducts WHERE td.idusers = ${id} AND td.paymentstatus='cart'`
+        // //database actions
         mysqldb.query(sql, (err, res1) => {
             if (err) return res.status(500).send(err)
             return res.status(200).send({ result: res1 })
         })
     },
 
-    userGetCart: (req, res) => {
-        // //get data from frontend
+    userGetReceiver: (req, res) => {
         const { id } = req.params
-        // //set SQL for database
-        let sql = `SELECT t.*, p.productname, p.productprice FROM transactions t JOIN products p ON p.idproducts = t.idproducts WHERE t.idusers = ${id} AND t.paymentstatus='cart'`
-        // //database actions
+        let sql = `SELECT username, address, province, postalcode FROM users WHERE idusers = ${id}`
         mysqldb.query(sql, (err, res1) => {
             if (err) return res.status(500).send(err)
             return res.status(200).send({ result: res1 })
@@ -110,7 +108,7 @@ module.exports = {
         // //get data from frontend
         const { id } = req.params
         // //set SQL for database
-        let sql = `SELECT t.*, p.productname, p.productprice FROM transactions t JOIN products p ON p.idproducts = t.idproducts WHERE t.idusers = ${id} AND t.paymentstatus='checkout'`
+        let sql = `SELECT td.*, p.productname, p.productprice FROM transactiondetails td JOIN products p ON p.idproducts = td.idproducts WHERE td.idusers = ${id} AND td.paymentstatus='checkout'`
         // //database actions
         mysqldb.query(sql, (err, res1) => {
             if (err) return res.status(500).send(err)
@@ -122,7 +120,7 @@ module.exports = {
         // //get data from frontend
         const { id } = req.params
         // //set SQL for database
-        let sql = `SELECT t.*, p.productname, p.productprice FROM transactions t JOIN products p ON p.idproducts = t.idproducts WHERE t.idusers = ${id} AND t.paymentstatus='On Process' AND t.paymentstatus='Delivered'`
+        let sql = `SELECT td.*, p.productname, p.productprice FROM transactiondetails td JOIN products p ON p.idproducts = td.idproducts WHERE td.idusers = ${id} AND td.paymentstatus='On Process' AND td.paymentstatus='Delivered'`
         // //database actions
         mysqldb.query(sql, (err, res1) => {
             if (err) return res.status(500).send(err)
@@ -130,10 +128,10 @@ module.exports = {
         })
     },
 
-    // //============================== Delete Cart ============================================================// //
+    // //============================== DELETE FUNCTION =======================================================// //
 
     userDeleteCart: (req, res) => {
-        let sql = `DELETE FROM transactions WHERE idtransactions = ${req.params.id}`
+        let sql = `DELETE FROM transactiondetails WHERE idtransactiondetails = ${req.params.id}`
         mysqldb.query(sql, (err, res1) => {
             if (err) return res.status(500).send(err)
             return res.status(200).send({ result: res1 })
@@ -149,7 +147,5 @@ module.exports = {
     },
 
     // //============================== Post Cart To Checkout ==================================================// //
-
-
 
 }

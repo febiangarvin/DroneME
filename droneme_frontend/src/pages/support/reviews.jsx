@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import Header from '../components/header'
-import Footer from '../components/footer';
-import Alli from '../components/support/img/alli.png'
-import Kane from '../components/support/img/kane.png'
-import Hugo from '../components/support/img/hugo.png'
-import Son from '../components/support/img/son.png'
+import Header from '../../components/header'
+import Footer from '../../components/footer';
+import Alli from '../../components/support/img/alli.png'
+import Kane from '../../components/support/img/kane.png'
+import Hugo from '../../components/support/img/hugo.png'
+import Son from '../../components/support/img/son.png'
 
 class Reviews extends Component {
     state = {}

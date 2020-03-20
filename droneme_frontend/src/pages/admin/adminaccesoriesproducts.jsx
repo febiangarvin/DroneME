@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import AdminSideLeft from '../components/adminsideleft';
-import NotFound from '../pages/notfound'
+import AdminSideLeft from '../../components/adminsideleft';
+import NotFound from '../support/notfound'
 import Axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
-import { apiurl } from '../support/apiurl'
+import { apiurl } from '../../support/apiurl'
 import Swal from 'sweetalert2'
+import { Link } from 'react-router-dom'
 
 const AdminAccessoriesProducts = () => {
 
@@ -19,16 +20,30 @@ const AdminAccessoriesProducts = () => {
     })
     const dispatch = useDispatch()
     const [dataProducts, setDataProducts] = useState([])
+    const [pager, setPager] = useState({})
+    const [page, setPage] = useState(1)
 
     useEffect(() => {
-        Axios.get(`${apiurl}/products/getaccessoriesproducts`)
+        Axios.get(`${apiurl}/products/getaccessoriesproducts/${page}`)
             .then((res) => {
-                setDataProducts(res.data.result)
+                setDataProducts(res.data.pageOfData)
+                setPager(res.data.pager)
             })
             .catch((err) => {
                 console.log(err)
             })
     }, [])
+
+    useEffect(() => {
+        Axios.get(`${apiurl}/products/getaccessoriesproducts/${page}`)
+            .then((res) => {
+                setDataProducts(res.data.pageOfData)
+                setPager(res.data.pager)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [page])
 
     const renderProducts = () => {
         return dataProducts.map((val, index) => {
@@ -238,6 +253,29 @@ const AdminAccessoriesProducts = () => {
                                     {renderProducts()}
                                 </tbody>
                             </table>
+
+                            {pager.pages && pager.pages.length &&
+                                <ul className="pagination">
+                                    <li className={`page-item first-item ${pager.currentPage === 1 ? 'disabled' : ''}`}>
+                                        <Link to={{ search: `?page=1` }} className="page-link" onClick={() => setPage(pager.startPage)}>First</Link>
+                                    </li>
+                                    <li className={`page-item previous-item ${pager.currentPage === 1 ? 'disabled' : ''}`}>
+                                        <Link to={{ search: `?page=${pager.currentPage - 1}` }} className="page-link" onClick={() => setPage(pager.currentPage - 1)}>Previous</Link>
+                                    </li>
+                                    {pager.pages.map(page =>
+                                        <li key={page} className={`page-item number-item ${pager.currentPage === page ? 'active' : ''}`}>
+                                            <Link to={{ search: `?page=${page}` }} className="page-link" onClick={() => setPage(page)}>{page}</Link>
+                                        </li>
+                                    )}
+                                    <li className={`page-item next-item ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`}>
+                                        <Link to={{ search: `?page=${pager.currentPage + 1}` }} className="page-link" onClick={() => setPage(pager.currentPage + 1)}>Next</Link>
+                                    </li>
+                                    <li className={`page-item last-item ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`}>
+                                        <Link to={{ search: `?page=${pager.totalPages}` }} className="page-link" onClick={() => setPage(pager.totalPages)}>Last</Link>
+                                    </li>
+                                </ul>
+                            }
+
                         </div>
                         <br />
                         <div className="form-action">

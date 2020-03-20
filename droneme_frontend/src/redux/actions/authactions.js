@@ -85,11 +85,11 @@ export const UserGetCart = () => {
     }
 }
 
-export const RegisterAction = ({ username, email, password, confirmpassword }) => {
+export const RegisterAction = ({ username, email, password, confirmpassword, address, province, postalcode }) => {
     return (dispatch) => {
         dispatch({ type: 'LOGIN_LOADING' })
         Axios.post(apiurl + '/auth/register', {
-            username, email, password, confirmpassword
+            username, email, password, confirmpassword, address, province, postalcode
         }).then((res) => {
             console.log(res)
             if (res.data.status === 'error') {

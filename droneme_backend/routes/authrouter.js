@@ -5,9 +5,14 @@ const { authcontroller } = require('../controllers')
 const router = express.Router()
 
 router.post('/register', authcontroller.register)
+
+router.get('/changeencrypt/:password', authcontroller.hashpassword)
 router.get('/login', authcontroller.login)
 router.get('/keeplogin/:id', authcontroller.keeplogin)
-router.get('/changeencrypt/:password', authcontroller.hashpassword)
+router.get('/getusers', authcontroller.getUsers)
+
+router.delete('/deleteuser/:id', authcontroller.deleteUser)
+
 // router.get('/authlog/:id', authcontroller.Authlogin)
 // router.get('/authlog', authcontroller.Authlogin)
 // router.get('/verified', auth, authcontroller.verifiedemail)

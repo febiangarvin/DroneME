@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import AdminSideLeft from '../components/adminsideleft';
+import AdminSideLeft from '../../components/adminsideleft';
+import NotFound from '../support/notfound'
 
 class AdminSales extends Component {
     state = {}

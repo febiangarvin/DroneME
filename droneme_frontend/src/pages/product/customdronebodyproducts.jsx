@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import Header from '../components/header'
-import Footer from '../components/footer';
+import Header from '../../components/header'
+import Footer from '../../components/footer';
 import Axios from 'axios'
-import { apiurl, apiImage } from '../support/apiurl'
+import { apiurl, apiImage } from '../../support/apiurl'
 
 const CustomDroneBodyProducts = () => {
 

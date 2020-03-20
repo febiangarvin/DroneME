@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import AdminSideLeft from '../components/adminsideleft';
+import AdminSideLeft from '../../components/adminsideleft';
 import Axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
-import { apiurl } from '../support/apiurl'
+import { apiurl } from '../../support/apiurl'
 import { Redirect } from 'react-router-dom';
-import NotFound from '../pages/notfound'
+import NotFound from '../support/notfound'
 
 const AdminAddProducts = () => {
 

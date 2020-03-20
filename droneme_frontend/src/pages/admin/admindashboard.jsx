@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import AdminSideLeft from '../components/adminsideleft';
-import NotFound from '../pages/notfound'
+import AdminSideLeft from '../../components/adminsideleft';
+import NotFound from '../support/notfound'
 import Axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
-import { apiurl } from '../support/apiurl'
+import { apiurl } from '../../support/apiurl'
 
 const AdminDashboard = () => {
 
-    // //============================== FUNCTION READ Users =================================================// //
+    // //============================== FUNCTION READ USERS ===================================================// //
 
     const redux = useSelector((state) => {
         return {
@@ -19,7 +19,7 @@ const AdminDashboard = () => {
     const [dataUsers, setDataUsers] = useState([])
 
     useEffect(() => {
-        Axios.get(`${apiurl}/users/getusers`)
+        Axios.get(`${apiurl}/auth/getusers`)
             .then((res) => {
                 setDataUsers(res.data.result)
             })

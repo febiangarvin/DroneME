@@ -42,7 +42,7 @@ class AdminSideLeft extends Component {
                             </div>
 
                             <div className="item-menu">
-                                <a href="/admincustomers">
+                                <a href="/adminmanageusers">
                                     <p className="icon-item-menu">
                                         <i className="fas fa-user-astronaut"></i>
                                     </p>

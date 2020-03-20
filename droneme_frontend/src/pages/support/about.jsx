@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Header from '../components/header'
-import Footer from '../components/footer';
-import Luka from '../components/support/img/luka.png'
-import Gareth from '../components/support/img/bale.png'
-import Rafael from '../components/support/img/rafael.png'
+import Header from '../../components/header'
+import Footer from '../../components/footer';
+import Luka from '../../components/support/img/luka.png'
+import Gareth from '../../components/support/img/bale.png'
+import Rafael from '../../components/support/img/rafael.png'
 
 class About extends Component {
     state = {}

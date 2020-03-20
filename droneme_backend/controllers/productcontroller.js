@@ -1,10 +1,11 @@
 const { mysqldb } = require('./../connections')
 const { uploader } = require('./../helpers/uploader')
 const fs = require('fs')
+const paginate = require('jw-paginate')
 
 module.exports = {
 
-    // //============================== Create Products =======================================================// //
+    // //============================== CREATE FUNCTION =======================================================// //
 
     postProducts: (req, res) => {
         // try {
@@ -47,29 +48,107 @@ module.exports = {
         // }
     },
 
-    // //============================== Read Products =========================================================// //
+    // //============================== READ FUNCTION =========================================================// //
 
     getDroneProducts: (req, res) => {
-        var sql = 'SELECT p.idproducts, p.productname, p.productimage, p.productprice, p.productstock, pt.producttypes, p.productdescription FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=1'
-        mysqldb.query(sql, (err, res1) => {
-            if (err) return res.status(500).send(err)
-            return res.status(200).send({ result: res1 })
+        const sqlCount = `SELECT COUNT(*) AS count FROM products WHERE idproducttypes=1` // //sql syntax buat count
+
+        let dataCount // //action database
+
+        mysqldb.query(sqlCount, (err, results) => {
+            if (err) res.status(500).send(err)
+            dataCount = results[0].count // //collection data
+
+            const page = parseInt(req.params.id) || 1 // //ambil objek dari page yang diinginkan
+            console.log(page)
+            const pageSize = 8
+            const pager = paginate(dataCount, page, pageSize)
+
+            let offset // //setting limit offset dari database
+            if (page === 1) {
+                offset = 0
+            }
+            else {
+                offset = pageSize * (page - 1)
+            }
+            const sql =
+                `SELECT p.idproducts, p.productname, p.productimage, p.productprice, p.productstock, pt.producttypes, p.productdescription 
+                FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes 
+                WHERE p.idproducttypes=1 LIMIT ? OFFSET ?`
+
+            mysqldb.query(sql, [pageSize, offset], (err2, res2) => {
+                if (err2) return res.status(500).send(err2)
+                const pageOfData = res2
+                return res.status(200).send({ pageOfData, pager })
+            })
         })
     },
 
     getDroneAccessoriesProducts: (req, res) => {
-        var sql = 'SELECT p.idproducts, p.productname, p.productimage, p.productprice, p.productstock, pt.producttypes, p.productdescription FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=2'
-        mysqldb.query(sql, (err, res1) => {
-            if (err) return res.status(500).send(err)
-            return res.status(200).send({ result: res1 })
+        const sqlCount = `SELECT COUNT(*) AS count FROM products WHERE idproducttypes=2` // //sql syntax buat count
+
+        let dataCount // //action database
+
+        mysqldb.query(sqlCount, (err, results) => {
+            if (err) res.status(500).send(err)
+            dataCount = results[0].count // //collection data
+
+            const page = parseInt(req.params.id) || 1 // //ambil objek dari page yang diinginkan
+            console.log(page)
+            const pageSize = 8
+            const pager = paginate(dataCount, page, pageSize)
+
+            let offset // //setting limit offset dari database
+            if (page === 1) {
+                offset = 0
+            }
+            else {
+                offset = pageSize * (page - 1)
+            }
+            const sql =
+                `SELECT p.idproducts, p.productname, p.productimage, p.productprice, p.productstock, pt.producttypes, p.productdescription 
+                FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes 
+                WHERE p.idproducttypes=2 LIMIT ? OFFSET ?`
+
+            mysqldb.query(sql, [pageSize, offset], (err2, res2) => {
+                if (err2) return res.status(500).send(err2)
+                const pageOfData = res2
+                return res.status(200).send({ pageOfData, pager })
+            })
         })
     },
 
     getAccessoriesProducts: (req, res) => {
-        var sql = 'SELECT p.idproducts, p.productname, p.productimage, p.productprice, p.productstock, pt.producttypes, p.productdescription FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes WHERE p.idproducttypes=3'
-        mysqldb.query(sql, (err, res1) => {
-            if (err) return res.status(500).send(err)
-            return res.status(200).send({ result: res1 })
+        const sqlCount = `SELECT COUNT(*) AS count FROM products WHERE idproducttypes=3` // //sql syntax buat count
+
+        let dataCount // //action database
+
+        mysqldb.query(sqlCount, (err, results) => {
+            if (err) res.status(500).send(err)
+            dataCount = results[0].count // //collection data
+
+            const page = parseInt(req.params.id) || 1 // //ambil objek dari page yang diinginkan
+            console.log(page)
+            const pageSize = 8
+            const pager = paginate(dataCount, page, pageSize)
+
+            let offset // //setting limit offset dari database
+            if (page === 1) {
+                offset = 0
+            }
+            else {
+                offset = pageSize * (page - 1)
+            }
+            const sql =
+                `SELECT p.idproducts, p.productname, p.productimage, p.productprice, p.productstock, pt.producttypes, p.productdescription 
+                FROM products p JOIN producttypes pt ON p.idproducttypes=pt.idproducttypes 
+                WHERE p.idproducttypes=3 LIMIT ? OFFSET ?`
+
+            mysqldb.query(sql, [pageSize, offset], (err2, res2) => {
+                if (err2) return res.status(500).send(err2)
+                const pageOfData = res2
+                return res.status(200).send({ pageOfData, pager })
+            })
         })
     },
 
@@ -113,7 +192,7 @@ module.exports = {
         })
     },
 
-    // //============================== Update Products =======================================================// //
+    // //============================== UPDATE FUNCTION =======================================================// //
 
     editDroneProducts: (req, res) => {
         var sql = `SELECT * FROM products WHERE idproducts = ${req.params.id}`
@@ -277,7 +356,7 @@ module.exports = {
         })
     },
 
-    // //============================== Delete Products =======================================================// //
+    // //============================== DELETE FUNCTION =======================================================// //
 
     deleteProducts: (req, res) => {
         var sql = `SELECT productimage FROM products WHERE idproducts = ${req.params.id};`

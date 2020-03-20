@@ -7,8 +7,8 @@ router.post('/addcart', usercontroller.userAddCart)
 router.post('/addcheckout', usercontroller.userAddCheckout)
 router.post('/addorders', usercontroller.userAddOrders)
 
-router.get('/getusers', usercontroller.getUsers)
 router.get('/usergetcart/:id', usercontroller.userGetCart)
+router.get('/usergetreceiver/:id', usercontroller.userGetReceiver)
 router.get('/usergetcheckout/:id', usercontroller.userGetCheckout)
 router.get('/usergetorders/:id', usercontroller.userGetOrders)
 

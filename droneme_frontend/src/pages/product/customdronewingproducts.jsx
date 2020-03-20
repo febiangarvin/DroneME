@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import Header from '../components/header'
-import Footer from '../components/footer';
+import Header from '../../components/header'
+import Footer from '../../components/footer';
 import Axios from 'axios'
-import { apiurl, apiImage } from '../support/apiurl'
+import { apiurl, apiImage } from '../../support/apiurl'
 
-const CustomDroneBatteryProducts = () => {
+const CustomDroneWingProducts = () => {
 
     // //============================== FUNCTION READ =========================================================// //
 
-    const [dataDroneBattery, setdataDroneBattery] = useState([])
+    const [dataDroneWing, setdataDroneWing] = useState([])
 
     useEffect(() => {
-        Axios.get(`${apiurl}/products/getdronebatteryproducts`)
+        Axios.get(`${apiurl}/products/getdronewingproducts`)
             .then((res) => {
-                setdataDroneBattery(res.data.result)
+                setdataDroneWing(res.data.result)
             })
             .catch((err) => {
                 console.log(err)
@@ -22,7 +22,7 @@ const CustomDroneBatteryProducts = () => {
     }, [])
 
     const renderProduk = () => {
-        return dataDroneBattery.map((val, index) => {
+        return dataDroneWing.map((val, index) => {
             return (
                 <div class="card" key={index} style={{ position: 'relative' }}>
                     <div style={{ height: '200px', width: '100%' }}>
@@ -50,7 +50,7 @@ const CustomDroneBatteryProducts = () => {
                             <h5 className="productPrice">Rp {val.productprice}</h5>
                             <br />
                             <a href='/Product' className="btn-small mt-1 mb-1" style={{ textAlign: 'center', paddingRight: '10px', paddingBottom: '5px', marginBottom: '5px' }}>
-                                Choose This Battery
+                                Choose This Wing
                             </a>
                         </center>
                         <br />
@@ -91,14 +91,14 @@ const CustomDroneBatteryProducts = () => {
     const { indexDescription, modalDescription } = descriptionModal
 
     const onModalOpen = (index) => {
-        setProductDescription(dataDroneBattery[index])
+        setProductDescription(dataDroneWing[index])
         setDescriptionModal({ ...descriptionModal, modalDescription: true, indexDescription: index });
     }
 
     const toggleModal = () => setDescriptionModal({ ...descriptionModal, modalDescription: !modalDescription })
 
     const renderModalDescription = () => {
-        return dataDroneBattery.map((val, index) => {
+        return dataDroneWing.map((val, index) => {
             return (
                 <Modal isOpen={modalDescription} fade={false} key={index} toggle={toggleModal}>
                     <ModalHeader>
@@ -125,13 +125,13 @@ const CustomDroneBatteryProducts = () => {
         <div>
             <Header />
             {renderModalDescription()}
-            <h2 className="productHeader">Drone Batteries</h2>
+            <h2 className="productHeader">Drone Wings</h2>
             <div className='productList'>
                 {renderProduk()}
             </div>
             <br />
             <div style={{ textAlign: 'center', paddingBottom: '15px', marginBottom: '35px' }}>
-                <a href='/customcart' className="btn-medium mt-1 mb-1" style={{ textAlign: 'center', paddingRight: '15px', paddingBottom: '15px', marginBottom: '25px' }}>
+                <a href='/customdronemotorproducts' className="btn-medium mt-1 mb-1" style={{ textAlign: 'center', paddingRight: '15px', paddingBottom: '15px', marginBottom: '25px' }}>
                     Next Item
                 </a>
             </div>
@@ -141,4 +141,4 @@ const CustomDroneBatteryProducts = () => {
     );
 }
 
-export default CustomDroneBatteryProducts;
+export default CustomDroneWingProducts;

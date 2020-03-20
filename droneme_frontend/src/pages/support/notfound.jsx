@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Header from '../components/header'
-import Footer from '../components/footer';
+import Header from '../../components/header'
+import Footer from '../../components/footer';
 
 class NotFound extends Component { // //component jika pada url web tidak sesuai namanya dengan component yang telah dibuat
     render() {

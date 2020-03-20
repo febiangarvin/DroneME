@@ -1,44 +1,52 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'; // //main import
 import './App.css';
 import Home from './pages/home';
-import Login from './pages/login'
-import Register from './pages/register'
-import About from './pages/about'
-import Reviews from './pages/reviews'
-import FAQ from './pages/faq'
-import NotFound from './pages/notfound';
-import DroneProducts from './pages/droneproducts'
-import AccessoriesProducts from './pages/accessoriesproducts'
-import DroneAccessoriesProducts from './pages/droneaccessoriesproducts'
-import CustomDroneBodyProducts from './pages/customdronebodyproducts';
-import CustomDroneWingProducts from './pages/customdronewingproducts';
-import CustomDroneMotorProducts from './pages/customdronemotorproducts';
-import CustomDroneBatteryProducts from './pages/customdronebatteryproducts';
-import AdminDashboard from './pages/admindashboard';
-import AdminDroneProducts from './pages/admindroneproducts';
-import AdminDroneAccessoriesProducts from './pages/admindroneaccessoriesproducts';
-import AdminAccessoriesProducts from './pages/adminaccesoriesproducts';
-import AdminManageProducts from './pages/adminmanageproducts'
-import AdminAddProducts from './pages/adminaddproducts';
-import AdminSales from './pages/adminsales';
-import AdminSalesDetail from './pages/adminsalesdetail';
-import AdminEdit from './pages/adminedit';
-import FlyaDrone from './pages/flyadrone';
-import AssembleaDrone from './pages/assembleadrone';
-import RepairaDrone from './pages/repairadrone';
-import Cart from './pages/cart';
 
-import { Switch, Route } from 'react-router-dom'
+import Login from './pages/account/login' // //account import
+import Register from './pages/account/register'
+
+import AdminDashboard from './pages/admin/admindashboard'; // //admin import
+import AdminDroneProducts from './pages/admin/admindroneproducts';
+import AdminDroneAccessoriesProducts from './pages/admin/admindroneaccessoriesproducts';
+import AdminAccessoriesProducts from './pages/admin/adminaccesoriesproducts';
+import AdminAddProducts from './pages/admin/adminaddproducts';
+import AdminSales from './pages/admin/adminsales';
+import AdminSalesDetail from './pages/admin/adminsalesdetail';
+import AdminEdit from './pages/admin/adminedit';
+import AdminManageUsers from './pages/admin/adminmanageusers';
+
+import FlyaDrone from './pages/documentation/flyadrone'; // //documentation import
+import AssembleaDrone from './pages/documentation/assembleadrone';
+import RepairaDrone from './pages/documentation/repairadrone';
+
+import DroneProducts from './pages/product/droneproducts' // //product import
+import AccessoriesProducts from './pages/product/accessoriesproducts'
+import DroneAccessoriesProducts from './pages/product/droneaccessoriesproducts'
+import CustomDroneBodyProducts from './pages/product/customdronebodyproducts';
+import CustomDroneWingProducts from './pages/product/customdronewingproducts';
+import CustomDroneMotorProducts from './pages/product/customdronemotorproducts';
+import CustomDroneBatteryProducts from './pages/product/customdronebatteryproducts';
+
+import About from './pages/support/about' // //support import
+import Reviews from './pages/support/reviews'
+import FAQ from './pages/support/faq'
+import NotFound from './pages/support/notfound';
+
+import UserTransaction from './pages/transaction/usertransaction';
+// import Cart from './pages/transaction/cart';
+// import Checkout from './pages/transaction/checkout';
+import Orders from './pages/transaction/orders';
+import OrderDetail from './pages/transaction/orderdetail';
+
+import { Switch, Route } from 'react-router-dom' // //other components import
 import { KeepLogin, UserGetCart } from './redux/actions'
 import { useDispatch } from 'react-redux';
 
 const App = () => {
 
-  // //set dispatch
-  const dispatch = useDispatch()
+  const dispatch = useDispatch() // //set dispatch
 
-  // //component didmount
-  useEffect(() => {
+  useEffect(() => { // //equivalen dengan component didmount
     dispatch(KeepLogin())
     dispatch(UserGetCart())
   }, [])
@@ -49,38 +57,43 @@ const App = () => {
         <Route path={'/'} exact component={Home}>
           <Home />
         </Route>
+
         <Route path={'/login'} exact component={Login} />
         <Route path={'/register'} exact component={Register} />
-
-        <Route path={'/droneproducts'} exact component={DroneProducts} />
-        <Route path={'/droneaccessoriesproducts'} exact component={DroneAccessoriesProducts} />
-        <Route path={'/accessoriesproducts'} exact component={AccessoriesProducts} />
-
-        <Route path={'/customdronebodyproducts'} exact component={CustomDroneBodyProducts} />
-        <Route path={'/customdronewingproducts'} exact component={CustomDroneWingProducts} />
-        <Route path={'/customdronemotorproducts'} exact component={CustomDroneMotorProducts} />
-        <Route path={'/customdronebatteryproducts'} exact component={CustomDroneBatteryProducts} />
-
-        <Route path={'/flyadrone'} exact component={FlyaDrone} />
-        <Route path={'/assembleadrone'} exact component={AssembleaDrone} />
-        <Route path={'/repairadrone'} exact component={RepairaDrone} />
-
-        <Route path={'/about'} exact component={About} />
-        <Route path={'/reviews'} exact component={Reviews} />
-        <Route path={'/faq'} exact component={FAQ} />
-
-        <Route path={'/cart'} exact component={Cart} />
 
         <Route path={'/admindashboard'} exact component={AdminDashboard} />
         <Route path={'/admindroneproducts'} exact component={AdminDroneProducts} />
         <Route path={'/admindroneaccessoriesproducts'} exact component={AdminDroneAccessoriesProducts} />
         <Route path={'/adminaccessoriesproducts'} exact component={AdminAccessoriesProducts} />
-        <Route path={'/adminmanageproducts'} exact component={AdminManageProducts} />
         <Route path={'/adminaddproducts'} exact component={AdminAddProducts} />
         <Route path={'/adminsales'} exact component={AdminSales} />
         <Route path={'/adminsalesdetail'} exact component={AdminSalesDetail} />
         <Route path={'/adminedit'} exact component={AdminEdit} />
+        <Route path={'/adminmanageusers'} exact component={AdminManageUsers} />
+
+        <Route path={'/flyadrone'} exact component={FlyaDrone} />
+        <Route path={'/assembleadrone'} exact component={AssembleaDrone} />
+        <Route path={'/repairadrone'} exact component={RepairaDrone} />
+
+        <Route path={'/droneproducts'} exact component={DroneProducts} />
+        <Route path={'/droneaccessoriesproducts'} exact component={DroneAccessoriesProducts} />
+        <Route path={'/accessoriesproducts'} exact component={AccessoriesProducts} />
+        <Route path={'/customdronebodyproducts'} exact component={CustomDroneBodyProducts} />
+        <Route path={'/customdronewingproducts'} exact component={CustomDroneWingProducts} />
+        <Route path={'/customdronemotorproducts'} exact component={CustomDroneMotorProducts} />
+        <Route path={'/customdronebatteryproducts'} exact component={CustomDroneBatteryProducts} />
+
+        <Route path={'/usertransaction'} component={UserTransaction} />
+        {/* <Route path={'/cart'} exact component={Cart} /> */}
+        {/* <Route path={'/checkout'} exact component={Checkout} /> */}
+        <Route path={'/orders'} exact component={Orders} />
+        <Route path={'/orderdetail'} exact component={OrderDetail} />
+
+        <Route path={'/about'} exact component={About} />
+        <Route path={'/reviews'} exact component={Reviews} />
+        <Route path={'/faq'} exact component={FAQ} />
         <Route path={'/*'} exact component={NotFound} />
+
       </Switch>
     </div>
   );

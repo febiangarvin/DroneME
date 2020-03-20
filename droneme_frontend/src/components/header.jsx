@@ -14,7 +14,7 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux'
 import { LogoutAction } from './../redux/actions/authactions'
-import { FaUserAstronaut, FaUserSecret, FaShoppingCart, FaUserEdit, FaSignOutAlt, FaRegEdit, FaPlane, FaCashRegister } from "react-icons/fa"
+import { FaUserAstronaut, FaUserSecret, FaShoppingCart, FaUserEdit, FaSignOutAlt, FaRegEdit, FaPlane, FaCashRegister, FaShoppingBag } from "react-icons/fa"
 import Logo from '../components/support/img/icons/logo.png'
 
 // //============================== FUNCTION VARIABLES ==================================================// //
@@ -104,7 +104,8 @@ const Header = (props) => {
                                             <FaUserAstronaut /> Hello, {props.username}
                                         </DropdownToggle>
                                         <DropdownMenu right>
-                                            <DropdownItem href='/cart' className='dropdownHeader'><FaShoppingCart /> My Cart</DropdownItem>
+                                            <DropdownItem href='/usertransaction/cart' className='dropdownHeader'><FaShoppingCart /> My Cart</DropdownItem>
+                                            <DropdownItem href='/orders' className='dropdownHeader'><FaShoppingBag /> My Orders</DropdownItem>
                                             <DropdownItem href='/resetpassword' className='dropdownHeader'><FaUserEdit /> Edit Profile</DropdownItem>
                                             <DropdownItem href={'/'} onClick={Logoutbtn} className='dropdownHeader'><FaSignOutAlt /> Logout </DropdownItem>
                                         </DropdownMenu>

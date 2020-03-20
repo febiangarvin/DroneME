@@ -5,8 +5,11 @@ const { createJWTToken, createJWTTokenemail } = require('./../helpers/jwt')
 const transporter = require('./../helpers/mailer')
 
 module.exports = {
+
+    // //============================== CREATE FUNCTION =======================================================// //
+
     register: (req, res) => {
-        const { username, email, password, confirmpassword } = req.body
+        const { username, email, password, confirmpassword, address, province, postalcode } = req.body
 
         var sql = `SELECT idusers FROM users WHERE username='${username}'`
         mysqldb.query(sql, (err, results) => {
@@ -28,7 +31,10 @@ module.exports = {
                     email,
                     password: encryptpass,
                     idroles: 1,
-                    verification: 'verification incomplete'
+                    verification: 'verification incomplete',
+                    address,
+                    province,
+                    postalcode
                 }
                 sql = `INSERT INTO users SET ?`
                 mysqldb.query(sql, data, (err1, results1) => {
@@ -41,6 +47,14 @@ module.exports = {
             }
         })
     },
+
+    hashpassword: (req, res) => {
+        var { password } = req.params
+        var encrypt = hashpassword(password)
+        return res.send({ encrypt, password })
+    },
+
+    // //============================== READ FUNCTION =========================================================// //
 
     login: (req, res) => {
         const {
@@ -71,9 +85,22 @@ module.exports = {
         })
     },
 
-    hashpassword: (req, res) => {
-        var { password } = req.params
-        var encrypt = hashpassword(password)
-        return res.send({ encrypt, password })
-    }
+    getUsers: (req, res) => {
+        var sql = 'SELECT u.username, u.email, u.verification FROM users u WHERE u.idroles=1;'
+        mysqldb.query(sql, (err, res1) => {
+            if (err) return res.status(500).send(err)
+            return res.status(200).send({ result: res1 })
+        })
+    },
+
+    // //============================== DELETE FUNCTION =======================================================// //
+
+    deleteUser: (req, res) => {
+        var sql = `DELETE FROM users WHERE idusers = ${req.params.id};`
+        mysqldb.query(sql, (err, res1) => {
+            if (err) return res.status(500).send(err)
+            return res.status(200).send({ result: res1 })
+        })
+    },
+
 }

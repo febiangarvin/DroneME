@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from '../components/header'
-import Jumbotron4 from '../components/jumbotron4';
-import Footer from '../components/footer';
+import Header from '../../components/header'
+import Jumbotron4 from '../../components/jumbotron4';
+import Footer from '../../components/footer';
 
 const AssembleaDrone = () => {
     return (
