@@ -29,6 +29,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...INITIAL_STATE, register: true }
         case 'ADD_PRODUCT_SUCCESS':
             return { ...INITIAL_STATE, addproduct: true }
+        case "RESET_PASS":
+            return { ...state, ...action.payload };
         default:
             return state
     }

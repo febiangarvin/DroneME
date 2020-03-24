@@ -69,12 +69,38 @@ export const KeepLogin = () => {
     }
 }
 
-// //function untuk mendapatkan data cart user yang login
-export const UserGetCart = () => {
+export const UserGetCart = () => { // //function untuk mendapatkan data cart user yang login
     return (dispatch) => {
-        // dispatch({ type: 'GET_CART_LOADING' })
         const idusers = localStorage.getItem('droneme')
         Axios.get(`${apiurl}/users/usergetcart/${idusers}`)
+            .then((res) => {
+                dispatch({ type: 'GET_CART_LENGTH_SUCCESS', payload: res.data.result.length })
+                dispatch({ type: 'GET_CART_SUCCESS', payload: res.data.result })
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+}
+
+export const UserGetCheckout = () => {
+    return (dispatch) => {
+        const idusers = localStorage.getItem('droneme')
+        Axios.get(`${apiurl}/users/usergetcheckout/${idusers}`)
+            .then((res) => {
+                dispatch({ type: 'GET_CHECKOUT_LENGTH_SUCCESS', payload: res.data.result.length })
+                dispatch({ type: 'GET_CHECKOUT_SUCCESS', payload: res.data.result })
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+}
+
+export const UserGetCheckoutDetail = () => { // //function untuk mendapatkan data cart user yang login
+    return (dispatch) => {
+        const idusers = localStorage.getItem('droneme')
+        Axios.get(`${apiurl}/users/usergetcheckoutdetail/${idusers}`)
             .then((res) => {
                 dispatch({ type: 'GET_CART_LENGTH_SUCCESS', payload: res.data.result.length })
                 dispatch({ type: 'GET_CART_SUCCESS', payload: res.data.result })
@@ -109,6 +135,9 @@ export const RegisterAction = ({ username, email, password, confirmpassword, add
     }
 }
 
-// export const AddProductSuccess = () => {
-//     return {type: 'ADD_PRODUCT_SUCCESS'}
-// }
+export const ResetPassAction = newpass => {
+    return {
+        type: "RESET_PASS",
+        payload: newpass
+    };
+};

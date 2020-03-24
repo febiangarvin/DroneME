@@ -10,25 +10,35 @@ const Orders = () => {
 
     // //============================== FUNCTION READ ORDERS ==================================================// //
 
-    // const { datacart } = useSelector(state => state.HomeReducers)
-    // const dispatch = useDispatch()
-    // const [dataOrders, setDataOrders] = useState([])
+    const { datacheckout } = useSelector(state => state.OrderReducers)
+    const dispatch = useDispatch()
+    const [dataCheckout, setDataCheckout] = useState([])
 
-    // const renderOrders = () => {
-    //     return datacart.map((val, index) => {
-    //         // return console.log(val);
-    //         return (
-    //             <tr key={index}>
-    //                 <td>{val.iduniquetransactions}</td>
-    //                 <td>{val.totalproce}</td>
-    //                 <td>
-    //                     <a href="/orderdetail" className="btn-primary ml-3">Details</a>
-    //                 </td>
-    //                 <td>{val.paymentstatus}</td>
-    //             </tr>
-    //         )
-    //     })
-    // }
+    useEffect(() => {
+        const idusers = localStorage.getItem('droneme')
+        Axios.get(`${apiurl}/users/usergetcheckout/${idusers}`)
+            .then((res) => {
+                setDataCheckout(res.data.result)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [])
+
+    const renderCheckout = () => {
+        return dataCheckout.map((val, index) => {
+            return (
+                <tr key={index}>
+                    <td>{val.idtransactions}</td>
+                    <td>Rp {val.totalprice}</td>
+                    <td>
+                        <a href={`/orderdetail/${val.idtransactions}`} className="btn-primary ml-3">Details</a>
+                    </td>
+                    <td>{val.paymentstatus}</td>
+                </tr>
+            )
+        })
+    }
 
     // //============================== RENDER AKHIR ==========================================================// //
 
@@ -57,15 +67,7 @@ const Orders = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        {/* {renderOrders()} */}
-                                        <td>35467890</td>
-                                        <td>Rp10.000.000</td>
-                                        <td>
-                                            <a href="/orderdetail" className="btn-primary ml-3">Details</a>
-                                        </td>
-                                        <td>Waiting for Payment</td>
-                                    </tr>
+                                    {renderCheckout()}
                                 </tbody>
                             </table>
                         </div>

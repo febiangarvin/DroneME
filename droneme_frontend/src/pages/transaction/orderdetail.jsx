@@ -3,153 +3,140 @@ import Header from '../../components/header'
 import NotFound from '../support/notfound'
 import Axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
-import { UserGetCheckout } from '../../redux/actions'
+import { UserGetCheckoutDetail } from '../../redux/actions'
 import { apiurl } from '../../support/apiurl'
+import Swal from 'sweetalert2'
+import { Link, Redirect } from 'react-router-dom';
 
-const OrderDetail = () => {
+const OrderDetail = (props) => {
 
     // //============================== FUNCTION READ ORDER DETAIL ================================================// //
 
-    // const { datacart } = useSelector(state => state.HomeReducers)
-    // const dispatch = useDispatch()
-    // const [dataCheckout, setDataCheckout] = useState([])
+    const { datacart } = useSelector(state => state.HomeReducers)
+    const { username, address, province, postalcode } = useSelector(state => state.Auth)
+    const dispatch = useDispatch()
+    const [dataCheckoutDetail, setDataCheckoutDetail] = useState([])
+    const [totalPrice, setTotalPrice] = useState(0)
 
-    // const renderCart = () => {
-    //     return datacart.map((val, index) => {
-    //         // return console.log(val);
-    //         return (
-    //             <tr key={index}>
-    //                 <td>{val.productname}</td>
-    //                 <td>Rp{val.productprice}</td>
-    //                 <td>{val.quantity}</td>
-    //             </tr>
-    //         )
-    //     })
-    // }
 
-    // const renderTotalPrice = () => {
-    //     return datacart.map((val, index) => {
-    //         return (
-    //             <tr key={index}>
-    //                 <td>{val.totalproce}</td>
-    //             </tr>
-    //         )
-    //     })
-    // }
+    console.log(props.match.params);
 
-    // const renderReceiver = () => {
-    //     return datacart.map((val, index) => {
-    //         // return console.log(val);
-    //         return (
-    //             <tr key={index}>
-    //                 Your Transaction ID : {val.iduniquetransactions}
-    //             </tr>
-    //             <tr key={index}>
-    //                 Receiver Name : {val.receiver}
-    //             </tr>
-    //             <tr key={index}>
-    //                 Address : {val.address}
-    //             </tr>
-    //             <tr key={index}>
-    //                 Province : {val.province}
-    //             </tr>
-    //             <tr key={index}>
-    //                 Postal Code : {val.postalcode}
-    //             </tr>
-    //         )
-    //     })
-    // }
+    useEffect(() => {
+        const idusers = localStorage.getItem('droneme')
+        const idtransactions = props.match.params.idtransactions
+        Axios.get(`${apiurl}/users/usergetcheckoutdetail/${idusers}/${idtransactions}`)
+            .then((res) => {
+                setDataCheckoutDetail(res.data.result)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [])
 
-    // //============================== FUNCTION OPEN MODAL UPLOAD PAYMENT ====================================// //
+    const renderCheckoutDetail = () => {
+        return dataCheckoutDetail.map((val, index) => {
+            return (
+                <tr key={index}>
+                    <td>{val.productname}</td>
+                    <td>Rp {val.productprice}</td>
+                    <td>{val.quantity}</td>
+                </tr>
+            )
+        })
+    }
 
-    // const [startPayment, setStartPayment] = useState({
-    //     iduniquetransactions: 0,
-    // })
+    const [dataReceiver, setDataReceiver] = useState([])
 
-    // const { iduniquetransactions } = startPayment
+    useEffect(() => {
+        let total = 0
+        for (let i = 0; i < dataCheckoutDetail.length; i++) {
+            total += dataCheckoutDetail[i].productprice * dataCheckoutDetail[i].quantity
+        }
+        setTotalPrice(total)
+    }, [dataCheckoutDetail])
 
-    // const [addImage, setAddImage] = useState({ // //array pertama menunjukan state dan kedua untuk memodifikasi state
-    //     imageFileName: 'Add an image...',
-    //     imageFile: undefined
-    // })
+    const renderReceiver = () => {
+        return (
+            <tbody style={{ fontSize: '20px', color: 'white' }}>
+                <tr>
+                    Receiver Name : {username}
+                </tr>
+                <tr>
+                    Address : {address}
+                </tr>
+                <tr>
+                    Province : {province}
+                </tr>
+                <tr>
+                    Postal Code : {postalcode}
+                </tr>
+            </tbody>
+        )
+    }
 
-    // const onAddImage = e => {
-    //     console.log('e.target.files[0]', addImage);
-    //     var file = e.target.files[0]
-    //     if (file) {
-    //         setAddDataProduct({ ...addDataProduct, productimagename: file.name, productimage: file })
-    //     }
-    //     else {
-    //         setAddDataProduct({ ...addDataProduct, productimagename: 'Select Image', productimage: undefined })
-    //     }
-    // }
+    // //============================== FUNCTION ADD UPLOAD PAYMENT ===========================================// //
 
-    // const onConfirmPayment = () => { // //function add product
-    //     var formdata = new FormData()
-    //     var dataproducts = { // //buat variable dari isi yang akan dilakukan post
-    //         productname,
-    //         productprice,
-    //         idproducttypes,
-    //         productstock,
-    //         productdescription,
-    //     }
+    const [addPaymentImage, setAddPaymentImage] = useState({
+        idtransactions: 0,
+        paymentimage: undefined,
+        paymentimagename: '',
+    })
 
-    //     console.log(dataproducts);
-    //     console.log(productimage);
+    const { paymentimage } = addPaymentImage
 
-    //     var Headers = {
-    //         headers: {
-    //             'Content-Type': 'multipart/form-data'
-    //         }
-    //     }
-    //     formdata.append('image', productimage)
-    //     formdata.append('products', JSON.stringify(dataproducts))
+    const onAddPaymentImage = (event) => {
+        // console.log(document.getElementById('addImagePost').files[0])
+        console.log(event.target)
+        console.log(event.target.files[0])
+        var file = event.target.files[0]
+        if (file) {
+            setAddPaymentImage({ ...addPaymentImage, paymentimagename: file.name, paymentimage: event.target.files[0] })
+        } else {
+            setAddPaymentImage({ ...addPaymentImage, paymentimagename: 'Select Image...', paymentimage: undefined })
+        }
+    }
 
-    //     // //melakukan post (url sesuai yang dibuat di product controller). Data yang dikirim berupa formData dan headers
-    //     Axios.post(`${apiurl}/products/addproducts`, formdata, Headers)
-    //         .then(res => { // //jika berhasil, mengirimkan response
-    //             console.log(res.data.dataproducts)
-    //             dispatch({ type: 'ADD_PRODUCT_SUCCESS' }) // //dengan dispatch, buat actions yang case nya dibuat di reducers
-    //         })
-    //         .catch(err => { // //jika error, mengirimkan error
-    //             console.log(err)
-    //         })
-    // }
+    const onPayClick = () => { // //function add product
+        const idusers = localStorage.getItem('droneme')
+        var formdata = new FormData()
+        var Headers = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
 
-    // const [paymentModal, setPaymentModal] = useState({
-    //     modalPayment: false,
-    //     indexTransaction: -1
-    // })
+        const data = {
+            idusers: idusers,
+            paymentstatus: 'Payment Uploaded',
+            idtransactions: props.match.params.idtransactions,
+        }
 
-    // const { indexTransaction, modalPayment } = paymentModal
+        formdata.append('image', paymentimage)
+        formdata.append('data', JSON.stringify(data))
 
-    // const onModalOpen = (index) => {
-    //     setStartPayment(startPayment[index])
-    //     setPaymentModal({ ...paymentModal, modalPayment: true, indexTransaction: index });
-    // }
-
-    // const toggleModal = () => setPaymentModal({ ...paymentModal, modalPayment: !modalPayment })
-
-    // const renderModalPayment = () => {
-    //     return startPayment.map((val, index) => {
-    //         return (
-    //             <Modal isOpen={modalPayment} fade={false} key={index} toggle={toggleModal}>
-    //                 <ModalHeader>
-    //                     <center>
-    //                         Pay the required fee via BCA : 54672871 (a/n DroneME)
-    //                     </center>
-    //                 </ModalHeader>
-    //                 <ModalBody>
-    //                     <input type="file" className="form-control input-type-primary" style={{ padding: 2 }} onChange={onEditImageFileChange} name='productimage' />
-    //                 </ModalBody>
-    //                 <ModalFooter>
-    //                     <Button color="success" onClick={onConfirmPayment}>Confirm</Button>
-    //                     <Button color="secondary" onClick={toggleModal}>Close</Button>
-    //                 </ModalFooter>
-    //             </Modal>
-    //         )
-    //     })
-    // }
+        Axios.post(`${apiurl}/users/addpaymentimage`, formdata, Headers)
+            .then(res => {
+                console.log(res.data.paymentimage)
+                if (res.data.result) {
+                    Swal.fire({
+                        title: 'Your Payment Image Has Been Uploaded!',
+                        text: `Please wait for verification`,
+                        icon: 'success',
+                        background: '#21272C',
+                        color: '#ddd'
+                    })
+                    // .then(() => {
+                    //     return <Link to='/orders' />
+                    // })
+                    // .catch((error) => {
+                    //     console.log(error);
+                    // })
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
 
     // //============================== RENDER AKHIR ==========================================================// //
 
@@ -179,20 +166,37 @@ const OrderDetail = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {/* {renderCart()} */}
-                                    <tr>
-                                        <td>DJI Phantom 4 Pro</td>
-                                        <td>Rp 20.000.000</td>
-                                        <td>1</td>
-                                    </tr>
-                                    <br /><br />
+                                    {renderCheckoutDetail()}
                                 </tbody>
                                 <tfooter style={{ fontSize: '20px', color: 'white' }}>
-                                    {/* {renderTotalPrice()} */}
+                                    <br />
                                     <tr>
-                                        Grand Total : Rp 20.000.000
+                                        Your Grand Total : Rp {totalPrice}
                                     </tr>
                                 </tfooter>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br /><br />
+
+                <div className="header row">
+                    <div className="col-md-12">
+                        <p className="header-title" style={{ marginRight: '130px' }}>
+                            Receiver and Address :
+                        </p>
+                        <p className="header-title" style={{ marginRight: '130px', fontSize: '17px', color: 'red' }}>
+                            Note: This an address that you have submitted when starting your registration.<br />
+                            To change, please head on to the <a href='/useredit'>Edit Profile Tab</a> before making your payment.
+                        </p>
+                    </div>
+                </div>
+
+                <div className="row report-group">
+                    <div className="col-md-12">
+                        <div className="item-big-report col-md-12">
+                            <table className="table-wisata table table-borderless">
+                                {renderReceiver()}
                             </table>
                         </div>
                     </div>
@@ -203,47 +207,24 @@ const OrderDetail = () => {
                 <div className="header row">
                     <div className="col-md-12">
                         <p className="header-title" style={{ marginRight: '130px' }}>
-                            Receiver and Address :
+                            Upload Your Payment Here :
                         </p>
-                    </div>
-                </div>
-
-                <div className="row report-group">
-                    <div className="col-md-12">
-                        <div className="item-big-report col-md-12">
-                            <table className="table-wisata table table-borderless">
-                                <tbody style={{ fontSize: '20px', color: 'white' }}>
-                                    {/* {renderReceiver()} */}
-                                    <tr>
-                                        Your Transaction ID : 1233456665
-                                    </tr>
-                                    <tr>
-                                        Receiver Name : Febian
-                                    </tr>
-                                    <tr>
-                                        Address : Cirendeu CirendeuCirendeu Cirendeu Cirendeu CirendeuCirendeu
-                                    </tr>
-                                    <tr>
-                                        Province : Banten
-                                    </tr>
-                                    <tr>
-                                        Postal Code : 16553
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <br />
-                        <div className="form-action" style={{ marginLeft: '425px' }}>
-                            {/* <button className='btn btn-danger mr-1 ml-1' onClick={() => onCancelCheckout(index)}>CANCEL</button> */}
-                            <a href='/orders' className='btn btn-danger mr-2 ml-2'>BACK</a>
-                            <a href='/orders' className='btn btn-success mr-2 ml-2'>PAY</a>
-                        </div>
                         <br /><br />
+                        <div className="overlay-box col-md-4" style={{ marginLeft: '280px' }}>
+                            <input type="file" onChange={onAddPaymentImage} name='paymentimage' />
+                        </div>
                     </div>
                 </div>
 
-            </div>
+                <br /><br />
 
+                <div className="form-action">
+                    <a style={{ marginLeft: '400px', padding: 20 }} href="/orders" className="btn-danger">Return</a>
+                    <a style={{ marginLeft: '25px', padding: 20 }} onClick={onPayClick} className="btn-primary">PAY !</a>
+                </div>
+
+                <br /><br />
+            </div>
         </div>
     );
 }

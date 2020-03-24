@@ -21,10 +21,9 @@ const DroneProducts = () => {
 
     const [productQuantity, setProductQuantity] = useState(1)
 
-    // //set dipatch(pengganti connect, pada class component)
-    const dispatch = useDispatch()
+    const dispatch = useDispatch() // //set dipatch(pengganti connect, pada class component)
 
-    useEffect(() => {
+    useEffect(() => { // //get
         Axios.get(`${apiurl}/products/getdroneproducts/${page}`)
             .then((res) => {
                 console.log('res', res.data);
@@ -36,7 +35,7 @@ const DroneProducts = () => {
             })
     }, [])
 
-    useEffect(() => {
+    useEffect(() => { // //trigger saat state berubah
         Axios.get(`${apiurl}/products/getdroneproducts/${page}`)
             .then((res) => {
                 console.log('res', res.data);
@@ -46,7 +45,7 @@ const DroneProducts = () => {
             .catch((err) => {
                 console.log(err)
             })
-    }, [page])
+    }, [page]) // //state page
 
     const renderProduk = () => {
         return dataDrone.map((val, index) => {

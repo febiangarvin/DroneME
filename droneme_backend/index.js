@@ -20,10 +20,11 @@ app.get('/', (req, res) => {
     return res.status(200).send('<h1>Welcome to droneME</h1>')
 })
 
-const { authrouter, productrouter, userrouter } = require('./routes')
+const { authrouter, productrouter, userrouter, adminrouter } = require('./routes')
 
 app.use('/auth', authrouter)
 app.use('/products', productrouter)
 app.use('/users', userrouter)
+app.use('/admin', adminrouter)
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`)) // //notifikasi pada terminal mengenai status port

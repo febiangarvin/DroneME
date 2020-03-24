@@ -11,6 +11,8 @@ router.get('/login', authcontroller.login)
 router.get('/keeplogin/:id', authcontroller.keeplogin)
 router.get('/getusers', authcontroller.getUsers)
 
+router.put('/updatepassword/:id', authcontroller.updatePassword)
+
 router.delete('/deleteuser/:id', authcontroller.deleteUser)
 
 // router.get('/authlog/:id', authcontroller.Authlogin)

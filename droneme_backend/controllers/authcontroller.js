@@ -93,6 +93,19 @@ module.exports = {
         })
     },
 
+    // //============================== UPDATE FUNCTION =======================================================// //
+
+    updatePassword: (req, res) => {
+        const data = (req.body.data)
+
+        let sql = `UPDATE users SET ? WHERE idusers = ${req.params.id}`
+
+        mysqldb.query(sql, data, (err, res1) => {
+            if (err) return res.status(500).send(err)
+            return res.status(200).send({ result: res1 })
+        })
+    },
+
     // //============================== DELETE FUNCTION =======================================================// //
 
     deleteUser: (req, res) => {

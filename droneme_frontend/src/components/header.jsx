@@ -106,7 +106,7 @@ const Header = (props) => {
                                         <DropdownMenu right>
                                             <DropdownItem href='/usertransaction/cart' className='dropdownHeader'><FaShoppingCart /> My Cart</DropdownItem>
                                             <DropdownItem href='/orders' className='dropdownHeader'><FaShoppingBag /> My Orders</DropdownItem>
-                                            <DropdownItem href='/resetpassword' className='dropdownHeader'><FaUserEdit /> Edit Profile</DropdownItem>
+                                            <DropdownItem href='/useredit' className='dropdownHeader'><FaUserEdit /> Edit Profile</DropdownItem>
                                             <DropdownItem href={'/'} onClick={Logoutbtn} className='dropdownHeader'><FaSignOutAlt /> Logout </DropdownItem>
                                         </DropdownMenu>
                                     </UncontrolledDropdown>

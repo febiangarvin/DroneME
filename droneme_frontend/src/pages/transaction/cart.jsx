@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { UserGetCart } from '../../redux/actions'
 import { apiurl } from '../../support/apiurl'
 import Swal from 'sweetalert2'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 const Cart = () => {
 
@@ -69,15 +69,12 @@ const Cart = () => {
 
     const [addToCheckout, setAddToCheckout] = useState(datacart)
 
-    const addCartData = e => {
-        const { name, value } = e.target
-        setAddToCheckout([...addToCheckout, { [name]: value }])
-    }
-    console.log(addToCheckout);
     const addDataToCheckout = () => {
-        Axios.put(`${apiurl}/users/addcheckout`, dataCart)
+        const idusers = localStorage.getItem('droneme')
+        const datacheckout = { idusers: idusers, totalprice: parseInt(totalPrice) }
+        Axios.post(`${apiurl}/users/addcheckout`, datacheckout)
             .then(() => {
-                return <Link to='/usertransaction/checkout' />
+                return <Link to='/orders' />
             })
     }
 
@@ -161,6 +158,7 @@ const Cart = () => {
                         </div>
                     </div>
                 </div>
+
                 <br /><br />
 
                 <div className="header row">
@@ -170,7 +168,7 @@ const Cart = () => {
                         </p>
                         <p className="header-title" style={{ marginRight: '130px', fontSize: '17px', color: 'red' }}>
                             Note: This an address that you have submitted when starting your registration.<br />
-                            To change, please head on to the <a href='/useredit'>Edit Profile Tab</a> before checking out.
+                            To change, please head on to the <a href='/useredit'>Edit Profile Tab</a> before making your payment.
                         </p>
                     </div>
                 </div>
@@ -188,8 +186,8 @@ const Cart = () => {
                 <br /><br />
 
                 <div className="form-action">
-                    <a style={{ marginLeft: '375px', paddingLeft: 20 }} href="/droneproducts" className="btn-medium">Return</a>
-                    <a style={{ marginLeft: '25px', paddingLeft: 20 }} onClick={addDataToCheckout} className="btn-medium">Checkout</a>
+                    <a style={{ marginLeft: '400px', padding: 20 }} href="/droneproducts" className="btn-warning">Return</a>
+                    <a style={{ marginLeft: '25px', padding: 20 }} onClick={addDataToCheckout} href="/orders" className="btn-success">Checkout</a>
                 </div>
 
                 <br /><br />

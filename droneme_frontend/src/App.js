@@ -4,6 +4,7 @@ import Home from './pages/home';
 
 import Login from './pages/account/login' // //account import
 import Register from './pages/account/register'
+import UserEdit from './pages/account/useredit';
 
 import AdminDashboard from './pages/admin/admindashboard'; // //admin import
 import AdminDroneProducts from './pages/admin/admindroneproducts';
@@ -60,6 +61,7 @@ const App = () => {
 
         <Route path={'/login'} exact component={Login} />
         <Route path={'/register'} exact component={Register} />
+        <Route path={'/useredit'} exact component={UserEdit} />
 
         <Route path={'/admindashboard'} exact component={AdminDashboard} />
         <Route path={'/admindroneproducts'} exact component={AdminDroneProducts} />
@@ -87,7 +89,7 @@ const App = () => {
         {/* <Route path={'/cart'} exact component={Cart} /> */}
         {/* <Route path={'/checkout'} exact component={Checkout} /> */}
         <Route path={'/orders'} exact component={Orders} />
-        <Route path={'/orderdetail'} exact component={OrderDetail} />
+        <Route path={'/orderdetail/:idtransactions'} exact component={OrderDetail} />
 
         <Route path={'/about'} exact component={About} />
         <Route path={'/reviews'} exact component={Reviews} />
