@@ -20,7 +20,7 @@ const AdminManageUsers = () => {
     const [dataUsers, setDataUsers] = useState([])
 
     useEffect(() => {
-        Axios.get(`${apiurl}/auth/getusers`)
+        Axios.get(`${apiurl}/admin/admingetusers`)
             .then((res) => {
                 setDataUsers(res.data.result)
             })
@@ -68,9 +68,9 @@ const AdminManageUsers = () => {
                     color: '#ddd'
                 })
                     .then(() => {
-                        Axios.delete(`${apiurl}/auth/deleteuser/${id}`)
+                        Axios.delete(`${apiurl}/admin/admindeleteuser/${id}`)
                             .then(() => {
-                                Axios.get(`${apiurl}/auth/getusers`)
+                                Axios.get(`${apiurl}/admin/admingetusers`)
                                     .then((res) => {
                                         setDataUsers(res.data.result)
                                     })

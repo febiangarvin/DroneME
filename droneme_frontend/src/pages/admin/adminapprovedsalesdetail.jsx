@@ -7,7 +7,7 @@ import { apiurl, apiImage } from '../../support/apiurl'
 import Swal from 'sweetalert2'
 import { Link, Redirect } from 'react-router-dom';
 
-const AdminSalesDetail = (props) => {
+const AdminApprovedSalesDetail = (props) => {
 
     // //============================== FUNCTION READ ORDER DETAIL ============================================// //
 
@@ -15,7 +15,7 @@ const AdminSalesDetail = (props) => {
 
     useEffect(() => {
         const idtransactions = props.match.params.idtransactions
-        Axios.get(`${apiurl}/admin/admingetunapprovedcheckoutdetail/${idtransactions}`)
+        Axios.get(`${apiurl}/admin/admingetapprovedpaymentdetail/${idtransactions}`)
             .then((res) => {
                 setDataCheckoutDetail(res.data.result)
             })
@@ -100,24 +100,6 @@ const AdminSalesDetail = (props) => {
         })
     }
 
-    // //============================== FUNCTION UPDATE PAYMENT STATUS =======+================================// //
-
-    const onApprovePaymentClick = () => {
-        const idtransactions = props.match.params.idtransactions
-        Axios.post(`${apiurl}/admin/approvepayment/${idtransactions}`)
-            .then(() => {
-                return <Link to='/adminsales' />
-            })
-    }
-
-    const onRejectPaymentClick = () => {
-        const idtransactions = props.match.params.idtransactions
-        Axios.post(`${apiurl}/admin/rejectpayment/${idtransactions}`)
-            .then(() => {
-                return <Link to='/adminsales' />
-            })
-    }
-
     // //============================== RENDER AKHIR ==========================================================// //
 
     return (
@@ -197,9 +179,7 @@ const AdminSalesDetail = (props) => {
                 <br /><br />
 
                 <div className="form-action">
-                    <a style={{ marginLeft: '400px', padding: 20 }} href="/adminsales" className="btn-danger">Return</a>
-                    {/* <a style={{ marginLeft: '25px', padding: 20 }} onClick={onRejectPaymentClick} className="btn-warning">REJECT !</a> */}
-                    <a style={{ marginLeft: '25px', padding: 20 }} onClick={onApprovePaymentClick} className="btn-primary">APPROVE !</a>
+                    <a style={{ marginLeft: '450px', padding: 20 }} href="/adminapprovedsales" className="btn-danger">Return</a>
                 </div>
 
                 <br /><br />
@@ -209,4 +189,4 @@ const AdminSalesDetail = (props) => {
     );
 }
 
-export default AdminSalesDetail;
+export default AdminApprovedSalesDetail;

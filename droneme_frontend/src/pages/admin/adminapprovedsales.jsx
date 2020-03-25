@@ -5,14 +5,14 @@ import Axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { apiurl } from '../../support/apiurl'
 
-const AdminSales = () => {
+const AdminApprovedSales = () => {
 
     // //============================== FUNCTION READ CHECKOUTS ===============================================// //
 
     const [dataCheckout, setDataCheckout] = useState([])
 
     useEffect(() => {
-        Axios.get(`${apiurl}/admin/admingetunapprovedcheckout`)
+        Axios.get(`${apiurl}/admin/admingetapprovedpayment`)
             .then((res) => {
                 setDataCheckout(res.data.result)
             })
@@ -29,7 +29,7 @@ const AdminSales = () => {
                     <td>{val.username}</td>
                     <td>Rp {val.totalprice}</td>
                     <td>
-                        <a href={`/adminsalesdetail/${val.idtransactions}`} className="btn-primary ml-3">Details</a>
+                        <a href={`/adminapprovedsalesdetail/${val.idtransactions}`} className="btn-primary ml-3">Details</a>
                     </td>
                     <td>{val.paymentstatus}</td>
                 </tr>
@@ -52,12 +52,12 @@ const AdminSales = () => {
                         <br /><br />
                     </div>
                     <div className="col-md-8 row" style={{ marginLeft: '75px' }}>
-                        <p className="sub-header-title" style={{ fontWeight: 'bolder' }}>
+                        <a href="/adminsales" className="sub-header-title">
                             Waiting For Approval Orders
-                            </p>
-                        <a href="/adminapprovedsales" className="sub-header-title">
-                            Approved Orders
                             </a>
+                        <p className="sub-header-title" style={{ fontWeight: 'bolder' }}>
+                            Approved Orders
+                            </p>
                     </div>
                 </div>
 
@@ -86,4 +86,4 @@ const AdminSales = () => {
     );
 }
 
-export default AdminSales;
+export default AdminApprovedSales;

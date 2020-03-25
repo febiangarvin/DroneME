@@ -12,7 +12,9 @@ import AdminDroneAccessoriesProducts from './pages/admin/admindroneaccessoriespr
 import AdminAccessoriesProducts from './pages/admin/adminaccesoriesproducts';
 import AdminAddProducts from './pages/admin/adminaddproducts';
 import AdminSales from './pages/admin/adminsales';
+import AdminApprovedSales from './pages/admin/adminapprovedsales';
 import AdminSalesDetail from './pages/admin/adminsalesdetail';
+import AdminApprovedSalesDetail from './pages/admin/adminapprovedsalesdetail';
 import AdminEdit from './pages/admin/adminedit';
 import AdminManageUsers from './pages/admin/adminmanageusers';
 
@@ -37,7 +39,9 @@ import UserTransaction from './pages/transaction/usertransaction';
 // import Cart from './pages/transaction/cart';
 // import Checkout from './pages/transaction/checkout';
 import Orders from './pages/transaction/orders';
+import PaidOrders from './pages/transaction/paidorders';
 import OrderDetail from './pages/transaction/orderdetail';
+import PaidOrderDetail from './pages/transaction/paidorderdetail';
 
 import { Switch, Route } from 'react-router-dom' // //other components import
 import { KeepLogin, UserGetCart } from './redux/actions'
@@ -69,7 +73,9 @@ const App = () => {
         <Route path={'/adminaccessoriesproducts'} exact component={AdminAccessoriesProducts} />
         <Route path={'/adminaddproducts'} exact component={AdminAddProducts} />
         <Route path={'/adminsales'} exact component={AdminSales} />
-        <Route path={'/adminsalesdetail'} exact component={AdminSalesDetail} />
+        <Route path={'/adminapprovedsales'} exact component={AdminApprovedSales} />
+        <Route path={'/adminsalesdetail/:idtransactions'} exact component={AdminSalesDetail} />
+        <Route path={'/adminapprovedsalesdetail/:idtransactions'} exact component={AdminApprovedSalesDetail} />
         <Route path={'/adminedit'} exact component={AdminEdit} />
         <Route path={'/adminmanageusers'} exact component={AdminManageUsers} />
 
@@ -89,7 +95,9 @@ const App = () => {
         {/* <Route path={'/cart'} exact component={Cart} /> */}
         {/* <Route path={'/checkout'} exact component={Checkout} /> */}
         <Route path={'/orders'} exact component={Orders} />
+        <Route path={'/paidorders'} exact component={PaidOrders} />
         <Route path={'/orderdetail/:idtransactions'} exact component={OrderDetail} />
+        <Route path={'/paidorderdetail/:idtransactions'} exact component={PaidOrderDetail} />
 
         <Route path={'/about'} exact component={About} />
         <Route path={'/reviews'} exact component={Reviews} />

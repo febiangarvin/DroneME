@@ -16,7 +16,7 @@ const Orders = () => {
 
     useEffect(() => {
         const idusers = localStorage.getItem('droneme')
-        Axios.get(`${apiurl}/users/usergetcheckout/${idusers}`)
+        Axios.get(`${apiurl}/users/usergetunpaidcheckout/${idusers}`)
             .then((res) => {
                 setDataCheckout(res.data.result)
             })
@@ -52,6 +52,15 @@ const Orders = () => {
                         <p className="header-title" style={{ marginRight: '200px' }}>
                             My Orders
                         </p>
+                        <br /><br />
+                    </div>
+                    <div className="col-md-8 row" style={{ marginLeft: '75px' }}>
+                        <a href="/paidorders" className="sub-header-title">
+                            Orders I Have Paid
+                            </a>
+                        <p className="sub-header-title" style={{ fontWeight: 'bolder' }}>
+                            Unpaid Orders
+                            </p>
                     </div>
                 </div>
                 <div className="row report-group">

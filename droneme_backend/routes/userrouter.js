@@ -8,8 +8,10 @@ router.post('/addcheckout', usercontroller.userAddCheckout)
 
 router.get('/usergetcart/:id', usercontroller.userGetCart)
 router.get('/usergetreceiver/:id', usercontroller.userGetReceiver)
-router.get('/usergetcheckout/:id', usercontroller.userGetCheckout)
-router.get('/usergetcheckoutdetail/:id/:idtransactions', usercontroller.userGetCheckoutDetail)
+router.get('/usergetunpaidcheckout/:id', usercontroller.userGetUnpaidCheckout)
+router.get('/usergetpaidcheckout/:id', usercontroller.userGetPaidCheckout)
+router.get('/usergetunpaidcheckoutdetail/:id/:idtransactions', usercontroller.userGetUnpaidCheckoutDetail)
+router.get('/usergetpaidcheckoutdetail/:id/:idtransactions', usercontroller.userGetPaidCheckoutDetail)
 
 router.post('/addpaymentimage', usercontroller.userAddPaymentImage)
 

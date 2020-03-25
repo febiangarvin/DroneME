@@ -85,14 +85,6 @@ module.exports = {
         })
     },
 
-    getUsers: (req, res) => {
-        var sql = 'SELECT u.username, u.email, u.verification FROM users u WHERE u.idroles=1;'
-        mysqldb.query(sql, (err, res1) => {
-            if (err) return res.status(500).send(err)
-            return res.status(200).send({ result: res1 })
-        })
-    },
-
     // //============================== UPDATE FUNCTION =======================================================// //
 
     updatePassword: (req, res) => {
@@ -101,16 +93,6 @@ module.exports = {
         let sql = `UPDATE users SET ? WHERE idusers = ${req.params.id}`
 
         mysqldb.query(sql, data, (err, res1) => {
-            if (err) return res.status(500).send(err)
-            return res.status(200).send({ result: res1 })
-        })
-    },
-
-    // //============================== DELETE FUNCTION =======================================================// //
-
-    deleteUser: (req, res) => {
-        var sql = `DELETE FROM users WHERE idusers = ${req.params.id};`
-        mysqldb.query(sql, (err, res1) => {
             if (err) return res.status(500).send(err)
             return res.status(200).send({ result: res1 })
         })

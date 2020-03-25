@@ -67,19 +67,39 @@ module.exports = {
         })
     },
 
-    userGetCheckout: (req, res) => {
+    userGetUnpaidCheckout: (req, res) => {
         const { id } = req.params
-        let sql = `SELECT idtransactions, totalprice, paymentstatus FROM transactions WHERE idusers = ${id}`
+        let sql = `SELECT idtransactions, totalprice, paymentstatus FROM transactions WHERE idusers = ${id} AND paymentstatus IN ('waiting for payment', 'Re-upload of payment needed')`
         mysqldb.query(sql, (err, res1) => {
             if (err) return res.status(500).send(err)
             return res.status(200).send({ result: res1 })
         })
     },
 
-    userGetCheckoutDetail: (req, res) => {
+    userGetPaidCheckout: (req, res) => {
+        const { id } = req.params
+        let sql = `SELECT idtransactions, totalprice, paymentstatus FROM transactions WHERE idusers = ${id} AND paymentstatus IN ('Payment Uploaded', 'Approved')`
+        mysqldb.query(sql, (err, res1) => {
+            if (err) return res.status(500).send(err)
+            return res.status(200).send({ result: res1 })
+        })
+    },
+
+    userGetUnpaidCheckoutDetail: (req, res) => {
         const { id } = req.params // //get data from frontend
         // const { idtransactions } = req.params // //get data from frontend
-        let sql = `SELECT td.*, p.productname, p.productprice FROM transactiondetails td JOIN products p ON p.idproducts = td.idproducts WHERE td.idusers = ${id} AND td.paymentstatus='waiting for payment' AND td.idtransactions=${req.params.idtransactions}` // //set SQL for database
+        let sql = `SELECT td.*, p.productname, p.productprice FROM transactiondetails td JOIN products p ON p.idproducts = td.idproducts WHERE td.idusers = ${id} AND td.paymentstatus IN ('waiting for payment', 'Re-upload of payment needed') AND td.idtransactions=${req.params.idtransactions}` // //set SQL for database
+        console.log(req.params)
+        mysqldb.query(sql, (err, res1) => { // //database actions
+            if (err) return res.status(500).send(err)
+            return res.status(200).send({ result: res1 })
+        })
+    },
+
+    userGetPaidCheckoutDetail: (req, res) => {
+        const { id } = req.params // //get data from frontend
+        // const { idtransactions } = req.params // //get data from frontend
+        let sql = `SELECT td.*, p.productname, p.productprice, t.paymentimage FROM transactiondetails td JOIN products p ON p.idproducts = td.idproducts JOIN transactions t ON t.idtransactions=td.idtransactions WHERE td.idusers = ${id} AND td.paymentstatus IN ('Payment Uploaded', 'Approved') AND td.idtransactions=${req.params.idtransactions}` // //set SQL for database
         console.log(req.params)
         mysqldb.query(sql, (err, res1) => { // //database actions
             if (err) return res.status(500).send(err)

@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import AdminSideLeft from '../../components/adminsideleft';
+import Header from '../../components/header'
 import NotFound from '../support/notfound'
 import Axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
+import { UserGetCheckout } from '../../redux/actions'
 import { apiurl } from '../../support/apiurl'
 
-const AdminSales = () => {
+const PaidOrders = () => {
 
-    // //============================== FUNCTION READ CHECKOUTS ===============================================// //
+    // //============================== FUNCTION READ ORDERS ==================================================// //
 
+    const { datacheckout } = useSelector(state => state.OrderReducers)
+    const dispatch = useDispatch()
     const [dataCheckout, setDataCheckout] = useState([])
 
     useEffect(() => {
-        Axios.get(`${apiurl}/admin/admingetunapprovedcheckout`)
+        const idusers = localStorage.getItem('droneme')
+        Axios.get(`${apiurl}/users/usergetpaidcheckout/${idusers}`)
             .then((res) => {
                 setDataCheckout(res.data.result)
             })
@@ -26,10 +30,9 @@ const AdminSales = () => {
             return (
                 <tr key={index}>
                     <td>{val.idtransactions}</td>
-                    <td>{val.username}</td>
                     <td>Rp {val.totalprice}</td>
                     <td>
-                        <a href={`/adminsalesdetail/${val.idtransactions}`} className="btn-primary ml-3">Details</a>
+                        <a href={`/paidorderdetail/${val.idtransactions}`} className="btn-primary ml-3">Details</a>
                     </td>
                     <td>{val.paymentstatus}</td>
                 </tr>
@@ -37,30 +40,29 @@ const AdminSales = () => {
         })
     }
 
-    // //============================== RENDER AKHIR ==========================================================// //    
+    // //============================== RENDER AKHIR ==========================================================// //
 
     return (
         <div>
-            <AdminSideLeft />
+            <Header />
 
             <div className="main-content">
                 <div className="header row">
                     <div className="col-md-12">
-                        <p className="header-title">
-                            Product Sales
-                            </p>
+                        <p className="header-title" style={{ marginRight: '200px' }}>
+                            My Orders
+                        </p>
                         <br /><br />
                     </div>
                     <div className="col-md-8 row" style={{ marginLeft: '75px' }}>
                         <p className="sub-header-title" style={{ fontWeight: 'bolder' }}>
-                            Waiting For Approval Orders
+                            Orders I Have Paid
                             </p>
-                        <a href="/adminapprovedsales" className="sub-header-title">
-                            Approved Orders
+                        <a href="/orders" className="sub-header-title">
+                            Unpaid Orders
                             </a>
                     </div>
                 </div>
-
                 <div className="row report-group">
                     <div className="col-md-12">
                         <div className="item-big-report col-md-12">
@@ -68,7 +70,6 @@ const AdminSales = () => {
                                 <thead>
                                     <tr>
                                         <th scope="col">Transaction Unique ID</th>
-                                        <th scope="col">Username</th>
                                         <th scope="col">Total Price</th>
                                         <th scope="col">Details</th>
                                         <th scope="col">Payment Status</th>
@@ -86,4 +87,4 @@ const AdminSales = () => {
     );
 }
 
-export default AdminSales;
+export default PaidOrders;
