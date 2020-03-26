@@ -12,17 +12,13 @@ const Cart = () => {
 
     // //============================== FUNCTION READ CART ====================================================// //
 
-    const { datacart } = useSelector(state => state.HomeReducers)
-    const { username, address, province, postalcode } = useSelector(state => state.Auth)
-    const dispatch = useDispatch()
+    const { datacart } = useSelector(state => state.HomeReducers) // //mengambil state dari reducers
+    const dispatch = useDispatch() // //aktifkan dispatch (model hooks)
     const [dataCart, setDataCart] = useState([])
-    const [totalPrice, setTotalPrice] = useState(0)
 
     const renderCart = () => {
-        return datacart.map((val, index) => {
-            console.log(typeof val.productprice);
-            // return console.log(val);
-            return (
+        return datacart.map((val, index) => { // //me-return data berupa cart dengan melakukan mapping dengan parameter value dan index
+            return ( // //me-render tampilan cart dengan value data yang akan tampil
                 <tr key={index}>
                     <td>{val.productname}</td>
                     <td>Rp {val.productprice}</td>
@@ -36,18 +32,23 @@ const Cart = () => {
         })
     }
 
-    const [dataReceiver, setDataReceiver] = useState([])
+    const [totalPrice, setTotalPrice] = useState(0) // //state untuk menentukan total harga (dengan state awal angka 0)
 
-    useEffect(() => {
-        let total = 0
+    useEffect(() => { // //gunakan useEffect dengan jenis update
+        let total = 0 // //variable total awal dengan angka 0
         for (let i = 0; i < datacart.length; i++) {
+            // //lakukan looping berdasarkan length cart. Dimana total akan terus bertambah dengan hasil perkalian productprice dan quantity (sesuaikan dengan banyaknya product).
             total += datacart[i].productprice * datacart[i].quantity
         }
         setTotalPrice(total)
-    }, [datacart])
+        console.log(totalPrice);
+    }, [datacart]) // //update untuk state datacart
+
+    const { username, address, province, postalcode } = useSelector(state => state.Auth) // //mengambil state dari reducers
+    const [dataReceiver, setDataReceiver] = useState([])
 
     const renderReceiver = () => {
-        return (
+        return ( // //me-render tampilan receiver dengan value data user
             <tbody style={{ fontSize: '20px', color: 'white' }}>
                 <tr>
                     Receiver Name : {username}
@@ -69,19 +70,25 @@ const Cart = () => {
 
     const [addToCheckout, setAddToCheckout] = useState(datacart)
 
-    const addDataToCheckout = () => {
-        const idusers = localStorage.getItem('droneme')
-        const datacheckout = { idusers: idusers, totalprice: parseInt(totalPrice) }
-        Axios.post(`${apiurl}/users/addcheckout`, datacheckout)
-            .then(() => {
-                return <Link to='/orders' />
-            })
+    const addDataToCheckout = () => { // //function eksekusi cart menjadi checkout
+        if (totalPrice === 0) {
+            alert('Cart is Empty')
+        }
+        else {
+            const idusers = localStorage.getItem('droneme') // //mengirim variable berupa idusers yang diambil dari localstorage
+            const datacheckout = { idusers: idusers, totalprice: parseInt(totalPrice) } // //mengirim variable yang berisi idusers serta totalpriceyang di render dari frontend
+            Axios.post(`${apiurl}/users/addcheckout`, datacheckout)
+                .then(() => {
+                    console.log(totalPrice);
+                    return <Link to='/orders' />
+                })
+        }
     }
 
     // //============================== FUNCTION DELETE CART ===================================================// //
 
-    const onDeleteDataCart = (index) => {
-        var id = datacart[index].idtransactiondetails
+    const onDeleteDataCart = (index) => { // //function delete per product di cart
+        var id = datacart[index].idtransactiondetails // //variable id berdasrkan index per cart dari id transactiondetails (tabel)
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -102,9 +109,9 @@ const Cart = () => {
                     color: '#ddd'
                 })
                     .then(() => {
-                        Axios.delete(`${apiurl}/users/deletecart/${id}`)
+                        Axios.delete(`${apiurl}/users/deletecart/${id}`) // //jika confirm, maka melakukan delete
                             .then(() => {
-                                dispatch(UserGetCart())
+                                dispatch(UserGetCart()) // //setelahnya melakukan get lagi, dengan function yang telah dibuat di actions
                             })
                             .catch((error) => {
                                 console.log(error);

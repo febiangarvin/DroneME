@@ -12,10 +12,10 @@ const Orders = () => {
 
     const { datacheckout } = useSelector(state => state.OrderReducers)
     const dispatch = useDispatch()
-    const [dataCheckout, setDataCheckout] = useState([])
+    const [dataCheckout, setDataCheckout] = useState([]) // //state untuk mengambil data product yang telah dilakukan checkout (pada cart)
 
     useEffect(() => {
-        const idusers = localStorage.getItem('droneme')
+        const idusers = localStorage.getItem('droneme') // //mengirim variable berupa idusers yang diambil dari localstorage
         Axios.get(`${apiurl}/users/usergetunpaidcheckout/${idusers}`)
             .then((res) => {
                 setDataCheckout(res.data.result)
@@ -26,7 +26,7 @@ const Orders = () => {
     }, [])
 
     const renderCheckout = () => {
-        return dataCheckout.map((val, index) => {
+        return dataCheckout.map((val, index) => { // //me-return data berupa checkout dengan melakukan mapping dengan parameter value dan index
             return (
                 <tr key={index}>
                     <td>{val.idtransactions}</td>

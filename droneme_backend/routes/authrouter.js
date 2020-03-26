@@ -10,7 +10,7 @@ router.get('/changeencrypt/:password', authcontroller.hashpassword)
 router.get('/login', authcontroller.login)
 router.get('/keeplogin/:id', authcontroller.keeplogin)
 
-router.put('/updatepassword/:id', authcontroller.updatePassword)
+// router.put('/updatepassword/:id', authcontroller.updatePassword)
 
 // router.get('/authlog/:id', authcontroller.Authlogin)
 // router.get('/authlog', authcontroller.Authlogin)

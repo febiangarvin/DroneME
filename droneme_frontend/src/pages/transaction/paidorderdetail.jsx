@@ -16,8 +16,9 @@ const PaidOrderDetail = (props) => {
     const { username, address, province, postalcode } = useSelector(state => state.Auth)
     const dispatch = useDispatch()
     const [dataCheckoutDetail, setDataCheckoutDetail] = useState([])
+    const [dataReceiver, setDataReceiver] = useState([])
     const [totalPrice, setTotalPrice] = useState(0)
-
+    const [dataPaymentImage, setDataPaymentImage] = useState('Image')
 
     console.log(props.match.params);
 
@@ -27,6 +28,7 @@ const PaidOrderDetail = (props) => {
         Axios.get(`${apiurl}/users/usergetpaidcheckoutdetail/${idusers}/${idtransactions}`)
             .then((res) => {
                 setDataCheckoutDetail(res.data.result)
+                setDataPaymentImage(res.data.paymentimage)
             })
             .catch((err) => {
                 console.log(err)
@@ -46,22 +48,18 @@ const PaidOrderDetail = (props) => {
     }
 
     const renderPaymentImage = () => {
-        return dataCheckoutDetail.map((val, index) => {
-            return (
-                <tbody key={index}>
-                    <tr>
-                        <img
-                            src={`${apiImage + val.paymentimage}`}
-                            alt='paymentImage'
-                            style={{ alignItems: 'center', height: '100%', width: '100%' }}
-                        />
-                    </tr>
-                </tbody>
-            )
-        })
+        return (
+            <tbody>
+                <tr>
+                    <img
+                        src={`${apiImage + dataPaymentImage}`}
+                        alt='paymentImage'
+                        style={{ alignItems: 'center', height: '100%', width: '100%' }}
+                    />
+                </tr>
+            </tbody>
+        )
     }
-
-    const [dataReceiver, setDataReceiver] = useState([])
 
     useEffect(() => {
         let total = 0

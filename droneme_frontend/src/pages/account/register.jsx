@@ -10,6 +10,7 @@ class Register extends Component {
 
     // //============================== FUNCTION VARIABLES =============================================// //
 
+    // //data data yang dikirim dari frontend ke backend, melakukan penambahan data baru (post) berupa data register dalam bentuk function button
     btnregister = () => {
         var username = this.refs.username.value;
         var email = this.refs.email.value;
@@ -18,10 +19,11 @@ class Register extends Component {
         var address = this.refs.address.value;
         var province = this.refs.province.value;
         var postalcode = this.refs.postalcode.value;
+        // //saat diaktifkan, maka akan men-trigger actions pada redux dengan membawa data
         this.props.RegisterAction({ username, email, password, confirmpassword, address, province, postalcode });
     }
 
-    // //=============================== RENDER ========================================================// //
+    // //=============================== RENDER AKHIR ==================================================// //
 
     render() {
         if (this.props.register === false) {
@@ -98,7 +100,7 @@ class Register extends Component {
     }
 }
 
-const MapStateToProps = (state) => {
+const MapStateToProps = (state) => { // //mengambil state yang telah dibuat di reducer (atau useSelector) mengambil dari index
     return {
         register: state.Auth.register,
         loading: state.Auth.loading,

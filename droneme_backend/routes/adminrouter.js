@@ -14,8 +14,8 @@ router.get('/admingetreport', admincontroller.adminGetReport)
 router.post('/admingettotalincome', admincontroller.adminGetTotalIncome)
 router.post('/admingettotalsoldproducts', admincontroller.adminGetTotalSoldProducts)
 router.post('/approvepayment/:idtransactions', admincontroller.adminApprovePayment)
-router.post('/rejectpayment/:idtransactions', admincontroller.adminRejectPayment)
 
-router.delete('/admindeleteuser/:idusers', admincontroller.adminDeleteUser)
+// router.post('/rejectpayment/:idtransactions', admincontroller.adminRejectPayment)
+// router.delete('/admindeleteuser/:idusers', admincontroller.adminDeleteUser)
 
 module.exports = router

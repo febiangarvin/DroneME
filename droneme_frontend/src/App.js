@@ -15,7 +15,6 @@ import AdminSales from './pages/admin/adminsales';
 import AdminApprovedSales from './pages/admin/adminapprovedsales';
 import AdminSalesDetail from './pages/admin/adminsalesdetail';
 import AdminApprovedSalesDetail from './pages/admin/adminapprovedsalesdetail';
-import AdminEdit from './pages/admin/adminedit';
 import AdminManageUsers from './pages/admin/adminmanageusers';
 
 import FlyaDrone from './pages/documentation/flyadrone'; // //documentation import
@@ -76,7 +75,6 @@ const App = () => {
         <Route path={'/adminapprovedsales'} exact component={AdminApprovedSales} />
         <Route path={'/adminsalesdetail/:idtransactions'} exact component={AdminSalesDetail} />
         <Route path={'/adminapprovedsalesdetail/:idtransactions'} exact component={AdminApprovedSalesDetail} />
-        <Route path={'/adminedit'} exact component={AdminEdit} />
         <Route path={'/adminmanageusers'} exact component={AdminManageUsers} />
 
         <Route path={'/flyadrone'} exact component={FlyaDrone} />

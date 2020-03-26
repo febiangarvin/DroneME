@@ -35,10 +35,7 @@ const AdminManageUsers = () => {
                 <tr key={index}>
                     <td>{val.username}</td>
                     <td>{val.email}</td>
-                    <td>{val.verification}</td>
-                    <td>
-                        <button className='btn btn-danger mr-1 ml-1' onClick={() => onDeleteUser(index)}>DELETE</button>
-                    </td>
+                    {/* <td>{val.verification}</td> */}
                 </tr>
             )
         })
@@ -91,51 +88,48 @@ const AdminManageUsers = () => {
 
     // //============================== RENDER AKHIR ==========================================================// //
 
-    if (redux.roles === 1) { // //proteksi admin (hanya admin yang bisa akses)
+    if (redux.username !== 'admin') { // //proteksi admin (hanya admin yang bisa akses)
         return <NotFound />;
     }
-    console.log();
-    return (
-        <div>
-
-            <AdminSideLeft />
-
-            <div className="main-content">
-
-                <div className="header row">
-                    <div className="col-md-12">
-                        <p className="header-title">
-                            DroneME Users
+    else {
+        return (
+            <div>
+                <AdminSideLeft />
+                <div className="main-content">
+                    <div className="header row">
+                        <div className="col-md-12">
+                            <p className="header-title">
+                                DroneME Users
                             </p>
-                    </div>
-                </div>
-
-                <div className="row report-group">
-                    <div className="col-md-12">
-
-                        <div className="item-big-report col-md-12">
-                            <table className="table-wisata table-tiketsaya table table-borderless">
-
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Username</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Verification</th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {renderUsers()}
-                                </tbody>
-                            </table>
                         </div>
+                    </div>
 
+                    <div className="row report-group">
+                        <div className="col-md-12">
+
+                            <div className="item-big-report col-md-12">
+                                <table className="table-wisata table-tiketsaya table table-borderless">
+
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Username</th>
+                                            <th scope="col">Email</th>
+                                            {/* <th scope="col">Verification</th> */}
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {renderUsers()}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 export default AdminManageUsers;

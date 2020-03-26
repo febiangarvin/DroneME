@@ -8,19 +8,23 @@ import { Link, Redirect } from 'react-router-dom'
 class Login extends Component {
     state = {}
 
-    btnlogin = () => {
+    // //============================== FUNCTION VARIABLES =============================================// //
+
+    btnlogin = () => { // //data data yang dikirim dari frontend ke backend, mengambil data (get)
         var username = this.refs.username.value
         console.log(username);
         var password = this.refs.password.value
         console.log(password);
+        // //saat diaktifkan, maka akan men-trigger actions pada redux dengan membawa data
         this.props.LoginThunk(username, password)
     }
+
+    // //=============================== RENDER AKHIR ==================================================// //
 
     render() {
         if (this.props.AuthLog) {
             return <Redirect to={'/'} />
         }
-
         return (
             <div>
                 <div className="login">
@@ -41,6 +45,7 @@ class Login extends Component {
                                     <p className="title-form">
                                         Sign In
                                     </p>
+
                                     <form>
                                         <div className="form-group content-sign-in">
                                             <label className="label-sign-in" htmlFor="exampleInputEmail1">Username</label>
@@ -52,12 +57,14 @@ class Login extends Component {
                                         </div>
                                         <div onClick={this.btnlogin} className="btn-small">Sign In</div>
                                     </form>
+
                                     <p className="subtitle-form">
                                         <br />
                                         <a href='/Forgotpassword' style={{ fontSize: 12, fontWeight: 500 }}>Forgot Password?</a>
                                         <br /><br />
                                         <a href='/Register' style={{ fontSize: 19, fontWeight: 500 }}>Click here to Register</a>
                                     </p>
+
                                     <p className="subtitle-form">
                                         <a href='/'>Back to Home</a>
                                     </p>
@@ -66,14 +73,13 @@ class Login extends Component {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         );
     }
 }
 
-const MapStateToProps = (state) => {
+const MapStateToProps = (state) => { // //mengambil state yang telah dibuat di reducer (atau useSelector) mengambil dari index
     return {
         AuthLog: state.Auth.login,
         Auth: state.Auth

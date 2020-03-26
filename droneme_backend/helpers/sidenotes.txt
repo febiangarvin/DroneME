@@ -1,0 +1,11 @@
+1. Jika ingin menggunakan data dari reducers, maka gunakan dispatch sebagai parameter nya terlebih dahulu
+2. Payload berguna untuk mengirim data ke reducers
+3. SetItem untuk mengirim/menetapkan sebuah data. Sementara GetItem untuk mengambil data yang telah dilakukan SetItem terlebih dahulu
+4. Hooks dibuat untuk menggunakan state, berbeda dari functional component
+5. Redux untuk global state, misal: ada data a dan b lalu dibuat global. Jadi bisa digunakan saat berpindah page
+6. Kalo hooks tidak perlu pakai connect. Tapi menggunakan useSelector
+7. Appending in Javascript is a way to insert content to the end of already existing elements. To append in Javascript, we use the Jquery function append().
+8. "const dispatch = useDispatch()" merupakan variable untuk set dipatch (pengganti connect, pada class component)
+9. Difrontend buat function di object agar, "req.body.idproducts" dibuat di backend
+10. did = terjadi ketika pertama sebuah page dibuka (render), did akan berjalan 1 kali
+11. update = akan melakukan aksi berdasarkan sebuah state yg berubah

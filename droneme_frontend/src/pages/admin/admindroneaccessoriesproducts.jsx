@@ -22,6 +22,8 @@ const AdminDroneAccessoriesProducts = () => {
     const [dataProducts, setDataProducts] = useState([])
     const [pager, setPager] = useState({})
     const [page, setPage] = useState(1)
+    const [editDataPage, setEditDataPage] = useState(false)
+    const [deleteDataPage, setDeleteDataPage] = useState(false)
 
     useEffect(() => {
         Axios.get(`${apiurl}/products/getdroneaccessoriesproducts/${page}`)
@@ -39,11 +41,13 @@ const AdminDroneAccessoriesProducts = () => {
             .then((res) => {
                 setDataProducts(res.data.pageOfData)
                 setPager(res.data.pager)
+                setEditDataPage(false)
+                setDeleteDataPage(false)
             })
             .catch((err) => {
                 console.log(err)
             })
-    }, [page])
+    }, [page, editDataPage, deleteDataPage])
 
     const renderProducts = () => {
         return dataProducts.map((val, index) => {
@@ -152,7 +156,8 @@ const AdminDroneAccessoriesProducts = () => {
         Axios.put(`${apiurl}/products/editdroneaccessoriesproducts/${id}`, formdata, Headers) // //menaruh hasil edit ke axios (db)
             .then((res) => { // //jika axios berhasil
                 console.log('res', res);
-                setDataProducts(res.data.dataDrone)
+                // setDataProducts(res.data.dataDrone)
+                setEditDataPage(true)
                 setEditModal({ ...modalEdit, modalEdit: false, indexEdit: -1 })
             }).catch((err) => {
                 console.log(err)
@@ -185,13 +190,14 @@ const AdminDroneAccessoriesProducts = () => {
                     .then(() => {
                         Axios.delete(`${apiurl}/products/deleteproducts/${id}`)
                             .then(() => {
-                                Axios.get(`${apiurl}/products/getdroneaccessoriesproducts`)
-                                    .then((res) => {
-                                        setDataProducts(res.data.result)
-                                    })
-                                    .catch((error) => {
-                                        console.log(error);
-                                    })
+                                setDeleteDataPage(true)
+                                // Axios.get(`${apiurl}/products/getdroneaccessoriesproducts`)
+                                //     .then((res) => {
+                                //         setDataProducts(res.data.result)
+                                //     })
+                                //     .catch((error) => {
+                                //         console.log(error);
+                                //     })
                             })
                             .catch((error) => {
                                 console.log(error);
@@ -206,87 +212,88 @@ const AdminDroneAccessoriesProducts = () => {
 
     // //============================== RENDER AKHIR ==========================================================// //
 
-    if (redux.roles === 1) { // //proteksi admin (hanya admin yang bisa akses)
+    if (redux.username !== 'admin') { // //proteksi admin (hanya admin yang bisa akses)
         return <NotFound />;
     }
-    return (
-        <div>
-            <AdminSideLeft />
-            {renderModalEdit()}
-            <div className="main-content">
+    else {
+        return (
+            <div>
+                <AdminSideLeft />
+                {renderModalEdit()}
+                <div className="main-content">
 
-                <div className="header row">
-                    <div className="col-md-12">
-                        <p className="header-title">
-                            Manage Products
+                    <div className="header row">
+                        <div className="col-md-12">
+                            <p className="header-title">
+                                Manage Products
                         </p>
-                    </div>
-                    <div className="col-md-12 row">
-                        <a href="/adminaccessoriesproducts" className="sub-header-title">
-                            Accessories
-                            </a>
-                        <p className="sub-header-title" style={{ fontWeight: 'bolder' }}>
-                            Drone Accessories
-                            </p>
-                        <a href="/admindroneproducts" className="sub-header-title">
-                            Drone Products
-                            </a>
-                    </div>
-                </div>
-
-                <div className="row report-group">
-                    <div className="col-md-12">
-
-                        <div className="item-big-report col-md-12">
-                            <table className="table-wisata table-tiketsaya table table-borderless">
-
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Product Name</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Stock</th>
-                                        <th scope="col">Product Type</th>
-                                        <th scope="col">Admin's Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {renderProducts()}
-                                </tbody>
-                            </table>
-
-                            {pager.pages && pager.pages.length &&
-                                <ul className="pagination">
-                                    <li className={`page-item first-item ${pager.currentPage === 1 ? 'disabled' : ''}`}>
-                                        <Link to={{ search: `?page=1` }} className="page-link" onClick={() => setPage(pager.startPage)}>First</Link>
-                                    </li>
-                                    <li className={`page-item previous-item ${pager.currentPage === 1 ? 'disabled' : ''}`}>
-                                        <Link to={{ search: `?page=${pager.currentPage - 1}` }} className="page-link" onClick={() => setPage(pager.currentPage - 1)}>Previous</Link>
-                                    </li>
-                                    {pager.pages.map(page =>
-                                        <li key={page} className={`page-item number-item ${pager.currentPage === page ? 'active' : ''}`}>
-                                            <Link to={{ search: `?page=${page}` }} className="page-link" onClick={() => setPage(page)}>{page}</Link>
-                                        </li>
-                                    )}
-                                    <li className={`page-item next-item ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`}>
-                                        <Link to={{ search: `?page=${pager.currentPage + 1}` }} className="page-link" onClick={() => setPage(pager.currentPage + 1)}>Next</Link>
-                                    </li>
-                                    <li className={`page-item last-item ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`}>
-                                        <Link to={{ search: `?page=${pager.totalPages}` }} className="page-link" onClick={() => setPage(pager.totalPages)}>Last</Link>
-                                    </li>
-                                </ul>
-                            }
-
                         </div>
-                        <br />
-                        <div className="form-action">
-                            <a style={{ marginLeft: '450px', paddingLeft: 19 }} href="/adminaddproducts" className="btn-medium">Add Product</a>
+                        <div className="col-md-12 row">
+                            <a href="/adminaccessoriesproducts" className="sub-header-title">
+                                Accessories
+                            </a>
+                            <p className="sub-header-title" style={{ fontWeight: 'bolder' }}>
+                                Drone Accessories
+                            </p>
+                            <a href="/admindroneproducts" className="sub-header-title">
+                                Drone Products
+                            </a>
+                        </div>
+                    </div>
+
+                    <div className="row report-group">
+                        <div className="col-md-12">
+
+                            <div className="item-big-report col-md-12">
+                                <table className="table-wisata table-tiketsaya table table-borderless">
+
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Product Name</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Stock</th>
+                                            <th scope="col">Product Type</th>
+                                            <th scope="col">Admin's Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {renderProducts()}
+                                    </tbody>
+                                </table>
+
+                                {pager.pages && pager.pages.length &&
+                                    <ul className="pagination">
+                                        <li className={`page-item first-item ${pager.currentPage === 1 ? 'disabled' : ''}`}>
+                                            <Link to={{ search: `?page=1` }} className="page-link" onClick={() => setPage(pager.startPage)}>First</Link>
+                                        </li>
+                                        <li className={`page-item previous-item ${pager.currentPage === 1 ? 'disabled' : ''}`}>
+                                            <Link to={{ search: `?page=${pager.currentPage - 1}` }} className="page-link" onClick={() => setPage(pager.currentPage - 1)}>Previous</Link>
+                                        </li>
+                                        {pager.pages.map(page =>
+                                            <li key={page} className={`page-item number-item ${pager.currentPage === page ? 'active' : ''}`}>
+                                                <Link to={{ search: `?page=${page}` }} className="page-link" onClick={() => setPage(page)}>{page}</Link>
+                                            </li>
+                                        )}
+                                        <li className={`page-item next-item ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`}>
+                                            <Link to={{ search: `?page=${pager.currentPage + 1}` }} className="page-link" onClick={() => setPage(pager.currentPage + 1)}>Next</Link>
+                                        </li>
+                                        <li className={`page-item last-item ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`}>
+                                            <Link to={{ search: `?page=${pager.totalPages}` }} className="page-link" onClick={() => setPage(pager.totalPages)}>Last</Link>
+                                        </li>
+                                    </ul>
+                                }
+
+                            </div>
+                            <br />
+                            <div className="form-action">
+                                <a style={{ marginLeft: '450px', paddingLeft: 19 }} href="/adminaddproducts" className="btn-medium">Add Product</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-    );
+        );
+    }
 }
 
 export default AdminDroneAccessoriesProducts;

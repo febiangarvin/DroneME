@@ -3,8 +3,9 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Header from '../../components/header'
 import Footer from '../../components/footer';
 import Axios from 'axios'
+import NotFound from '../support/notfound'
 import { apiurl, apiImage } from '../../support/apiurl'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { UserGetCart } from '../../redux/actions'
 import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
@@ -13,17 +14,24 @@ const DroneProducts = () => {
 
     // //============================== FUNCTION READ =========================================================// //
 
-    const [dataDrone, setDataDrone] = useState([])
+    const redux = useSelector((state) => {
+        return {
+            roles: state.Auth.roles,
+            username: state.Auth.username,
+        }
+    })
 
-    const [pager, setPager] = useState({})
+    const [dataDrone, setDataDrone] = useState([]) // //state untuk mengambil product
 
-    const [page, setPage] = useState(1)
+    const [pager, setPager] = useState({}) // //state object untuk mengambil pager (pagination)
 
-    const [productQuantity, setProductQuantity] = useState(1)
+    const [page, setPage] = useState(1) // //state untuk menentukan posisi page (dengan state awal angka 1)
 
-    const dispatch = useDispatch() // //set dipatch(pengganti connect, pada class component)
+    const [productQuantity, setProductQuantity] = useState(1) // //state untuk menentukan banyak pembelian product (dengan state awal angka 1)
 
-    useEffect(() => { // //get
+    const dispatch = useDispatch()
+
+    useEffect(() => { // //function get untuk mengambil product
         Axios.get(`${apiurl}/products/getdroneproducts/${page}`)
             .then((res) => {
                 console.log('res', res.data);
@@ -35,7 +43,7 @@ const DroneProducts = () => {
             })
     }, [])
 
-    useEffect(() => { // //trigger saat state berubah
+    useEffect(() => { // //gunakan useEffect dengan jenis update
         Axios.get(`${apiurl}/products/getdroneproducts/${page}`)
             .then((res) => {
                 console.log('res', res.data);
@@ -45,10 +53,11 @@ const DroneProducts = () => {
             .catch((err) => {
                 console.log(err)
             })
-    }, [page]) // //state page
+    }, [page]) // //update untuk state page
 
     const renderProduk = () => {
-        return dataDrone.map((val, index) => {
+        // //me-render tampilan product
+        return dataDrone.map((val, index) => { // //melakukan untuk mapping data product (menyesuaikan types)
             const detailProduct = {
                 idproducts: val.idproducts,
                 productprice: val.productprice,
@@ -94,15 +103,18 @@ const DroneProducts = () => {
 
     // //============================== FUNCTION ADD PRODUCT ==================================================// //
 
-    const addProduct = (index) => {
-        // dispatch(usersAddCart(detailProduct))
-        const idusers = localStorage.getItem('droneme')
-        dispatch({ type: 'ADD_CART_LOADING' })
+    const addProduct = (index) => { // //function add product dengan parameter index
+        const idusers = localStorage.getItem('droneme') // //mengirim variable berupa idusers yang diambil dari localstorage
+        dispatch({ type: 'ADD_CART_LOADING' }) // //men-trigger dispatch dari reducer dengan type LOADING
+        // //variable untuk mengirim product dengan datanya
         const newDataProduct = { idproducts: dataDrone[index].idproducts, idusers: idusers, quantity: parseInt(productQuantity) }
-        // console.log(newDataProduct);
-        Axios.post(`${apiurl}/users/addcart`, newDataProduct) // //di object agar, req.body.idproducts di backend
+        Axios.post(`${apiurl}/users/addcart`, newDataProduct) // //melakukan post dengan sebuah variable
             .then(res => {
-                if (res.data.result) {
+                // if (redux.username === 'admin') { // //proteksi admin (hanya admin yang bisa akses)
+                //     alert('Login as a User Please')
+                // }
+                // else {
+                if (res.data.result) { // //jika ada result, men-trigger sebuah dispatch dengan type SUCCESS beserta function di actions
                     dispatch({ type: 'ADD_CART_SUCCESS' })
                     dispatch(UserGetCart())
                     Swal.fire({
@@ -114,7 +126,8 @@ const DroneProducts = () => {
                     })
                 }
                 else {
-                    dispatch({ type: 'ADD_CART_ERROR' })
+                    dispatch({ type: 'ADD_CART_ERROR' }) // //jika tidak ada result, men-trigger sebuah dispatch dengan type ERROR
+                    // }
                 }
             })
             .catch(err => { console.log(err) })
@@ -123,29 +136,33 @@ const DroneProducts = () => {
     // //============================== FUNCTION OPEN MODAL PRODUCT DESCRIPTION ===============================// //
 
     const [productDescription, setProductDescription] = useState({
+        // //destructuring state untuk menampilkan productdescription, beserta data spesifik yang akan dikirim
         idproducts: 0,
         productname: '',
         productdescription: '',
     })
 
-    const { idproducts, productname, productdescription } = productDescription
+    const { idproducts, productname, productdescription } = productDescription // //variable object dari state awal
 
     const [descriptionModal, setDescriptionModal] = useState({
+        // //destructuring state untuk menampilkan modal, beserta data spesifik yang akan dikirim
         modalDescription: false,
         indexDescription: -1
     })
 
-    const { indexDescription, modalDescription } = descriptionModal
+    const { indexDescription, modalDescription } = descriptionModal // //variable object dari state awal
 
-    const onModalOpen = (index) => {
-        setProductDescription(dataDrone[index])
+    const onModalOpen = (index) => { // //function membuka modal beserta index per product
+        setProductDescription(dataDrone[index]) // //mengambil description per index product
+        // //men-trigger modal dengan spread objek modal. Lalu dibuat true. Beserta menampilkan index description per index product
         setDescriptionModal({ ...descriptionModal, modalDescription: true, indexDescription: index });
     }
 
+    // //function toggle pada modal. Melakukan callback trigger modal dengan spread objek modal. Dan menonaktifkan dekscription pada modal
     const toggleModal = () => setDescriptionModal({ ...descriptionModal, modalDescription: !modalDescription })
 
-    const renderModalDescription = () => {
-        return dataDrone.map((val, index) => {
+    const renderModalDescription = () => { // //function render akhir modal description
+        return dataDrone.map((val, index) => { // //melakukan map data product dengan index
             return (
                 <Modal isOpen={modalDescription} fade={false} key={index} toggle={toggleModal}>
                     <ModalHeader>

@@ -16,6 +16,6 @@ router.get('/usergetpaidcheckoutdetail/:id/:idtransactions', usercontroller.user
 router.post('/addpaymentimage', usercontroller.userAddPaymentImage)
 
 router.delete('/deletecart/:id', usercontroller.userDeleteCart)
-router.delete('/deletecheckout/:id', usercontroller.userDeleteCheckout)
+// router.delete('/deletecheckout/:id', usercontroller.userDeleteCheckout)
 
 module.exports = router
