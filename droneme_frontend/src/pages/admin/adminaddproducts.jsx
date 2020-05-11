@@ -119,9 +119,9 @@ const AdminAddProducts = () => {
 
     // //============================== RENDER AKHIR ==========================================================// //
 
-    if (redux.username !== 'admin') { // //proteksi admin (hanya admin yang bisa akses)
-        return <NotFound />;
-    }
+    // if (redux.username !== 'admin') { // //proteksi admin (hanya admin yang bisa akses)
+    //     return <NotFound />;
+    // }
     if (loading) {
         return (
             <div>Loading...</div>
@@ -130,79 +130,79 @@ const AdminAddProducts = () => {
     if (redux.addproductstatus) {
         return <Redirect to='/admindroneproducts' />
     }
-    else {
-        return (
-            <div>
-                <AdminSideLeft />
-                <div className="main-content">
+    // else {
+    return (
+        <div>
+            <AdminSideLeft />
+            <div className="main-content">
 
-                    <div className="header row">
-                        <div className="col-md-12">
-                            <p className="header-title">
-                                Add New Product
+                <div className="header row">
+                    <div className="col-md-12">
+                        <p className="header-title">
+                            Add New Product
                             </p>
-                        </div>
                     </div>
+                </div>
 
-                    <div className="row report-group">
-                        <div className="col-md-12">
-                            <div className="item-big-report col-md-12">
-                                <div className="row">
+                <div className="row report-group">
+                    <div className="col-md-12">
+                        <div className="item-big-report col-md-12">
+                            <div className="row">
 
-                                    <div className="overlay-box col-md-4">
-                                        <input type="file" onChange={onAddImage} name='productimage' />
-                                    </div>
-                                    <div style={{ paddingLeft: '30px' }} className="thumbnail-box col-md-4">
-                                        <img className="thumbnail-products" src="https://cdn10.bigcommerce.com/s-xxhdb6xi/product_images/uploaded_images/p4.png" alt="ProductImage" />
-                                    </div>
+                                <div className="overlay-box col-md-4">
+                                    <input type="file" onChange={onAddImage} name='productimage' />
+                                </div>
+                                <div style={{ paddingLeft: '30px' }} className="thumbnail-box col-md-4">
+                                    <img className="thumbnail-products" src="https://cdn10.bigcommerce.com/s-xxhdb6xi/product_images/uploaded_images/p4.png" alt="ProductImage" />
+                                </div>
 
-                                    <div className="col-md-5">
-                                        <form>
-                                            <div className="form-group content-sign-in">
-                                                <input type="text" className="form-control input-type-primary" onChange={addProduct} name='productname' defaultValue={productname} placeholder="Product Name" />
-                                            </div>
+                                <div className="col-md-5">
+                                    <form>
+                                        <div className="form-group content-sign-in">
+                                            <input type="text" className="form-control input-type-primary" onChange={addProduct} name='productname' defaultValue={productname} placeholder="Product Name" />
+                                        </div>
 
-                                            <div className="form-group">
-                                                <input type="number" className="form-control input-type-primary" onChange={addProduct} name='productprice' defaultValue={productprice} placeholder="Price (Rp)" />
-                                            </div>
+                                        <div className="form-group">
+                                            <input type="number" className="form-control input-type-primary" onChange={addProduct} name='productprice' defaultValue={productprice} placeholder="Price (Rp)" />
+                                        </div>
 
-                                            <div className="form-group">
-                                                <div className="row">
-                                                    <div className="col-md-6">
-                                                        <input type="number" className="form-control input-type-primary" onChange={addProduct} name='productstock' defaultValue={productstock} placeholder="Stock" min={1} />
-                                                    </div>
-                                                    <div className="col-md-6">
-                                                        <select className="form-control input-type-primary" onChange={addProduct} name='idproducttypes'>
-                                                            <option hidden>Product Type</option>
-                                                            {productTypes && renderSelectTypes()}
-                                                        </select>
-                                                    </div>
+                                        <div className="form-group">
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <input type="number" className="form-control input-type-primary" onChange={addProduct} name='productstock' defaultValue={productstock} placeholder="Stock" min={1} />
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <select className="form-control input-type-primary" onChange={addProduct} name='idproducttypes'>
+                                                        <option hidden>Product Type</option>
+                                                        {productTypes && renderSelectTypes()}
+                                                    </select>
                                                 </div>
                                             </div>
+                                        </div>
 
-                                            <div className="form-group">
-                                                <textarea type="text" className="form-control input-type-primary" onChange={addProduct} name='productdescription' defaultValue={productdescription} placeholder="Description" />
-                                            </div>
+                                        <div className="form-group">
+                                            <textarea type="text" className="form-control input-type-primary" onChange={addProduct} name='productdescription' defaultValue={productdescription} placeholder="Description" />
+                                        </div>
 
-                                            {/* <div style={{ marginBottom: '-40px', visibility: 'hidden' }} className="form-group content-sign-in">
+                                        {/* <div style={{ marginBottom: '-40px', visibility: 'hidden' }} className="form-group content-sign-in">
                                             <input id="image_file" type="file" />
                                         </div> */}
 
-                                            <div className="form-action">
-                                                <div onClick={onAddClick} style={{ paddingLeft: '20px' }} type="submit" className="btn-small">Add</div>
-                                                <div style={{ marginLeft: '10px', paddingLeft: 19 }} href='/admindroneproducts' className="btn-small">Back</div>
-                                            </div>
+                                        <div className="form-action">
+                                            <div onClick={onAddClick} style={{ paddingLeft: '20px' }} href='/admindroneproducts' type="submit" className="btn-small">Add</div>
+                                            <div style={{ marginLeft: '10px', paddingLeft: 19 }} href='/admindroneproducts' className="btn-small">Back</div>
+                                        </div>
 
-                                        </form>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        )
-    }
+        </div>
+    )
+    // }
 }
 
 

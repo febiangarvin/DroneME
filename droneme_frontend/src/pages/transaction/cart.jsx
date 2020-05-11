@@ -12,6 +12,13 @@ const Cart = () => {
 
     // //============================== FUNCTION READ CART ====================================================// //
 
+    const redux = useSelector((state) => {
+        return {
+            roles: state.Auth.roles,
+            username: state.Auth.username,
+        }
+    })
+
     const { datacart } = useSelector(state => state.HomeReducers) // //mengambil state dari reducers
     const dispatch = useDispatch() // //aktifkan dispatch (model hooks)
     const [dataCart, setDataCart] = useState([])
@@ -126,82 +133,87 @@ const Cart = () => {
 
     // //============================== RENDER AKHIR ==========================================================// //
 
-    return (
-        <div>
-            <Header />
+    if (redux.username == 'admin') { // //proteksi admin (hanya admin yang bisa akses)
+        return <NotFound />;
+    }
+    else {
+        return (
+            <div>
+                <Header />
 
-            <div className="main-content">
-                <div className="header row">
-                    <div className="col-md-12">
-                        <p className="header-title" style={{ marginRight: '150px' }}>
-                            Cart
+                <div className="main-content">
+                    <div className="header row">
+                        <div className="col-md-12">
+                            <p className="header-title" style={{ marginRight: '150px' }}>
+                                Cart
                         </p>
-                    </div>
-                </div>
-
-                <div className="row report-group">
-                    <div className="col-md-12">
-                        <div className="item-big-report col-md-12">
-                            <table className="table-wisata table-tiketsaya table table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Product Name</th>
-                                        <th scope="col">Item Price</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">Total Price</th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {renderCart()}
-                                </tbody>
-                                <tfooter style={{ fontSize: '20px', color: 'white' }}>
-                                    <br />
-                                    <tr>
-                                        Your Grand Total : Rp {totalPrice}
-                                    </tr>
-                                </tfooter>
-                            </table>
                         </div>
                     </div>
-                </div>
 
-                <br /><br />
+                    <div className="row report-group">
+                        <div className="col-md-12">
+                            <div className="item-big-report col-md-12">
+                                <table className="table-wisata table-tiketsaya table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Product Name</th>
+                                            <th scope="col">Item Price</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Total Price</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {renderCart()}
+                                    </tbody>
+                                    <tfooter style={{ fontSize: '20px', color: 'white' }}>
+                                        <br />
+                                        <tr>
+                                            Your Grand Total : Rp {totalPrice}
+                                        </tr>
+                                    </tfooter>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
 
-                <div className="header row">
-                    <div className="col-md-12">
-                        <p className="header-title" style={{ marginRight: '130px' }}>
-                            Receiver and Address :
+                    <br /><br />
+
+                    <div className="header row">
+                        <div className="col-md-12">
+                            <p className="header-title" style={{ marginRight: '130px' }}>
+                                Receiver and Address :
                         </p>
-                        <p className="header-title" style={{ marginRight: '130px', fontSize: '17px', color: 'red' }}>
-                            Note: This an address that you have submitted when starting your registration.<br />
+                            {/* <p className="header-title" style={{ marginRight: '130px', fontSize: '17px', color: 'red' }}>
+                                Note: This an address that you have submitted when starting your registration.<br />
                             To change, please head on to the <a href='/useredit'>Edit Profile Tab</a> before making your payment.
-                        </p>
-                    </div>
-                </div>
-
-                <div className="row report-group">
-                    <div className="col-md-12">
-                        <div className="item-big-report col-md-12">
-                            <table className="table-wisata table table-borderless">
-                                {renderReceiver()}
-                            </table>
+                        </p> */}
                         </div>
                     </div>
+
+                    <div className="row report-group">
+                        <div className="col-md-12">
+                            <div className="item-big-report col-md-12">
+                                <table className="table-wisata table table-borderless">
+                                    {renderReceiver()}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br /><br />
+
+                    <div className="form-action">
+                        <a style={{ marginLeft: '400px', padding: 20 }} href="/droneproducts" className="btn-warning">Return</a>
+                        <a style={{ marginLeft: '25px', padding: 20 }} onClick={addDataToCheckout} href="/orders" className="btn-success">Checkout</a>
+                    </div>
+
+                    <br /><br />
                 </div>
 
-                <br /><br />
-
-                <div className="form-action">
-                    <a style={{ marginLeft: '400px', padding: 20 }} href="/droneproducts" className="btn-warning">Return</a>
-                    <a style={{ marginLeft: '25px', padding: 20 }} onClick={addDataToCheckout} href="/orders" className="btn-success">Checkout</a>
-                </div>
-
-                <br /><br />
             </div>
-
-        </div>
-    );
+        );
+    }
 }
 
 export default Cart;

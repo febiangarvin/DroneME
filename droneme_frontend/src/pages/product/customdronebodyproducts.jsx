@@ -9,56 +9,56 @@ const CustomDroneBodyProducts = () => {
 
     // //============================== FUNCTION READ =========================================================// //
 
-    const [dataDroneBody, setdataDroneBody] = useState([])
+    // const [dataDroneBody, setdataDroneBody] = useState([])
 
-    useEffect(() => {
-        Axios.get(`${apiurl}/products/getdronebodyproducts`)
-            .then((res) => {
-                setdataDroneBody(res.data.result)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }, [])
+    // useEffect(() => {
+    //     Axios.get(`${apiurl}/products/getdronebodyproducts`)
+    //         .then((res) => {
+    //             setdataDroneBody(res.data.result)
+    //         })
+    //         .catch((err) => {
+    //             console.log(err)
+    //         })
+    // }, [])
 
-    const renderProduk = () => {
-        return dataDroneBody.map((val, index) => {
-            return (
-                <div class="card" key={index} style={{ position: 'relative' }}>
-                    <div style={{ height: '200px', width: '100%' }}>
-                        <img
-                            src={`${apiImage + val.productimage}`}
-                            alt='productImage'
-                            style={{ alignItems: 'center', height: '100%', width: '100%' }}
-                        />
-                    </div>
-                    <br />
-                    <div class="container">
-                        <h4 style={{ textAlign: "center", fontFamily: "Righteous, cursive" }}>
-                            {val.productname}
-                        </h4>
-                        <center>
-                            <br />
-                            <button className='btn btn-success mr-1 ml-1' onClick={() => onModalOpen(index)}>Product Details</button>
-                            <br /><br />
-                            <p style={{ fontFamily: "Montserrat, Overpass, Trebuchet MS, Arial, sans-serif" }}>
-                                We have, <h4>{val.productstock}</h4> items left in store
-                            </p>
-                        </center>
-                        <br />
-                        <center>
-                            <h5 className="productPrice">Rp {val.productprice}</h5>
-                            <br />
-                            <a href='/Product' className="btn-small mt-1 mb-1" style={{ textAlign: 'center', paddingRight: '10px', paddingBottom: '5px', marginBottom: '5px' }}>
-                                Choose This Body
-                            </a>
-                        </center>
-                        <br />
-                    </div>
-                </div>
-            )
-        })
-    }
+    // const renderProduk = () => {
+    //     return dataDroneBody.map((val, index) => {
+    //         return (
+    //             <div class="card" key={index} style={{ position: 'relative' }}>
+    //                 <div style={{ height: '200px', width: '100%' }}>
+    //                     <img
+    //                         src={`${apiImage + val.productimage}`}
+    //                         alt='productImage'
+    //                         style={{ alignItems: 'center', height: '100%', width: '100%' }}
+    //                     />
+    //                 </div>
+    //                 <br />
+    //                 <div class="container">
+    //                     <h4 style={{ textAlign: "center", fontFamily: "Righteous, cursive" }}>
+    //                         {val.productname}
+    //                     </h4>
+    //                     <center>
+    //                         <br />
+    //                         <button className='btn btn-success mr-1 ml-1' onClick={() => onModalOpen(index)}>Product Details</button>
+    //                         <br /><br />
+    //                         <p style={{ fontFamily: "Montserrat, Overpass, Trebuchet MS, Arial, sans-serif" }}>
+    //                             We have, <h4>{val.productstock}</h4> items left in store
+    //                         </p>
+    //                     </center>
+    //                     <br />
+    //                     <center>
+    //                         <h5 className="productPrice">Rp {val.productprice}</h5>
+    //                         <br />
+    //                         <a href='/Product' className="btn-small mt-1 mb-1" style={{ textAlign: 'center', paddingRight: '10px', paddingBottom: '5px', marginBottom: '5px' }}>
+    //                             Choose This Body
+    //                         </a>
+    //                     </center>
+    //                     <br />
+    //                 </div>
+    //             </div>
+    //         )
+    //     })
+    // }
 
     // //============================== FUNCTION ADD CUSTOM PRODUCT ==================================================// //
 
@@ -75,58 +75,58 @@ const CustomDroneBodyProducts = () => {
 
     // //============================== FUNCTION OPEN MODAL PRODUCT DESCRIPTION ===============================// //
 
-    const [productDescription, setProductDescription] = useState({
-        idproducts: 0,
-        productname: '',
-        productdescription: '',
-    })
+    // const [productDescription, setProductDescription] = useState({
+    //     idproducts: 0,
+    //     productname: '',
+    //     productdescription: '',
+    // })
 
-    const { idproducts, productname, productdescription } = productDescription
+    // const { idproducts, productname, productdescription } = productDescription
 
-    const [descriptionModal, setDescriptionModal] = useState({
-        modalDescription: false,
-        indexDescription: -1
-    })
+    // const [descriptionModal, setDescriptionModal] = useState({
+    //     modalDescription: false,
+    //     indexDescription: -1
+    // })
 
-    const { indexDescription, modalDescription } = descriptionModal
+    // const { indexDescription, modalDescription } = descriptionModal
 
-    const onModalOpen = (index) => {
-        setProductDescription(dataDroneBody[index])
-        setDescriptionModal({ ...descriptionModal, modalDescription: true, indexDescription: index });
-    }
+    // const onModalOpen = (index) => {
+    //     setProductDescription(dataDroneBody[index])
+    //     setDescriptionModal({ ...descriptionModal, modalDescription: true, indexDescription: index });
+    // }
 
-    const toggleModal = () => setDescriptionModal({ ...descriptionModal, modalDescription: !modalDescription })
+    // const toggleModal = () => setDescriptionModal({ ...descriptionModal, modalDescription: !modalDescription })
 
-    const renderModalDescription = () => {
-        return dataDroneBody.map((val, index) => {
-            return (
-                <Modal isOpen={modalDescription} fade={false} key={index} toggle={toggleModal}>
-                    <ModalHeader>
-                        <center>
-                            {productname} Details:
-                </center>
-                    </ModalHeader>
-                    <ModalBody>
-                        <center>
-                            {productdescription}
-                        </center>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="secondary" onClick={toggleModal}>Close</Button>
-                    </ModalFooter>
-                </Modal>
-            )
-        })
-    }
+    // const renderModalDescription = () => {
+    //     return dataDroneBody.map((val, index) => {
+    //         return (
+    //             <Modal isOpen={modalDescription} fade={false} key={index} toggle={toggleModal}>
+    //                 <ModalHeader>
+    //                     <center>
+    //                         {productname} Details:
+    //             </center>
+    //                 </ModalHeader>
+    //                 <ModalBody>
+    //                     <center>
+    //                         {productdescription}
+    //                     </center>
+    //                 </ModalBody>
+    //                 <ModalFooter>
+    //                     <Button color="secondary" onClick={toggleModal}>Close</Button>
+    //                 </ModalFooter>
+    //             </Modal>
+    //         )
+    //     })
+    // }
 
     // //============================== RENDER AKHIR ==========================================================// //
 
     return (
         <div>
             <Header />
-            {renderModalDescription()}
-            <h2 className="productHeader">Drone Bodies</h2>
-            <div className='productList'>
+            {/* {renderModalDescription()} */}
+            <h2 className="productHeader">UNDER MAINTENANCE</h2>
+            {/* <div className='productList'>
                 {renderProduk()}
             </div>
             <br />
@@ -135,7 +135,8 @@ const CustomDroneBodyProducts = () => {
                     Next Item
                 </a>
             </div>
-            <br />
+            <br /> */}
+            <br /><br />
             <Footer />
         </div>
     );

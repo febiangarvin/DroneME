@@ -226,88 +226,88 @@ const AdminDroneProducts = () => {
 
     // //============================== RENDER AKHIR ==========================================================// //
 
-    if (redux.username !== 'admin') { // //proteksi admin (hanya admin yang bisa akses)
-        return <NotFound />;
-    }
-    else {
-        return (
-            <div>
-                <AdminSideLeft />
-                {renderModalEdit()}
-                <div className="main-content">
+    // if (redux.username !== 'admin') { // //proteksi admin (hanya admin yang bisa akses)
+    //     return <NotFound />;
+    // }
+    // else {
+    return (
+        <div>
+            <AdminSideLeft />
+            {renderModalEdit()}
+            <div className="main-content">
 
-                    <div className="header row">
-                        <div className="col-md-12">
-                            <p className="header-title">
-                                Manage Products
+                <div className="header row">
+                    <div className="col-md-12">
+                        <p className="header-title">
+                            Manage Products
                             </p>
-                        </div>
-                        <div className="col-md-12 row">
-                            <a href="/admindroneaccessoriesproducts" className="sub-header-title">
-                                Drone Accessories
-                            </a>
-                            <p className="sub-header-title" style={{ fontWeight: 'bolder' }}>
-                                Drone Products
-                            </p>
-                            <a href="/adminaccessoriesproducts" className="sub-header-title">
-                                Accessories
-                            </a>
-                        </div>
                     </div>
+                    <div className="col-md-12 row">
+                        <a href="/admindroneaccessoriesproducts" className="sub-header-title">
+                            Drone Accessories
+                            </a>
+                        <p className="sub-header-title" style={{ fontWeight: 'bolder' }}>
+                            Drone Products
+                            </p>
+                        <a href="/adminaccessoriesproducts" className="sub-header-title">
+                            Accessories
+                            </a>
+                    </div>
+                </div>
 
-                    <div className="row report-group">
-                        <div className="col-md-12">
-                            <div className="item-big-report col-md-12">
+                <div className="row report-group">
+                    <div className="col-md-12">
+                        <div className="item-big-report col-md-12">
 
-                                <table className="table-wisata table-tiketsaya table table-borderless">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Product Name</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Stock</th>
-                                            <th scope="col">Product Type</th>
-                                            <th scope="col">Admin's Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {renderProducts()}
-                                    </tbody>
-                                </table>
+                            <table className="table-wisata table-tiketsaya table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Product Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Stock</th>
+                                        <th scope="col">Product Type</th>
+                                        <th scope="col">Admin's Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {renderProducts()}
+                                </tbody>
+                            </table>
 
-                                {pager.pages && pager.pages.length &&
-                                    <ul className="pagination">
-                                        <li className={`page-item first-item ${pager.currentPage === 1 ? 'disabled' : ''}`}>
-                                            <Link to={{ search: `?page=1` }} className="page-link" onClick={() => setPage(pager.startPage)}>First</Link>
+                            {pager.pages && pager.pages.length &&
+                                <ul className="pagination">
+                                    <li className={`page-item first-item ${pager.currentPage === 1 ? 'disabled' : ''}`}>
+                                        <Link to={{ search: `?page=1` }} className="page-link" onClick={() => setPage(pager.startPage)}>First</Link>
+                                    </li>
+                                    <li className={`page-item previous-item ${pager.currentPage === 1 ? 'disabled' : ''}`}>
+                                        <Link to={{ search: `?page=${pager.currentPage - 1}` }} className="page-link" onClick={() => setPage(pager.currentPage - 1)}>Previous</Link>
+                                    </li>
+                                    {pager.pages.map(page =>
+                                        <li key={page} className={`page-item number-item ${pager.currentPage === page ? 'active' : ''}`}>
+                                            <Link to={{ search: `?page=${page}` }} className="page-link" onClick={() => setPage(page)}>{page}</Link>
                                         </li>
-                                        <li className={`page-item previous-item ${pager.currentPage === 1 ? 'disabled' : ''}`}>
-                                            <Link to={{ search: `?page=${pager.currentPage - 1}` }} className="page-link" onClick={() => setPage(pager.currentPage - 1)}>Previous</Link>
-                                        </li>
-                                        {pager.pages.map(page =>
-                                            <li key={page} className={`page-item number-item ${pager.currentPage === page ? 'active' : ''}`}>
-                                                <Link to={{ search: `?page=${page}` }} className="page-link" onClick={() => setPage(page)}>{page}</Link>
-                                            </li>
-                                        )}
-                                        <li className={`page-item next-item ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`}>
-                                            <Link to={{ search: `?page=${pager.currentPage + 1}` }} className="page-link" onClick={() => setPage(pager.currentPage + 1)}>Next</Link>
-                                        </li>
-                                        <li className={`page-item last-item ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`}>
-                                            <Link to={{ search: `?page=${pager.totalPages}` }} className="page-link" onClick={() => setPage(pager.totalPages)}>Last</Link>
-                                        </li>
-                                    </ul>
-                                }
+                                    )}
+                                    <li className={`page-item next-item ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`}>
+                                        <Link to={{ search: `?page=${pager.currentPage + 1}` }} className="page-link" onClick={() => setPage(pager.currentPage + 1)}>Next</Link>
+                                    </li>
+                                    <li className={`page-item last-item ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`}>
+                                        <Link to={{ search: `?page=${pager.totalPages}` }} className="page-link" onClick={() => setPage(pager.totalPages)}>Last</Link>
+                                    </li>
+                                </ul>
+                            }
 
-                            </div>
-                            <br />
-                            <div className="form-action">
-                                <a style={{ marginLeft: '450px', paddingLeft: 19 }} href="/adminaddproducts" className="btn-medium">Add Product</a>
-                            </div>
+                        </div>
+                        <br />
+                        <div className="form-action">
+                            <a style={{ marginLeft: '450px', paddingLeft: 19 }} href="/adminaddproducts" className="btn-medium">Add Product</a>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-        );
-    }
+    );
+    // }
 }
 
 export default AdminDroneProducts;

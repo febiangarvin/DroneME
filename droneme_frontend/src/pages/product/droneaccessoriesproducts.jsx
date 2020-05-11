@@ -4,7 +4,7 @@ import Header from '../../components/header'
 import Footer from '../../components/footer';
 import Axios from 'axios'
 import { apiurl, apiImage } from '../../support/apiurl'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { UserGetCart } from '../../redux/actions'
 import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
@@ -12,6 +12,13 @@ import { Link } from 'react-router-dom'
 const DroneAccessoriesProducts = () => {
 
     // //============================== FUNCTION READ =========================================================// //
+
+    const redux = useSelector((state) => {
+        return {
+            roles: state.Auth.roles,
+            username: state.Auth.username,
+        }
+    })
 
     const [dataDroneAccessories, setDataDroneAccessories] = useState([])
 
@@ -46,49 +53,85 @@ const DroneAccessoriesProducts = () => {
             })
     }, [page])
 
-    const renderProduk = () => {
-        return dataDroneAccessories.map((val, index) => {
-            const detailProduct = {
-                idproducts: val.idproducts,
-                productprice: val.productprice,
-            }
-            return (
-                <div class="card" key={index} style={{ position: 'relative' }}>
-                    <div style={{ height: '200px', width: '100%' }}>
-                        <img
-                            src={`${apiImage + val.productimage}`}
-                            alt='productImage'
-                            style={{ alignItems: 'center', height: '100%', width: '100%' }}
-                        />
-                    </div>
-                    <br />
-                    <div class="container">
-                        <h4 style={{ textAlign: "center", fontFamily: "Righteous, cursive" }}>
-                            {val.productname}
-                        </h4>
-                        <center>
+    const renderProduk = () => { // //me-render tampilan product
+        if (redux.username == 'admin') { // //proteksi admin (tampilan admin )
+            return dataDroneAccessories.map((val, index) => { // //melakukan untuk mapping data product (menyesuaikan types)
+                const detailProduct = {
+                    idproducts: val.idproducts,
+                    productprice: val.productprice,
+                }
+                return (
+                    <div class="card" key={index} style={{ position: 'relative' }}>
+                        <div style={{ height: '200px', width: '100%' }}>
+                            <img
+                                src={`${apiImage + val.productimage}`}
+                                alt='productImage'
+                                style={{ alignItems: 'center', height: '100%', width: '100%' }}
+                            />
+                        </div>
+                        <br />
+                        <div class="container">
+                            <h4 style={{ textAlign: "center", fontFamily: "Righteous, cursive" }}>
+                                {val.productname}
+                            </h4>
+                            <center>
+                                <br />
+                                <button className='btn btn-success mr-1 ml-1' onClick={() => onModalOpen(index)}>Product Details</button>
+                                <br /><br />
+                                {/* <p style={{ fontFamily: "Montserrat, Overpass, Trebuchet MS, Arial, sans-serif" }}>
+                                    We have, <h4>{val.productstock}</h4> items left in store
+                                </p> */}
+                            </center>
                             <br />
-                            <button className='btn btn-success mr-1 ml-1' onClick={() => onModalOpen(index)}>Product Details</button>
-                            <br /><br />
-                            <p style={{ fontFamily: "Montserrat, Overpass, Trebuchet MS, Arial, sans-serif" }}>
+                        </div>
+                    </div>
+                )
+            })
+        }
+        else {
+            return dataDroneAccessories.map((val, index) => { // //melakukan untuk mapping data product (menyesuaikan types)
+                const detailProduct = {
+                    idproducts: val.idproducts,
+                    productprice: val.productprice,
+                }
+                return (
+                    <div class="card" key={index} style={{ position: 'relative' }}>
+                        <div style={{ height: '200px', width: '100%' }}>
+                            <img
+                                src={`${apiImage + val.productimage}`}
+                                alt='productImage'
+                                style={{ alignItems: 'center', height: '100%', width: '100%' }}
+                            />
+                        </div>
+                        <br />
+                        <div class="container">
+                            <h4 style={{ textAlign: "center", fontFamily: "Righteous, cursive" }}>
+                                {val.productname}
+                            </h4>
+                            <center>
+                                <br />
+                                <button className='btn btn-success mr-1 ml-1' onClick={() => onModalOpen(index)}>Product Details</button>
+                                <br /><br />
+                                {/* <p style={{ fontFamily: "Montserrat, Overpass, Trebuchet MS, Arial, sans-serif" }}>
                                 We have, <h4>{val.productstock}</h4> items left in store
-                            </p>
-                        </center>
-                        <br />
-                        <center>
-                            <h5 className="productPrice">Rp {val.productprice}</h5>
-                            <p>Chosen Quantity :</p>
-                            <input type="number" onChange={e => setProductQuantity(e.target.value)} className="form-control" style={{ width: '55px', marginLeft: '10px' }} name='quantity' defaultValue={1} min={1} />
+                            </p> */}
+                            </center>
                             <br />
-                            <div onClick={() => addProduct(index)} className="btn-medium mt-1 mb-1" style={{ textAlign: 'center', paddingRight: '10px', paddingBottom: '10px', marginBottom: '5px' }}>
-                                Add This Product
+                            <center>
+                                <h5 className="productPrice">Rp {val.productprice}</h5>
+                                <p>Chosen Quantity :</p>
+                                <input type="number" onChange={e => setProductQuantity(e.target.value)} className="form-control" style={{ width: '55px', marginLeft: '10px' }} name='quantity' defaultValue={1} min={1} />
+                                <br />
+                                <div onClick={() => addProduct(index)} className="btn-medium mt-1 mb-1" style={{ textAlign: 'center', paddingRight: '10px', paddingBottom: '10px', marginBottom: '5px' }}>
+                                    Add This Product
                             </div>
-                        </center>
-                        <br />
+                            </center>
+                            <br />
+                        </div>
                     </div>
-                </div>
-            )
-        })
+                )
+            })
+        }
     }
 
     // //============================== FUNCTION ADD PRODUCT ==================================================// //

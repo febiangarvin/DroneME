@@ -196,10 +196,10 @@ const OrderDetail = (props) => {
                             <p className="header-title" style={{ marginRight: '130px' }}>
                                 Receiver and Address :
                         </p>
-                            <p className="header-title" style={{ marginRight: '130px', fontSize: '17px', color: 'red' }}>
+                            {/* <p className="header-title" style={{ marginRight: '130px', fontSize: '17px', color: 'red' }}>
                                 Note: This an address that you have submitted when starting your registration.<br />
                             To change, please head on to the <a href='/useredit'>Edit Profile Tab</a> before making your payment.
-                        </p>
+                        </p> */}
                         </div>
                     </div>
 

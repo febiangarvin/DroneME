@@ -12,6 +12,13 @@ const PaidOrderDetail = (props) => {
 
     // //============================== FUNCTION READ ORDER DETAIL ================================================// //
 
+    const redux = useSelector((state) => {
+        return {
+            roles: state.Auth.roles,
+            username: state.Auth.username,
+        }
+    })
+
     const { datacart } = useSelector(state => state.HomeReducers)
     const { username, address, province, postalcode } = useSelector(state => state.Auth)
     const dispatch = useDispatch()
@@ -89,93 +96,96 @@ const PaidOrderDetail = (props) => {
     }
 
     // //============================== RENDER AKHIR ==========================================================// //
+    if (redux.username == 'admin') { // //proteksi admin (hanya admin yang bisa akses)
+        return <NotFound />;
+    }
+    else {
+        return (
+            <div>
+                <Header />
 
-    return (
-
-        <div>
-            <Header />
-
-            <div className="main-content">
-                <div className="header row">
-                    <div className="col-md-12">
-                        <p className="header-title" style={{ marginRight: '150px' }}>
-                            Items You Ordered :
+                <div className="main-content">
+                    <div className="header row">
+                        <div className="col-md-12">
+                            <p className="header-title" style={{ marginRight: '150px' }}>
+                                Items You Ordered :
                         </p>
-                    </div>
-                </div>
-
-                <div className="row report-group">
-                    <div className="col-md-12">
-                        <div className="item-big-report col-md-12">
-                            <table className="table-wisata table-tiketsaya table table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Product Name</th>
-                                        <th scope="col">Item Price</th>
-                                        <th scope="col">Quantity</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {renderCheckoutDetail()}
-                                </tbody>
-                                <tfooter style={{ fontSize: '20px', color: 'white' }}>
-                                    <br />
-                                    <tr>
-                                        Your Grand Total : Rp {totalPrice}
-                                    </tr>
-                                </tfooter>
-                            </table>
                         </div>
                     </div>
-                </div>
-                <br /><br />
 
-                <div className="header row">
-                    <div className="col-md-12">
-                        <p className="header-title" style={{ marginRight: '130px' }}>
-                            Receiver and Address :
-                        </p>
-                    </div>
-                </div>
-
-                <div className="row report-group">
-                    <div className="col-md-12">
-                        <div className="item-big-report col-md-12">
-                            <table className="table-wisata table table-borderless">
-                                {renderReceiver()}
-                            </table>
+                    <div className="row report-group">
+                        <div className="col-md-12">
+                            <div className="item-big-report col-md-12">
+                                <table className="table-wisata table-tiketsaya table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Product Name</th>
+                                            <th scope="col">Item Price</th>
+                                            <th scope="col">Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {renderCheckoutDetail()}
+                                    </tbody>
+                                    <tfooter style={{ fontSize: '20px', color: 'white' }}>
+                                        <br />
+                                        <tr>
+                                            Your Grand Total : Rp {totalPrice}
+                                        </tr>
+                                    </tfooter>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    <br /><br />
 
-                <br /><br />
-                <div className="header row">
-                    <div className="col-md-12">
-                        <p className="header-title" style={{ marginRight: '130px' }}>
-                            Payment Image :
+                    <div className="header row">
+                        <div className="col-md-12">
+                            <p className="header-title" style={{ marginRight: '130px' }}>
+                                Receiver and Address :
                         </p>
-                    </div>
-                </div>
-                <div className="row report-group">
-                    <div className="col-md-12">
-                        <div className="item-big-report col-md-12">
-                            <table className="table-wisata table table-borderless">
-                                {renderPaymentImage()}
-                            </table>
                         </div>
                     </div>
+
+                    <div className="row report-group">
+                        <div className="col-md-12">
+                            <div className="item-big-report col-md-12">
+                                <table className="table-wisata table table-borderless">
+                                    {renderReceiver()}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br /><br />
+                    <div className="header row">
+                        <div className="col-md-12">
+                            <p className="header-title" style={{ marginRight: '130px' }}>
+                                Payment Image :
+                        </p>
+                        </div>
+                    </div>
+                    <div className="row report-group">
+                        <div className="col-md-12">
+                            <div className="item-big-report col-md-12">
+                                <table className="table-wisata table table-borderless">
+                                    {renderPaymentImage()}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br /><br />
+
+                    <div className="form-action">
+                        <a style={{ marginLeft: '450px', padding: 20 }} href="/paidorders" className="btn-danger">Return</a>
+                    </div>
+
+                    <br /><br />
                 </div>
-
-                <br /><br />
-
-                <div className="form-action">
-                    <a style={{ marginLeft: '450px', padding: 20 }} href="/paidorders" className="btn-danger">Return</a>
-                </div>
-
-                <br /><br />
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 export default PaidOrderDetail

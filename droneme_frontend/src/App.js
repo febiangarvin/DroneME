@@ -31,7 +31,7 @@ import CustomDroneBatteryProducts from './pages/product/customdronebatteryproduc
 
 import About from './pages/support/about' // //support import
 import Reviews from './pages/support/reviews'
-import FAQ from './pages/support/faq'
+// import FAQ from './pages/support/faq'
 import NotFound from './pages/support/notfound';
 
 import UserTransaction from './pages/transaction/usertransaction';
@@ -99,7 +99,7 @@ const App = () => {
 
         <Route path={'/about'} exact component={About} />
         <Route path={'/reviews'} exact component={Reviews} />
-        <Route path={'/faq'} exact component={FAQ} />
+        {/* <Route path={'/faq'} exact component={FAQ} /> */}
         <Route path={'/*'} exact component={NotFound} />
 
       </Switch>

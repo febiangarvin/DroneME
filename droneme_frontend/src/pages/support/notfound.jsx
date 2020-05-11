@@ -9,7 +9,7 @@ class NotFound extends Component { // //component jika pada url web tidak sesuai
                 <Header />
                 <div id="error-page">
                     <div id="error-inner">
-                        <h1> Sorry, you've got the wrong direction</h1>
+                        <h1> Sorry, the page might be under maintenance or not found</h1>
                         <div className="pesan-eror">404</div>
                         <p className="balik-home"><a href="/">RETURN TO HOME</a></p><br />
                     </div>

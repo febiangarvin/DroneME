@@ -10,6 +10,13 @@ const Orders = () => {
 
     // //============================== FUNCTION READ ORDERS ==================================================// //
 
+    const redux = useSelector((state) => {
+        return {
+            roles: state.Auth.roles,
+            username: state.Auth.username,
+        }
+    })
+
     const { datacheckout } = useSelector(state => state.OrderReducers)
     const dispatch = useDispatch()
     const [dataCheckout, setDataCheckout] = useState([]) // //state untuk mengambil data product yang telah dilakukan checkout (pada cart)
@@ -42,49 +49,54 @@ const Orders = () => {
 
     // //============================== RENDER AKHIR ==========================================================// //
 
-    return (
-        <div>
-            <Header />
+    if (redux.username == 'admin') { // //proteksi admin (hanya admin yang bisa akses)
+        return <NotFound />;
+    }
+    else {
+        return (
+            <div>
+                <Header />
 
-            <div className="main-content">
-                <div className="header row">
-                    <div className="col-md-12">
-                        <p className="header-title" style={{ marginRight: '200px' }}>
-                            My Orders
+                <div className="main-content">
+                    <div className="header row">
+                        <div className="col-md-12">
+                            <p className="header-title" style={{ marginRight: '200px' }}>
+                                My Orders
                         </p>
-                        <br /><br />
-                    </div>
-                    <div className="col-md-8 row" style={{ marginLeft: '75px' }}>
-                        <a href="/paidorders" className="sub-header-title">
-                            Orders I Have Paid
+                            <br /><br />
+                        </div>
+                        <div className="col-md-8 row" style={{ marginLeft: '75px' }}>
+                            <a href="/paidorders" className="sub-header-title">
+                                Orders I Have Paid
                             </a>
-                        <p className="sub-header-title" style={{ fontWeight: 'bolder' }}>
-                            Unpaid Orders
+                            <p className="sub-header-title" style={{ fontWeight: 'bolder' }}>
+                                Unpaid Orders
                             </p>
+                        </div>
                     </div>
-                </div>
-                <div className="row report-group">
-                    <div className="col-md-12">
-                        <div className="item-big-report col-md-12">
-                            <table className="table-tiketsaya table table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Transaction Unique ID</th>
-                                        <th scope="col">Total Price</th>
-                                        <th scope="col">Details</th>
-                                        <th scope="col">Payment Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {renderCheckout()}
-                                </tbody>
-                            </table>
+                    <div className="row report-group">
+                        <div className="col-md-12">
+                            <div className="item-big-report col-md-12">
+                                <table className="table-tiketsaya table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Transaction Unique ID</th>
+                                            <th scope="col">Total Price</th>
+                                            <th scope="col">Details</th>
+                                            <th scope="col">Payment Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {renderCheckout()}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 export default Orders;
